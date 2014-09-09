@@ -1,0 +1,13 @@
+*.out
+*.o
+*.idea
+*.aux
+*.dvi
+*.log
+*.fls
+*latex*
+*.bak
+*synctex*
+*.pyc
+*.class
+*target
