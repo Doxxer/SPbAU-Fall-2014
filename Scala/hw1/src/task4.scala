@@ -6,14 +6,12 @@
 
 object task4 {
   def main(args: Array[String]): Unit = {
-    val s1 = new Series(new Res(5), new Res(4))
-    val s2 = new Series(new Res(10), new Res(20))
-    val s3 = new Parallel(s1, s2)
-    val s4 = new Parallel(s2, s1)
-    val s5: Parallel = new Parallel(new Series(new Parallel(s3, s4), new Res(2)), new Res(9))
-    val s6: Parallel = new Parallel(new Parallel(s5, new Res(9)), new Res(8))
+    val s1 = Series(Res(5), Res(4))
+    val s2 = Series(Res(10), Res(20))
+    val s3 = Parallel(s1, s2)
+    val s4 = Parallel(s2, s1)
+    val s5 = Parallel(Series(Parallel(s3, s4), Res(2)), Res(9))
+    val s6 = Parallel(Parallel(s5, Res(9)), Res(8))
     s6.show()
   }
-
-  
 }
