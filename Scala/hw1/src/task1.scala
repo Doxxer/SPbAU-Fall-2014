@@ -6,6 +6,7 @@ import scala.annotation.tailrec
  * Created by Turaev Timur on 09.09.14.
  */
 object task1 {
+
   @tailrec
   def gcd(x: Long, y: Long): Long = {
     if (y == 0) x else gcd(y, x % y)
