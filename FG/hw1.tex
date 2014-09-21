@@ -1,0 +1,116 @@
+\documentclass[russian]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=1cm,rmargin=1cm}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{babel}
+\usepackage{mathtools}
+\usepackage[T2A]{fontenc}
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\begin{document}
+
+\title{Формальные грамматики. HW\#1}
+\author{Тураев Тимур, SPbAU, SE, 604 group}
+\maketitle
+
+\paragraph*{1.}
+
+\textit{Построить обыкновенную грамматику для языка всех палиндромов $L_1 = \{ w \in \{a, b\}^* \mid w=w^R \}$. Показать, как строка $ababa$ выводится с помощью перезаписи строк. Показать, что эта же строка принадлежит наименьшему решению системы языковых уравнений, построив несколько шагов последовательности $\varphi^k(\bot)$}
+
+Обыкновенная грамматика:
+\begin{align*}
+S \to aSa \mid bSb \mid a \mid b \mid \varepsilon
+\end{align*}
+
+Вывод строки $\textbf{ababa}$ с помощью перезаписи строк:
+\begin{align*}
+S \to aSa \to abSba \to \textbf{ababa}
+\end{align*}
+
+Несколько шагов последовательности $\varphi^k(\bot)$: \\
+$S = (\{a\} \cdot S \cdot \{a\}) \cup  (\{b\} \cdot S \cdot \{b\}) \cup \{a\} \cup \{b\} \cup \{\varepsilon\}$
+
+\begin{align*}
+\varphi^0(\bot) = &\varnothing \\
+\varphi^1(\bot) = &\{a, b, \varepsilon \} \\
+\varphi^2(\bot) = &\{aaa, bab, aba, bbb, aa, bb, a, b, \varepsilon \} \\
+\varphi^3(\bot) = &\{aaaaa, \textbf{ababa}, aabaa, abbba, aaaa, abba, aaa, aba, aa, \\
+ & baaab, bbabb, babab, bbbbb, baab, bbbb, bab, bbb, bb, a, b, \varepsilon \} \\
+\end{align*}
+
+\paragraph*{2.}
+
+\textit{Доказать, что не существует обыкновенной грамматики для языка $L_2=\{ a^{k_1} b \ldots a^{k_n} b \mid n \geqslant 1, 0 \leqslant k_1 \leqslant \ldots \leqslant k_n \}$}
+
+Предположим, грамматика существует и пусть для константы $p \geqslant 1$ выполняется лемма накачки. Рассмотрим строку $w = a^pba^pba^pb$. Для этой строки должно существовать разбиение, допускающее накачку. Рассмотрим ряд случаев:
+
+\begin{itemize}
+\item Можно легко показать (практически по аналогии с лекционными заметками), что, если либо в $u$ или $v$ есть символ $b$, то строка не допускает накачки: можно накачать так, что пропадет условие неубывания длины блоков.
+\item Если оба $u$ или $v$ лежат в одном блоке $a^p$, то можно этот блок размножить так, что условие неубывания не выполнится, или наоборот, удалить его (в случае, если они лежат в третьем блоке), что тоже приведет к нарушению условия.
+\item Пусть $u$ лежит в первом блоке $a^p$, а $v$ во втором, тогда накачав их, получим, что в первом и втором блоке число символов $a$ больше, чем в третьем.
+\item Пусть $u$ лежит во втором блоке $a^p$, а $v$ в третьем, тогда удалив их, получим, что в первом блоке число символов $a$ больше, чем в во втором или третьем.
+\item $u$ и $v$ не могут лежать в первом и третьем блоках в силу условия $|uyv| \leqslant p$.
+\end{itemize}
+
+
+
+\paragraph*{3.}
+
+\textit{Построить конъюнктивную грамматику для языка $L_2$.}
+
+\begin{align*}
+& S \to Ab \mid SAb\ \&\ EBb \\
+& A \to aA \mid \varepsilon \\
+& B \to aBa \mid bA \\
+& E \to aE \mid bE \mid \varepsilon
+\end{align*}
+
+Пояснение: правило $SAb$ просто определяет набор блоков. Нужно еще убедиться, что последний дописанный блок по мощности не меньше чем предпоследний. Это проверяет правило $B$.
+
+\paragraph*{4.}
+
+\textit{Построить однозначную обыкновенную грамматику для языка $L_3=\{c^m a^{\ell_0}b \ldots a^{\ell_{m-1}}b a^{\ell_m}b \ldots a^{\ell_z}b d^n \mid m,n, \ell_i \geqslant 0, z \geqslant 1, \ell_m=n\}$}
+
+\begin{align*}
+& S \to B_1B_2 \\
+& B_1 \to cB_1A \mid \varepsilon \\
+& B_2 \to aB_2d \mid bE \\
+& E \to AE \mid A \\
+& A \to aA \mid b
+\end{align*}
+
+Пояснение: строку S можно построить путем конкатенации двух строк: сначала мы генерируем $m$ символов $c$ и такое же количество блоков $A$. Затем $l_m = n$ символов $a$ и такое же количество символов $d$, это заканчивается символом $b$, который завершает блок мощности $n$, и ненулевым количеством блоков $A$ (из-за условия $z \geqslant 1$)
+
+
+\paragraph*{5.}
+
+\textit{Является ли язык $L_3$ линейным конъюнктивным?}
+
+\paragraph*{6.}
+
+\textit{Пусть $D=\{\varepsilon, ab, aabb, abab, aaabbb, \ldots\}$ --- язык Дика над алфавитом $\{a, b\}$. Существует ли грамматика обёртывания пар для языка $L_4 = \{wc^{|w|} \mid w \in D\} = \{\varepsilon, abcc, aabbcccc, ababcccc, aaabbbcccccc, \ldots\}$?}
+
+\begin{align*}
+S \to (a:c) S (b:c) \mid SS \mid (\varepsilon : \varepsilon)
+\end{align*}
+
+Пояснение: логика построения языка практически идентична грамматике обертывания пар для языка $\{ww \mid w \in \{a, b\}^*\}$.
+ 
+\paragraph*{7.}
+
+\textit{Построить грамматику 1-го порядка для языка $\{ww \mid w \in \{a, b\}^*\}$.}
+
+\begin{align*}
+S(x, y) =\ & (\exists z) (A(x, z, z, y)) \\
+A(x, y, u, v) =\ & (x = y \land u = v) \lor (((a(x + 1) \land a(y + 1)) \lor (b(x + 1) \land b(y + 1))) \land A(x + 1, y, u + 1, v))
+\end{align*}
+
+ Пояснение: существует такая позиция $z$ в строке, которая делит эту строку на две равных. Далее простой логикой первого порядка проверяем, что эти строки либо пусты, либо равны (равны их первые символы и равны суффиксы длиной на единицу меньше, чем длина исходной строки)
+
+\end{document}
