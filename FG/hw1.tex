@@ -58,16 +58,15 @@ $S = (\{a\} \cdot S \cdot \{a\}) \cup  (\{b\} \cdot S \cdot \{b\}) \cup \{a\} \c
 \item $u$ и $v$ не могут лежать в первом и третьем блоках в силу условия $|uyv| \leqslant p$.
 \end{itemize}
 
-
-
 \paragraph*{3.}
 
 \textit{Построить конъюнктивную грамматику для языка $L_2$.}
 
 \begin{align*}
-& S \to Ab \mid SAb\ \&\ EBb \\
+& S \to Ab \mid SAb\ \&\ E'Bb \\
 & A \to aA \mid \varepsilon \\
 & B \to aBa \mid bA \\
+& E' \to Eb \mid \varepsilon \\
 & E \to aE \mid bE \mid \varepsilon
 \end{align*}
 
