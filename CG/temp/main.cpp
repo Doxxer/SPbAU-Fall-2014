@@ -115,7 +115,6 @@ int main(void) {
         glfwPollEvents();
     }
 
-    TwTerminate();
     glfwDestroyWindow(window);
     glfwTerminate();
     g_sample.reset();
