@@ -67,8 +67,8 @@ sample_t::sample_t()
    TwAddVarRW(bar, "ObjRotation", TW_TYPE_QUAT4F, &rotation_by_control_,
               " label='Object orientation' opened=true help='Change the object orientation.' ");
 
-   vs_ = create_shader(GL_VERTEX_SHADER  , "0.glslvs");
-   fs_ = create_shader(GL_FRAGMENT_SHADER, "0.glslfs");
+   vs_ = create_shader(GL_VERTEX_SHADER  , "vs.glsl");
+   fs_ = create_shader(GL_FRAGMENT_SHADER, "fs.glsl");
    program_ = create_program(vs_, fs_);
    init_buffer();
    init_vertex_array();
