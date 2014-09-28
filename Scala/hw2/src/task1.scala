@@ -11,13 +11,11 @@ object task1 {
     }
 
     def getDigitsFromFractionRepresentation(p: (BigInt, BigInt)): List[Int] = {
-      def nextDigit(a: ((BigInt, BigInt), Int)): ((BigInt, BigInt), Int) = {
-        val p: BigInt = a._1._1
-        val q: BigInt = a._1._2
-        val newDigit = p * 10 / q
-        ((p * 10 - q * newDigit, q), newDigit.intValue())
-      }
-      (Stream.iterate(((p._1 - p._2, p._2), 1))(nextDigit) take length).map(p => p._2).toList
+      (Stream.iterate(((p._1 - p._2, p._2), 1)) {
+        case ((a, b), _) =>
+          val newDigit = a * 10 / b
+          ((a * 10 - b * newDigit, b), newDigit.intValue())
+      } take length).map(p => p._2).toList
     }
 
     fractionRepresentation.map(getDigitsFromFractionRepresentation).sliding(2).find(a => a(0) == a(1)).get(0)
