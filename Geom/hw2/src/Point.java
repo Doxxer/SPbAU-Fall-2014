@@ -3,7 +3,7 @@
  * <p/>
  * Created by Turaev Timur on 13.09.14.
  */
-class Point {
+class Point implements Cloneable {
     static final int BOTTOM_CHAIN = 1;
     static final int UPPER_CHAIN = 2;
 
@@ -18,8 +18,23 @@ class Point {
         this.index = index;
     }
 
+    public Point(Point other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.index = other.index;
+        this.chain = other.chain;
+    }
+
     public int getIndex() {
         return index;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public PointToLinePosition classify(Point p0, Point p1) {
@@ -80,5 +95,10 @@ class Point {
 
     public int compareX(Point other) {
         return this.x == other.x ? this.y - other.y : this.x - other.x;
+    }
+
+    @Override
+    public Point clone() {
+        return new Point(this.x, this.y, this.index);
     }
 }

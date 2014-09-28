@@ -8,6 +8,7 @@ import java.util.*;
 class Polygon {
     private final ArrayList<Point> points;
     private Stack<Point> triangulateStack;
+    private int trianglesDoubleArea;
 
     public Polygon() {
         points = new ArrayList<>();
@@ -25,6 +26,7 @@ class Polygon {
     }
 
     public void triangulate() {
+        trianglesDoubleArea = 0;
         Comparator<Point> comparator = new Comparator<Point>() {
             @Override
             public int compare(Point o1, Point o2) {
@@ -59,7 +61,14 @@ class Polygon {
 
             triangulateStack.push(currentPoint);
         }
-//        System.out.println("---------");
+
+        checkArea();
+    }
+
+    private void checkArea() {
+        if (doubleArea() != trianglesDoubleArea) {
+            throw new IllegalStateException(String.format("Doubled polygon area = %d, triangles area = %d", doubleArea(), trianglesDoubleArea));
+        }
     }
 
     private boolean concave(Point currentPoint) {
@@ -74,7 +83,7 @@ class Polygon {
     }
 
     private void printTriangle(Point p1, Point p2, Point p3) {
-        ArrayList<Point> t = new ArrayList<>(Arrays.asList(p1, p2, p3));
+        ArrayList<Point> t = new ArrayList<>(Arrays.asList(p1.clone(), p2.clone(), p3.clone()));
 
         if (p3.classify(p1, p2) == PointToLinePosition.Right) {
             Collections.reverse(t);
@@ -84,6 +93,24 @@ class Polygon {
             Collections.rotate(t, -1);
         }
 
+        Polygon triangle = new Polygon();
+        triangle.addPoint(t.get(0));
+        triangle.addPoint(t.get(1));
+        triangle.addPoint(t.get(2));
+
+        trianglesDoubleArea += triangle.doubleArea();
+
         System.out.printf("(%d, %d, %d)\n", t.get(0).getIndex(), t.get(1).getIndex(), t.get(2).getIndex());
+    }
+
+    private int doubleArea() {
+        int result = 0;
+
+        for (int i = 0; i < points.size(); i++) {
+            int j = (i + 1) % points.size();
+            result += points.get(i).getX() * points.get(j).getY() - points.get(j).getX() * points.get(i).getY();
+        }
+
+        return result;
     }
 }
