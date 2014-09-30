@@ -4,8 +4,6 @@
  * Created by Turaev Timur on 23.09.14.
  */
 object task4 {
-  implicit def listToExtendedList[T](list: List[T]): ExtendedList[T] = new ExtendedList(list)
-
   def generatePolish(numbers: List[Variable], operations: List[(Expression, Expression) => Expression]): List[Expression] = {
     if (operations.isEmpty)
       return numbers
@@ -22,16 +20,23 @@ object task4 {
     result
   }
 
+  def permutationWithRepetitions[T](list: List[T], n: Int): List[List[T]] = {
+    n match {
+      case 1 => for (el <- list) yield List(el)
+      case _ => for (el <- list; perm <- permutationWithRepetitions(list, n - 1)) yield el :: perm
+    }
+  }
+
   def solve(n: Int) {
     val digits = (1 to 10).toList.map(Variable)
 
-    List(Sum, Minus, Mult).combWithRepetitions(digits.length - 1).foreach(operations => {
-      //      generatePolish(digits, operations).map(x => s"${x.toString()} = ${x.evaluate()}").foreach(println)
+    permutationWithRepetitions(List(Sum, Minus, Mult), digits.length - 1).foreach(operations => {
+//      generatePolish(digits, operations).map(x => s"${x.toString()} = ${x.evaluate()}").foreach(println)
       generatePolish(digits, operations).filter(_.evaluate() == n).map(_.toString()).foreach(println)
     })
   }
 
-  def main(args: Array[String]) = solve(2014)
+  def main(args: Array[String]) = solve(20000)
 }
 
 
@@ -70,7 +75,9 @@ abstract class BinaryExpr(left: Expression, right: Expression) extends Expressio
       case Variable(_) => ""
       case _ => ")"
     }
-    s"$braceLeftAtLeft${left.toString()}$braceRightAtLeft $operationRepresentation $braceLeftAtRight${right.toString()}$braceRightAtRight"
+    s"$operationRepresentation ${left.toString} ${right.toString}"
+    //    s"$operationRepresentation (${left.toString}) (${right.toString})"
+    //    s"$braceLeftAtLeft${left.toString()}$braceRightAtLeft $operationRepresentation $braceLeftAtRight${right.toString()}$braceRightAtRight"
   }
 }
 
