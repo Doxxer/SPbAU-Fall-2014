@@ -50,7 +50,7 @@ void sample_t::init_vertex_array() {
     glBindVertexArray(vao_);
     glBindBuffer(GL_ARRAY_BUFFER, vx_buf_);
 
-    GLuint const pos_location = glGetAttribLocation(program_, "in_pos");
+    GLuint const pos_location = (GLuint const) glGetAttribLocation(program_, "in_pos");
     glVertexAttribPointer(pos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), 0);
     glEnableVertexAttribArray(0);
     glBindVertexArray(0);
