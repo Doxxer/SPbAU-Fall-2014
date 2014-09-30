@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<debugInfo>
+  <unitInfo fileName="ConstraintsAspectDescriptor.java" startLine="9" startPosition="0" endLine="25" endPosition="0" unitName="Shapes.constraints.ConstraintsAspectDescriptor" />
+  <root nodeRef="r:52ff21bf-cb26-4390-9179-08045149eb87(Shapes.constraints)/6361760904743020564">
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="25" startPosition="39" endLine="26" endPosition="45" conceptFqName="jetbrains.mps.baseLanguage.structure.SuperConstructorInvocation" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="30" startPosition="83" endLine="31" endPosition="75" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="34" startPosition="44" endLine="35" endPosition="20" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="43" startPosition="63" endLine="44" endPosition="58" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="6361760904743067835" fileName="ColorReference_Constraints.java" startLine="50" startPosition="50" endLine="51" endPosition="153" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="57" startPosition="7" endLine="58" endPosition="22" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="61" startPosition="0" endLine="62" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticFieldDeclaration" propertyString="breakingNode_xr9dxr_a0a0a0a0a1a0b0a1a1" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="25" startPosition="0" endLine="28" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="ColorReference_Constraints#()V" />
+    <nodeInfo nodeId="6361760904743067380" fileName="ColorReference_Constraints.java" startLine="50" startPosition="0" endLine="53" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getName#(Lorg/jetbrains/mps/openapi/model/SNode;)Ljava/lang/String;" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="33" startPosition="0" endLine="37" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="hasOwnScopeProvider#()Z" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="42" startPosition="0" endLine="46" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getSearchScopeValidatorNode#()Lorg/jetbrains/mps/openapi/model/SNodeReference;" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="48" startPosition="122" endLine="53" endPosition="14" conceptFqName="jetbrains.mps.baseLanguage.structure.BlockStatement" />
+    <nodeInfo nodeId="6361760904743044822" fileName="ColorReference_Constraints.java" startLine="48" startPosition="122" endLine="53" endPosition="14" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="47" startPosition="0" endLine="55" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="createScope#(Ljetbrains/mps/smodel/IOperationContext;Ljetbrains/mps/smodel/runtime/ReferenceConstraintsContext;)Ljetbrains/mps/scope/Scope;" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="40" startPosition="56" endLine="55" endPosition="10" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="38" startPosition="0" endLine="57" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getScopeProvider#()Ljetbrains/mps/smodel/runtime/ReferenceScopeProvider;" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="31" startPosition="75" endLine="57" endPosition="7" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="29" startPosition="0" endLine="60" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getNotDefaultReferences#()Ljava/util/Map;" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="25" startPosition="39" endLine="26" endPosition="45" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="34" startPosition="44" endLine="35" endPosition="20" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="43" startPosition="63" endLine="44" endPosition="58" />
+    <scopeInfo nodeId="6361760904743067386" fileName="ColorReference_Constraints.java" startLine="50" startPosition="50" endLine="51" endPosition="153" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="25" startPosition="0" endLine="28" endPosition="0" />
+    <scopeInfo nodeId="6361760904743067380" fileName="ColorReference_Constraints.java" startLine="50" startPosition="0" endLine="53" endPosition="0">
+      <varInfo nodeId="6361760904743067384" varName="child" />
+    </scopeInfo>
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="33" startPosition="0" endLine="37" endPosition="0" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="42" startPosition="0" endLine="46" endPosition="0" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="48" startPosition="122" endLine="53" endPosition="14" />
+    <scopeInfo nodeId="6361760904743020628" fileName="ColorReference_Constraints.java" startLine="48" startPosition="122" endLine="53" endPosition="14" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="47" startPosition="0" endLine="55" endPosition="0">
+      <varInfo nodeId="6361760904743020564" varName="_context" />
+      <varInfo nodeId="6361760904743020564" varName="operationContext" />
+    </scopeInfo>
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="40" startPosition="56" endLine="55" endPosition="10" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="38" startPosition="0" endLine="57" endPosition="0" />
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="30" startPosition="83" endLine="58" endPosition="22">
+      <varInfo nodeId="6361760904743020564" varName="references" />
+    </scopeInfo>
+    <scopeInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="29" startPosition="0" endLine="60" endPosition="0" />
+    <unitInfo nodeId="6361760904743067368" fileName="ColorReference_Constraints.java" startLine="49" startPosition="23" endLine="53" endPosition="13" unitName="Shapes.constraints.ColorReference_Constraints$3" />
+    <unitInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="41" startPosition="19" endLine="55" endPosition="9" unitName="Shapes.constraints.ColorReference_Constraints$2" />
+    <unitInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="32" startPosition="32" endLine="57" endPosition="5" unitName="Shapes.constraints.ColorReference_Constraints$1" />
+    <unitInfo nodeId="6361760904743020564" fileName="ColorReference_Constraints.java" startLine="24" startPosition="0" endLine="63" endPosition="0" unitName="Shapes.constraints.ColorReference_Constraints" />
+  </root>
+</debugInfo>
+
