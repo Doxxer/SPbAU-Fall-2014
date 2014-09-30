@@ -37,6 +37,6 @@ class Main {
 
     private Point readPoint(int index) {
         String[] split = reader.nextString().replaceAll("[,()]", "").split(" ");
-        return new Point(Integer.parseInt(split[0]), Integer.parseInt(split[1]), index);
+        return new Point(Long.parseLong(split[0]), Long.parseLong(split[1]), index);
     }
 }

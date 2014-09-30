@@ -7,12 +7,12 @@ class Point implements Cloneable {
     static final int BOTTOM_CHAIN = 1;
     static final int UPPER_CHAIN = 2;
 
-    private final int x;
-    private final int y;
+    private final long x;
+    private final long y;
     private final int index;
     public int chain;
 
-    public Point(int x, int y, int index) {
+    public Point(long x, long y, int index) {
         this.x = x;
         this.y = y;
         this.index = index;
@@ -29,11 +29,11 @@ class Point implements Cloneable {
         return index;
     }
 
-    public int getX() {
+    public long getX() {
         return x;
     }
 
-    public int getY() {
+    public long getY() {
         return y;
     }
 
@@ -46,7 +46,7 @@ class Point implements Cloneable {
 
         Point a = p1.minus(p0);
         Point b = p2.minus(p0);
-        int det = a.x * b.y - b.x * a.y;
+        long det = a.x * b.y - b.x * a.y;
         if (det > 0)
             return PointToLinePosition.Left;
         if (det < 0)
@@ -88,12 +88,13 @@ class Point implements Cloneable {
 
     @Override
     public int hashCode() {
-        int result = x;
+        long result = x;
         result = 31 * result + y;
-        return result;
+        return (int) result;
     }
 
-    public int compareX(Point other) {
+    public long compareX(Point other)
+    {
         return this.x == other.x ? this.y - other.y : this.x - other.x;
     }
 

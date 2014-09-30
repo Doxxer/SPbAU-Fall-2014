@@ -30,7 +30,8 @@ class Polygon {
         Comparator<Point> comparator = new Comparator<Point>() {
             @Override
             public int compare(Point o1, Point o2) {
-                return o1.compareX(o2);
+                long compareResult = o1.compareX(o2);
+                return compareResult > 0 ? 1 : (compareResult == 0 ? 0 : -1);
             }
         };
         Collections.max(points, comparator).chain = Point.BOTTOM_CHAIN | Point.UPPER_CHAIN;
