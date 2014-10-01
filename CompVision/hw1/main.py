@@ -20,4 +20,4 @@ cv2.imwrite("{0}x{0}_laplacian.png".format(str(gaussian_kernel_size)), laplacian
 _, result_image = cv2.threshold(laplacian, 0, 255, cv2.THRESH_BINARY)
 cv2.imwrite("{0}x{0}_result_image.bmp".format(str(gaussian_kernel_size)), result_image)
 
-show_image("result", laplacian)
+show_image("result", result_image)
