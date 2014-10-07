@@ -63,8 +63,7 @@ class Point implements Cloneable {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
 //        return String.format("{x = %d, y = %d, #%d, chain=%d}", x, y, index, chain);
         return String.format("{#%d}", index);
     }
@@ -93,8 +92,7 @@ class Point implements Cloneable {
         return (int) result;
     }
 
-    public long compareX(Point other)
-    {
+    public long compareX(Point other) {
         return this.x == other.x ? this.y - other.y : this.x - other.x;
     }
 

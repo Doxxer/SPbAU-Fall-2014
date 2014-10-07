@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Stack;
 
 /**
  * Polygon class
@@ -27,18 +30,10 @@ class Polygon {
 
     public void triangulate() {
         trianglesDoubleArea = 0;
-        Comparator<Point> comparator = new Comparator<Point>() {
-            @Override
-            public int compare(Point o1, Point o2) {
-                long compareResult = o1.compareX(o2);
-                return compareResult > 0 ? 1 : (compareResult == 0 ? 0 : -1);
-            }
-        };
-        Collections.max(points, comparator).chain = Point.BOTTOM_CHAIN | Point.UPPER_CHAIN;
-        Collections.min(points, comparator).chain = Point.BOTTOM_CHAIN | Point.UPPER_CHAIN;
 
-        ArrayList<Point> sortedPoints = new ArrayList<>(points);
-        Collections.sort(sortedPoints, comparator);
+        ArrayList<Point> sortedPoints = mergeSortPoints(points);
+        sortedPoints.get(0).chain = Point.BOTTOM_CHAIN | Point.UPPER_CHAIN;
+        sortedPoints.get(sortedPoints.size() - 1).chain = Point.BOTTOM_CHAIN | Point.UPPER_CHAIN;
 
         triangulateStack = new Stack<>();
         triangulateStack.push(sortedPoints.get(0));
@@ -64,6 +59,27 @@ class Polygon {
         }
 
         checkArea();
+    }
+
+    private ArrayList<Point> mergeSortPoints(ArrayList<Point> points) {
+        ArrayList<Point> result = new ArrayList<>();
+        int i = 0;
+        int j = points.size() - 1;
+        while (i <= j) {
+            if (points.get(i).getX() <= points.get(j).getX()) {
+                result.add(points.get(i));
+                i++;
+            } else {
+                result.add(points.get(j));
+                j--;
+            }
+        }
+
+        if (points.size() != result.size()) {
+            throw new IllegalStateException("Merge failed");
+        }
+
+        return result;
     }
 
     private void checkArea() {
