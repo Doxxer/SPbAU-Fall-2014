@@ -11,5 +11,10 @@ set(SOURCE_FILES
     sample_t.cpp)
 add_executable(temp ${SOURCE_FILES})
 
-# libraries
-target_link_libraries(temp glfw3 glew anttweakbar ${OPENGL_LIBRARY})
+set(LIBS AntTweakBar glfw3 GLEW)
+
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(LIBS ${LIBS} Xext X11 Xrandr Xi Xxf86vm pthread)
+ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
+target_link_libraries(temp ${OPENGL_LIBRARY} ${LIBS})

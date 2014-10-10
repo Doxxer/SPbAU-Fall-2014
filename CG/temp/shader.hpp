@@ -1,7 +1,7 @@
 #ifndef SHADER_HPP
 #define SHADER_HPP
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 
 GLuint create_shader(GLenum shader_type, char const *file_name);
 

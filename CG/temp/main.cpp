@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <AntTweakBar.h>
+#include <memory>
 #include <iostream>
 #include "sample_t.hpp"
 
@@ -28,7 +29,7 @@ void glfw_error_callback(int error, const char *description) {
     fprintf(stderr, "GLFW error #%d occurred:\n%s\n", error, description);
 }
 
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {	
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (TwEventKeyGLFW(key, action) || TwEventCharGLFW(key, action)) {
         return;
     }
