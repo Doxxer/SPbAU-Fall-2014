@@ -14,7 +14,7 @@ import jetbrains.mps.smodel.runtime.LanguageAspectDescriptor;
 import jetbrains.mps.openapi.editor.descriptor.EditorAspectDescriptor;
 
 public class Language extends LanguageRuntime {
-  public static String MODULE_REF = "6194761c-0f01-4bcb-a09b-de801dbe4155(mps.demo.calc)";
+  public static String MODULE_REF = "471ef0ac-c7b2-4ee3-86a1-12b20e46ca39(mps.demo.calc)";
   private static String[] EXTENDED_LANGUAGE_IDS = new String[]{"jetbrains.mps.baseLanguage.closures", "jetbrains.mps.baseLanguage"};
   private EditorAspectDescriptorImpl myEditorAspectDescriptor;
 
@@ -44,7 +44,7 @@ public class Language extends LanguageRuntime {
 
   @Override
   public Collection<TemplateModule> getGenerators() {
-    return TemplateUtil.<TemplateModule>asCollection(TemplateUtil.createInterpretedGenerator(this, "3ce3c4ce-9338-4d02-9375-d4823ebab70a(mps.demo.calc#2009888184782028537)"));
+    return TemplateUtil.<TemplateModule>asCollection(TemplateUtil.createInterpretedGenerator(this, "027055fb-d4b6-44ba-bf0d-4dcf53312089(mps.demo.calc#3541037617674586680)"));
   }
 
   @Override

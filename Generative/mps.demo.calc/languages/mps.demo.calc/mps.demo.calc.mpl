@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language namespace="mps.demo.calc" uuid="6194761c-0f01-4bcb-a09b-de801dbe4155">
+<language namespace="mps.demo.calc" uuid="471ef0ac-c7b2-4ee3-86a1-12b20e46ca39">
   <models>
     <modelRoot contentPath="${module}" type="default">
-      <sourceRoot location="languageModels" />
+      <sourceRoot path="${module}/languageModels" />
     </modelRoot>
   </models>
   <accessoryModels />
   <generators>
-    <generator generatorUID="mps.demo.calc#2009888184782028537" uuid="3ce3c4ce-9338-4d02-9375-d4823ebab70a">
+    <generator generatorUID="mps.demo.calc#3541037617674586680" uuid="027055fb-d4b6-44ba-bf0d-4dcf53312089">
       <models>
         <modelRoot contentPath="${module}" type="default">
-          <sourceRoot location="generator/template" />
+          <sourceRoot path="${module}/generator/template" />
         </modelRoot>
       </models>
       <external-templates />
+      <dependencies>
+        <dependency reexport="false">6354ebe7-c22a-4a0f-ac54-50b52ab9b065(JDK)</dependency>
+      </dependencies>
       <usedLanguages>
         <usedLanguage>b401a680-8325-4110-8fd3-84331ff25bef(jetbrains.mps.lang.generator)</usedLanguage>
         <usedLanguage>d7706f63-9be2-479c-a3da-ae92af1e64d5(jetbrains.mps.lang.generator.generationContext)</usedLanguage>
-        <usedLanguage>6194761c-0f01-4bcb-a09b-de801dbe4155(mps.demo.calc)</usedLanguage>
+        <usedLanguage>471ef0ac-c7b2-4ee3-86a1-12b20e46ca39(mps.demo.calc)</usedLanguage>
       </usedLanguages>
       <usedDevKits>
         <usedDevKit>fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)</usedDevKit>
@@ -29,6 +32,9 @@
   <usedDevKits>
     <usedDevKit>2677cb18-f558-4e33-bc38-a5139cee06dc(jetbrains.mps.devkit.language-design)</usedDevKit>
   </usedDevKits>
+  <runtime>
+    <dependency reexport="false">83ec2dc4-1ca4-44bc-87d0-0ec8cb99f062(mps.demo.calc.runtime)</dependency>
+  </runtime>
   <extendedLanguages>
     <extendedLanguage>fd392034-7849-419d-9071-12563d152375(jetbrains.mps.baseLanguage.closures)</extendedLanguage>
     <extendedLanguage>f3061a53-9226-4cc5-a443-f952ceaf5816(jetbrains.mps.baseLanguage)</extendedLanguage>

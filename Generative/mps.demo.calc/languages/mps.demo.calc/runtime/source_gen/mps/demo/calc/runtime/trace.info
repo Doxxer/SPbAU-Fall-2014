@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <debugInfo>
-  <root nodeRef="r:83b2ee73-0e6c-40de-80da-25acd5827a8c(mps.demo.calc.runtime)/4069628166919990901">
-    <nodeInfo nodeId="4069628166919991030" fileName="CalcStatus.java" startLine="10" startPosition="0" endLine="11" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticFieldDeclaration" propertyString="ourStatus" />
-    <nodeInfo nodeId="4069628166920005189" fileName="CalcStatus.java" startLine="15" startPosition="37" endLine="16" endPosition="21" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
-    <nodeInfo nodeId="4069628166920005419" fileName="CalcStatus.java" startLine="19" startPosition="0" endLine="20" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="myMap" />
-    <nodeInfo nodeId="4069628166920021162" fileName="CalcStatus.java" startLine="21" startPosition="39" endLine="22" endPosition="47" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
-    <nodeInfo nodeId="4069628166920026212" fileName="CalcStatus.java" startLine="25" startPosition="51" endLine="26" endPosition="47" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="4069628166920001958" fileName="CalcStatus.java" startLine="12" startPosition="0" endLine="14" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="CalcStatus#()V" />
-    <nodeInfo nodeId="4069628166920005113" fileName="CalcStatus.java" startLine="15" startPosition="0" endLine="18" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getCalcStatus#()Lmps/demo/calc/runtime/CalcStatus;" />
-    <nodeInfo nodeId="4069628166920020841" fileName="CalcStatus.java" startLine="21" startPosition="0" endLine="24" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getStatus#(Ljava/lang/String;)Ljava/lang/Object;" />
-    <nodeInfo nodeId="4069628166920024140" fileName="CalcStatus.java" startLine="25" startPosition="0" endLine="28" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="setStatus#(Ljava/lang/String;Ljava/lang/Object;)V" />
-    <scopeInfo nodeId="4069628166920001961" fileName="CalcStatus.java" startLine="12" startPosition="24" endLine="12" endPosition="24" />
-    <scopeInfo nodeId="4069628166920005116" fileName="CalcStatus.java" startLine="15" startPosition="37" endLine="16" endPosition="21" />
-    <scopeInfo nodeId="4069628166920020844" fileName="CalcStatus.java" startLine="21" startPosition="39" endLine="22" endPosition="47" />
-    <scopeInfo nodeId="4069628166920024143" fileName="CalcStatus.java" startLine="25" startPosition="51" endLine="26" endPosition="47" />
-    <scopeInfo nodeId="4069628166920001958" fileName="CalcStatus.java" startLine="12" startPosition="0" endLine="14" endPosition="0" />
-    <scopeInfo nodeId="4069628166920005113" fileName="CalcStatus.java" startLine="15" startPosition="0" endLine="18" endPosition="0" />
-    <scopeInfo nodeId="4069628166920020841" fileName="CalcStatus.java" startLine="21" startPosition="0" endLine="24" endPosition="0">
-      <varInfo nodeId="4069628166920021007" varName="key" />
+  <root nodeRef="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/3541037617674733903">
+    <nodeInfo nodeId="3541037617674734157" fileName="CalcStatus.java" startLine="10" startPosition="0" endLine="11" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticFieldDeclaration" propertyString="ourStatus" />
+    <nodeInfo nodeId="3541037617674753244" fileName="CalcStatus.java" startLine="15" startPosition="44" endLine="16" endPosition="21" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="3541037617674753466" fileName="CalcStatus.java" startLine="20" startPosition="0" endLine="21" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="myMap" />
+    <nodeInfo nodeId="3541037617674755291" fileName="CalcStatus.java" startLine="22" startPosition="39" endLine="23" endPosition="47" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="3541037617674769648" fileName="CalcStatus.java" startLine="26" startPosition="51" endLine="27" endPosition="47" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="3541037617674750559" fileName="CalcStatus.java" startLine="12" startPosition="0" endLine="14" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="CalcStatus#()V" />
+    <nodeInfo nodeId="1668115546282229552" fileName="CalcStatus.java" startLine="15" startPosition="0" endLine="18" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticMethodDeclaration" propertyString="getCalcStatus#()Lmps/demo/calc/runtime/CalcStatus;" />
+    <nodeInfo nodeId="3541037617674755143" fileName="CalcStatus.java" startLine="22" startPosition="0" endLine="25" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="getStatus#(Ljava/lang/String;)Ljava/lang/Object;" />
+    <nodeInfo nodeId="3541037617674768631" fileName="CalcStatus.java" startLine="26" startPosition="0" endLine="29" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="setStatus#(Ljava/lang/String;Ljava/lang/Object;)V" />
+    <scopeInfo nodeId="3541037617674750562" fileName="CalcStatus.java" startLine="12" startPosition="24" endLine="12" endPosition="24" />
+    <scopeInfo nodeId="3541037617674753184" fileName="CalcStatus.java" startLine="15" startPosition="44" endLine="16" endPosition="21" />
+    <scopeInfo nodeId="3541037617674755146" fileName="CalcStatus.java" startLine="22" startPosition="39" endLine="23" endPosition="47" />
+    <scopeInfo nodeId="3541037617674768634" fileName="CalcStatus.java" startLine="26" startPosition="51" endLine="27" endPosition="47" />
+    <scopeInfo nodeId="3541037617674750559" fileName="CalcStatus.java" startLine="12" startPosition="0" endLine="14" endPosition="0" />
+    <scopeInfo nodeId="1668115546282229552" fileName="CalcStatus.java" startLine="15" startPosition="0" endLine="18" endPosition="0" />
+    <scopeInfo nodeId="3541037617674755143" fileName="CalcStatus.java" startLine="22" startPosition="0" endLine="25" endPosition="0">
+      <varInfo nodeId="3541037617674755227" varName="key" />
     </scopeInfo>
-    <scopeInfo nodeId="4069628166920024140" fileName="CalcStatus.java" startLine="25" startPosition="0" endLine="28" endPosition="0">
-      <varInfo nodeId="4069628166920025375" varName="key" />
-      <varInfo nodeId="4069628166920025771" varName="value" />
+    <scopeInfo nodeId="3541037617674768631" fileName="CalcStatus.java" startLine="26" startPosition="0" endLine="29" endPosition="0">
+      <varInfo nodeId="3541037617674768979" varName="key" />
+      <varInfo nodeId="3541037617674769297" varName="value" />
     </scopeInfo>
-    <unitInfo nodeId="4069628166919990901" fileName="CalcStatus.java" startLine="9" startPosition="0" endLine="29" endPosition="0" unitName="mps.demo.calc.runtime.CalcStatus" />
+    <unitInfo nodeId="3541037617674733903" fileName="CalcStatus.java" startLine="9" startPosition="0" endLine="30" endPosition="0" unitName="mps.demo.calc.runtime.CalcStatus" />
   </root>
 </debugInfo>
 

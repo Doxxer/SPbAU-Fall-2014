@@ -23,17 +23,17 @@ public class typeof_UserFunction_InferenceRule extends AbstractInferenceRule_Run
     if (SPropertyOperations.hasValue(calc, "datatype", "int", "double")) {
       if (!(typeCheckingContext.isSingleTypeComputation())) {
         {
-          SNode _nodeToCheck_1029348928467 = SLinkOperations.getTarget(userFunction, "funcion", true);
-          EquationInfo _info_12389875345 = new EquationInfo(_nodeToCheck_1029348928467, null, "r:ba7d966d-d046-4b3c-9907-9611d36e2f74(mps.demo.calc.typesystem)", "4069628166919955649", 0, null);
-          typeCheckingContext.createLessThanInequality((SNode) typeCheckingContext.typeOf(_nodeToCheck_1029348928467, "r:ba7d966d-d046-4b3c-9907-9611d36e2f74(mps.demo.calc.typesystem)", "4069628166919955673", true), (SNode) _quotation_createNode_tq7hoz_a0a0b0b(), true, true, _info_12389875345);
+          SNode _nodeToCheck_1029348928467 = SLinkOperations.getTarget(userFunction, "function", true);
+          EquationInfo _info_12389875345 = new EquationInfo(_nodeToCheck_1029348928467, null, "r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)", "3541037617674718411", 0, null);
+          typeCheckingContext.createLessThanInequality((SNode) typeCheckingContext.typeOf(_nodeToCheck_1029348928467, "r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)", "3541037617674718435", true), (SNode) _quotation_createNode_tq7hoz_a0a0b0b(), true, true, _info_12389875345);
         }
       }
     } else {
       if (!(typeCheckingContext.isSingleTypeComputation())) {
         {
-          SNode _nodeToCheck_1029348928467 = SLinkOperations.getTarget(userFunction, "funcion", true);
-          EquationInfo _info_12389875345 = new EquationInfo(_nodeToCheck_1029348928467, null, "r:ba7d966d-d046-4b3c-9907-9611d36e2f74(mps.demo.calc.typesystem)", "4069628166919957634", 0, null);
-          typeCheckingContext.createLessThanInequality((SNode) typeCheckingContext.typeOf(_nodeToCheck_1029348928467, "r:ba7d966d-d046-4b3c-9907-9611d36e2f74(mps.demo.calc.typesystem)", "4069628166919957674", true), (SNode) _quotation_createNode_tq7hoz_a0a0a1a1(), true, true, _info_12389875345);
+          SNode _nodeToCheck_1029348928467 = SLinkOperations.getTarget(userFunction, "function", true);
+          EquationInfo _info_12389875345 = new EquationInfo(_nodeToCheck_1029348928467, null, "r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)", "3541037617674719625", 0, null);
+          typeCheckingContext.createLessThanInequality((SNode) typeCheckingContext.typeOf(_nodeToCheck_1029348928467, "r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)", "3541037617674719649", true), (SNode) _quotation_createNode_tq7hoz_a0a0a1a1(), true, true, _info_12389875345);
         }
       }
     }
@@ -67,27 +67,33 @@ public class typeof_UserFunction_InferenceRule extends AbstractInferenceRule_Run
     SNode quotedNode_9 = null;
     SNode quotedNode_10 = null;
     SNode quotedNode_11 = null;
+    SNode quotedNode_12 = null;
+    SNode quotedNode_13 = null;
     quotedNode_1 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.lang.typesystem.structure.JoinType", null, null, false);
-    quotedNode_2 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
+    quotedNode_2 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
+    quotedNode_7 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.VoidType", null, null, false);
+    quotedNode_2.addChild("resultType", quotedNode_7);
     quotedNode_1.addChild("argument", quotedNode_2);
-    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
-    quotedNode_6 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
-    quotedNode_3.addChild("resultType", quotedNode_6);
+    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
     quotedNode_1.addChild("argument", quotedNode_3);
     quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
-    quotedNode_7 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
-    quotedNode_4.addChild("resultType", quotedNode_7);
     quotedNode_8 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
-    quotedNode_4.addChild("parameterType", quotedNode_8);
+    quotedNode_4.addChild("resultType", quotedNode_8);
     quotedNode_1.addChild("argument", quotedNode_4);
     quotedNode_5 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
     quotedNode_9 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
     quotedNode_5.addChild("resultType", quotedNode_9);
     quotedNode_10 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
     quotedNode_5.addChild("parameterType", quotedNode_10);
-    quotedNode_11 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
-    quotedNode_5.addChild("parameterType", quotedNode_11);
     quotedNode_1.addChild("argument", quotedNode_5);
+    quotedNode_6 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
+    quotedNode_11 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
+    quotedNode_6.addChild("resultType", quotedNode_11);
+    quotedNode_12 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
+    quotedNode_6.addChild("parameterType", quotedNode_12);
+    quotedNode_13 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.IntegerType", null, null, false);
+    quotedNode_6.addChild("parameterType", quotedNode_13);
+    quotedNode_1.addChild("argument", quotedNode_6);
     return quotedNode_1;
   }
 
@@ -104,27 +110,33 @@ public class typeof_UserFunction_InferenceRule extends AbstractInferenceRule_Run
     SNode quotedNode_9 = null;
     SNode quotedNode_10 = null;
     SNode quotedNode_11 = null;
+    SNode quotedNode_12 = null;
+    SNode quotedNode_13 = null;
     quotedNode_1 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.lang.typesystem.structure.JoinType", null, null, false);
-    quotedNode_2 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
+    quotedNode_2 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
+    quotedNode_7 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.VoidType", null, null, false);
+    quotedNode_2.addChild("resultType", quotedNode_7);
     quotedNode_1.addChild("argument", quotedNode_2);
-    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
-    quotedNode_6 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
-    quotedNode_3.addChild("resultType", quotedNode_6);
+    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
     quotedNode_1.addChild("argument", quotedNode_3);
     quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
-    quotedNode_7 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
-    quotedNode_4.addChild("resultType", quotedNode_7);
     quotedNode_8 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
-    quotedNode_4.addChild("parameterType", quotedNode_8);
+    quotedNode_4.addChild("resultType", quotedNode_8);
     quotedNode_1.addChild("argument", quotedNode_4);
     quotedNode_5 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
     quotedNode_9 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
     quotedNode_5.addChild("resultType", quotedNode_9);
     quotedNode_10 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
     quotedNode_5.addChild("parameterType", quotedNode_10);
-    quotedNode_11 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
-    quotedNode_5.addChild("parameterType", quotedNode_11);
     quotedNode_1.addChild("argument", quotedNode_5);
+    quotedNode_6 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.closures.structure.FunctionType", null, null, false);
+    quotedNode_11 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
+    quotedNode_6.addChild("resultType", quotedNode_11);
+    quotedNode_12 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
+    quotedNode_6.addChild("parameterType", quotedNode_12);
+    quotedNode_13 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.DoubleType", null, null, false);
+    quotedNode_6.addChild("parameterType", quotedNode_13);
+    quotedNode_1.addChild("argument", quotedNode_6);
     return quotedNode_1;
   }
 }

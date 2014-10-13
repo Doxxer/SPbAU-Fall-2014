@@ -12,9 +12,10 @@ public class CalcStatus {
   private CalcStatus() {
   }
 
-  public CalcStatus getCalcStatus() {
+  public static CalcStatus getCalcStatus() {
     return ourStatus;
   }
+
 
   private Map<String, Object> myMap = MapSequence.fromMap(new HashMap<String, Object>());
 

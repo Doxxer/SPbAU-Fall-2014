@@ -108,7 +108,7 @@ public class Calculator_Editor extends DefaultNodeEditor {
   }
 
   private EditorCell createConstant_uh00px_a3a(EditorContext editorContext, SNode node) {
-    EditorCell_Constant editorCell = new EditorCell_Constant(editorContext, node, "datatype");
+    EditorCell_Constant editorCell = new EditorCell_Constant(editorContext, node, "data type");
     editorCell.setCellId("Constant_uh00px_a3a");
     editorCell.setDefaultText("");
     return editorCell;
@@ -270,7 +270,7 @@ public class Calculator_Editor extends DefaultNodeEditor {
   }
 
   private EditorCell createConstant_uh00px_n3a(EditorContext editorContext, SNode node) {
-    EditorCell_Constant editorCell = new EditorCell_Constant(editorContext, node, "user fun");
+    EditorCell_Constant editorCell = new EditorCell_Constant(editorContext, node, "user functions");
     editorCell.setCellId("Constant_uh00px_n3a");
     editorCell.setDefaultText("");
     return editorCell;

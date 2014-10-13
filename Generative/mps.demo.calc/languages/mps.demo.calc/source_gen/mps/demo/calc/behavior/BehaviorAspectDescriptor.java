@@ -14,14 +14,18 @@ public class BehaviorAspectDescriptor implements jetbrains.mps.smodel.runtime.Be
     switch (Arrays.binarySearch(stringSwitchCases_846f5o_a0a0b, fqName)) {
       case 0:
         return new Calculator_BehaviorDescriptor();
-      case 1:
+      case 3:
         return new UI_BehaviorDescriptor();
-      case 2:
+      case 4:
         return new UserFunction_BehaviorDescriptor();
+      case 1:
+        return new GetStatusExpression_BehaviorDescriptor();
+      case 2:
+        return new SetStatusExpression_BehaviorDescriptor();
       default:
         return BehaviorAspectInterpreted.getInstance().getDescriptor(fqName);
     }
   }
 
-  private static String[] stringSwitchCases_846f5o_a0a0b = new String[]{"mps.demo.calc.structure.Calculator", "mps.demo.calc.structure.UI", "mps.demo.calc.structure.UserFunction"};
+  private static String[] stringSwitchCases_846f5o_a0a0b = new String[]{"mps.demo.calc.structure.Calculator", "mps.demo.calc.structure.GetStatusExpression", "mps.demo.calc.structure.SetStatusExpression", "mps.demo.calc.structure.UI", "mps.demo.calc.structure.UserFunction"};
 }
