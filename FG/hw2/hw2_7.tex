@@ -1,0 +1,40 @@
+\documentclass[russian,table]{article}
+\usepackage[table]{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1cm,bmargin=2cm,lmargin=1cm,rmargin=1cm}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{babel}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage[T2A]{fontenc}
+\usepackage{listings}
+\usepackage{slashbox}
+\usepackage{multirow}
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+\begin{document}
+
+\title{Формальные грамматики. HW\#2}
+\author{Тураев Тимур, SPbAU, SE, 604 group}
+\maketitle
+
+\paragraph*{7.}
+
+\textit{Для произвольной данной линейной грамматики $G$, пусть $L=\{vu \mid uv \in L(G)\}$ — циклический сдвиг порождаемого ею языка. Построить алгоритм, определяющий принадлежность данной на входе строки языку $L$, и использующий как можно меньше памяти. \\}
+
+\textit{Некоторые мысли и идеи по этой задаче.}
+
+Можно запустить распознавание каждой строки из всех возможных циклических сдвигов данной строки. И если хотя бы одна строка принадлежит языку, то ответим <<да>>. Нужно научиться делать 2 вещи: проверять строку на принадлежность языку $L(G)$ и как-то организовать перебор всех линейных сдвигов строк.
+Первое сделать просто: это алгоритм 10.1 из 14 лекции, распознающий обычные языки за $O((\log n)^2)$ памяти.
+Второе: можно добавить параметр в алгоритм, который характеризует текущий сдвиг $\mathit{offset}$, и в том месте где идет обращение к символам входной строки будем обращаться по индексу $1 + ((i + \mathit{offset}-1) \mod n)$, где $i$ -- индекс символа в рассматриваемой нами строке.
+
+
+\end{document}
