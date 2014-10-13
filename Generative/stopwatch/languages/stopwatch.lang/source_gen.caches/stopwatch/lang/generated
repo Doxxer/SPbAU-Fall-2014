@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependencies version="2" modelHash="3zfeec0j0ghw936s5bx696feiagil2s">
+  <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="303xz1b2lyseld0axia86q3lpvucmq6" />
+  <dep model="r:175fc26a-7fa8-454d-a621-475d597719a8(stopwatch.lang.typesystem)" hash="b0kz7ifuei04rfumqi42vkhlhui3kyd" />
+  <dep model="r:29219a47-3d2b-4467-b44a-13b59ed6dcf7(stopwatch.lang.editor)" hash="-dq6j57gxaz6w8rxcrocdc4rv2v8skuh" />
+  <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="b4ewbuz42qcbg1awca5bacgi0vopxqt" />
+  <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="a8elw7fctzg6sg8fe36u9gzu42axhdb" />
+  <common dependsOnNodes="true">
+    <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" />
+    <dep model="r:175fc26a-7fa8-454d-a621-475d597719a8(stopwatch.lang.typesystem)" />
+    <dep model="r:29219a47-3d2b-4467-b44a-13b59ed6dcf7(stopwatch.lang.editor)" />
+    <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" />
+    <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" />
+    <file name="Language.java" />
+  </common>
+</dependencies>
+

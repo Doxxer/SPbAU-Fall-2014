@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history>
+  <StructureModification>
+    <dependencies>
+      <model index="dvdp" modelUID="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" version="-1" />
+    </dependencies>
+    <rename id="dvdp.8150960194433683226" type="PROPERTY" from="photo" to="url" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="dvdp" modelUID="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" version="0" />
+    </dependencies>
+    <rename id="dvdp.8150960194433683030" type="PROPERTY" from="operationTime" to="maximumOperationTime" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="dvdp" modelUID="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" version="1" />
+    </dependencies>
+    <rename id="dvdp.8150960194433725054" type="CONCEPT" from="Buttin" to="Button" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="dvdp" modelUID="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" version="2" />
+    </dependencies>
+    <rename id="dvdp.8150960194433738771" type="PROPERTY" from="size" to="width" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="dvdp" modelUID="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" version="3" />
+    </dependencies>
+    <rename id="dvdp.8150960194433746268" type="REFERENCE" from="o" to="color" />
+  </StructureModification>
+</history>
+
