@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MPSProject">
+    <projectModules>
+      <modulePath path="$PROJECT_DIR$/languages/stopwatch.lang/sandbox/stopwatch.lang.sandbox.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/stopwatch.lang/stopwatch.lang.mpl" folder="" />
+    </projectModules>
+  </component>
+</project>
+
