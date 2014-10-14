@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <debugInfo>
   <unitInfo fileName="BehaviorAspectDescriptor.java" startLine="9" startPosition="0" endLine="32" endPosition="0" unitName="mps.demo.calc.behavior.BehaviorAspectDescriptor" />
-  <unitInfo fileName="Calculator_BehaviorDescriptor.java" startLine="10" startPosition="0" endLine="23" endPosition="0" unitName="mps.demo.calc.behavior.Calculator_BehaviorDescriptor" />
+  <unitInfo fileName="Calculator_BehaviorDescriptor.java" startLine="12" startPosition="0" endLine="33" endPosition="0" unitName="mps.demo.calc.behavior.Calculator_BehaviorDescriptor" />
   <unitInfo fileName="GetStatusExpression_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.GetStatusExpression_BehaviorDescriptor" />
   <unitInfo fileName="SetStatusExpression_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.SetStatusExpression_BehaviorDescriptor" />
   <unitInfo fileName="UI_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.UI_BehaviorDescriptor" />

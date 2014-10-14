@@ -101,15 +101,16 @@
       <property name="label" nameId="zqqo.3541037617674591948" value="arc" />
       <node role="function" roleId="zqqo.3541037617674591946" type="tp2c.ClosureLiteral" typeId="tp2c.1199569711397" id="3541037617674729053" nodeInfo="nn">
         <node role="body" roleId="tp2c.1199569916463" type="tpee.StatementList" typeId="tpee.1068580123136" id="3541037617674729055" nodeInfo="sn">
-          <node role="statement" roleId="tpee.1068581517665" type="tpee.SingleLineComment" typeId="tpee.6329021646629104954" id="6542582475673749636" nodeInfo="nn">
-            <node role="commentPart" roleId="tpee.6329021646629175155" type="tpee.StatementCommentPart" typeId="tpee.6329021646629175143" id="6542582475673749637" nodeInfo="nn">
-              <node role="commentedStatement" roleId="tpee.6329021646629175144" type="tpee.ExpressionStatement" typeId="tpee.1068580123155" id="1668115546281966941" nodeInfo="nn">
-                <node role="expression" roleId="tpee.1068580123156" type="zqqo.SetStatusExpression" typeId="zqqo.1668115546281658719" id="1668115546281966939" nodeInfo="ng">
-                  <property name="key" nameId="zqqo.1668115546281658720" value="arc" />
-                  <node role="value" roleId="zqqo.1668115546281658722" type="tpee.NotExpression" typeId="tpee.1081516740877" id="1668115546281967072" nodeInfo="nn">
-                    <node role="expression" roleId="tpee.1081516765348" type="zqqo.GetStatusExpression" typeId="zqqo.1668115546281636612" id="1668115546281967401" nodeInfo="ng">
-                      <property name="key" nameId="zqqo.1668115546281638675" value="arc" />
-                    </node>
+          <node role="statement" roleId="tpee.1068581517665" type="tpee.ExpressionStatement" typeId="tpee.1068580123155" id="1668115546281966941" nodeInfo="nn">
+            <node role="expression" roleId="tpee.1068580123156" type="zqqo.SetStatusExpression" typeId="zqqo.1668115546281658719" id="1668115546281966939" nodeInfo="ng">
+              <property name="key" nameId="zqqo.1668115546281658720" value="arc" />
+              <node role="value" roleId="zqqo.1668115546281658722" type="tpee.NotExpression" typeId="tpee.1081516740877" id="2096629347734301155" nodeInfo="nn">
+                <node role="expression" roleId="tpee.1081516765348" type="tpee.CastExpression" typeId="tpee.1070534934090" id="2096629347734301481" nodeInfo="nn">
+                  <node role="expression" roleId="tpee.1070534934092" type="zqqo.GetStatusExpression" typeId="zqqo.1668115546281636612" id="2096629347734302152" nodeInfo="ng">
+                    <property name="key" nameId="zqqo.1668115546281638675" value="arc" />
+                  </node>
+                  <node role="type" roleId="tpee.1070534934091" type="tpee.ClassifierType" typeId="tpee.1107535904670" id="2096629347734301807" nodeInfo="in">
+                    <link role="classifier" roleId="tpee.1107535924139" targetNodeId="e2lb.~Boolean" resolveInfo="Boolean" />
                   </node>
                 </node>
               </node>
