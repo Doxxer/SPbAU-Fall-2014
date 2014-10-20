@@ -10,7 +10,8 @@ public enum ButtonActionType {
   Start("Start", "start"),
   Pause("Pause", "pause"),
   Reset("Reset", "reset"),
-  Circle("Circle", "circle");
+  Circle("Circle", "circle"),
+  CurrentTime("CurrentTime", "currentTime");
 
   private String myName;
 
@@ -28,6 +29,7 @@ public enum ButtonActionType {
     ListSequence.fromList(list).addElement(ButtonActionType.Pause);
     ListSequence.fromList(list).addElement(ButtonActionType.Reset);
     ListSequence.fromList(list).addElement(ButtonActionType.Circle);
+    ListSequence.fromList(list).addElement(ButtonActionType.CurrentTime);
     return list;
   }
 
@@ -50,6 +52,9 @@ public enum ButtonActionType {
     }
     if (value.equals(ButtonActionType.Circle.getValueAsString())) {
       return ButtonActionType.Circle;
+    }
+    if (value.equals(ButtonActionType.CurrentTime.getValueAsString())) {
+      return ButtonActionType.CurrentTime;
     }
     return ButtonActionType.getDefault();
   }

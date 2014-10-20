@@ -166,6 +166,10 @@
       <property name="externalValue" nameId="tpce.1083923523172" value="Circle" />
       <property name="internalValue" nameId="tpce.1083923523171" value="circle" />
     </node>
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="4844453312553136151" nodeInfo="ig">
+      <property name="externalValue" nameId="tpce.1083923523172" value="CurrentTime" />
+      <property name="internalValue" nameId="tpce.1083923523171" value="currentTime" />
+    </node>
   </root>
   <root type="tpce.ConceptDeclaration" typeId="tpce.1071489090640" id="8150960194433738453" nodeInfo="ig">
     <property name="name" nameId="tpck.1169194664001" value="Appearance" />
