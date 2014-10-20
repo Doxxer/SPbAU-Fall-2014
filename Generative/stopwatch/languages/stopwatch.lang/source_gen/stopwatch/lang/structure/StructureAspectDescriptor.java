@@ -22,7 +22,7 @@ public class StructureAspectDescriptor implements jetbrains.mps.smodel.runtime.S
       case 3:
         return new ConceptDescriptorBuilder("stopwatch.lang.structure.ColorReference").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept").references("color").create();
       case 4:
-        return new ConceptDescriptorBuilder("stopwatch.lang.structure.Stopwatch").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept", "jetbrains.mps.lang.core.structure.INamedConcept").properties("url", "type").children(new String[]{"maximumOperatingTime", "timelines", "buttons", "appearance"}, new boolean[]{false, true, true, false}).create();
+        return new ConceptDescriptorBuilder("stopwatch.lang.structure.Stopwatch").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept", "jetbrains.mps.lang.core.structure.INamedConcept").properties("url", "type", "circleTimes").children(new String[]{"maximumOperatingTime", "timelines", "buttons", "appearance"}, new boolean[]{false, true, true, false}).create();
       case 5:
         return new ConceptDescriptorBuilder("stopwatch.lang.structure.Time").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept").properties("value", "unit").alias("", "\u0432\u0440\u0435\u043c\u044f").create();
       case 6:

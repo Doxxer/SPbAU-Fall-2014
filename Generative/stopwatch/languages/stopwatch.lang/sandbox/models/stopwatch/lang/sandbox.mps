@@ -10,6 +10,7 @@
     <property name="name" nameId="tpck.1169194664001" value="SimpleAnalogStopwatch" />
     <property name="url" nameId="dvdp.8150960194433683226" value="http://mera-tek.ru/components/com_virtuemart/shop_image/product/sekundomer_1kn.jpg" />
     <property name="type" nameId="dvdp.8150960194433663434" value="analog" />
+    <property name="circleTimes" nameId="dvdp.8791375046720356697" value="No" />
     <node role="buttons" roleId="dvdp.8150960194433737928" type="dvdp.Button" typeId="dvdp.8150960194433725054" id="8150960194434428930" nodeInfo="ng">
       <property name="name" nameId="tpck.1169194664001" value="mainButton" />
       <node role="actions" roleId="dvdp.8150960194433732823" type="dvdp.ButtonAction" typeId="dvdp.8150960194433732849" id="8150960194434428931" nodeInfo="ng">
@@ -51,6 +52,7 @@
     <property name="name" nameId="tpck.1169194664001" value="SimpleDigitalStopwatch" />
     <property name="url" nameId="dvdp.8150960194433683226" value="https://upload.wikimedia.org/wikipedia/commons/8/88/Stoppuhr_digital.jpg" />
     <property name="type" nameId="dvdp.8150960194433663434" value="digital" />
+    <property name="circleTimes" nameId="dvdp.8791375046720356697" value="Infinity" />
     <node role="maximumOperatingTime" roleId="dvdp.8150960194433717324" type="dvdp.Time" typeId="dvdp.8150960194433715360" id="8150960194434419043" nodeInfo="ng">
       <property name="value" nameId="dvdp.8150960194433721548" value="48" />
       <property name="unit" nameId="dvdp.8150960194433721550" value="h" />
@@ -80,6 +82,12 @@
         <property name="caption" nameId="dvdp.8150960194433732874" value="reset" />
       </node>
     </node>
+    <node role="buttons" roleId="dvdp.8150960194433737928" type="dvdp.Button" typeId="dvdp.8150960194433725054" id="3082503220528291533" nodeInfo="ng">
+      <property name="name" nameId="tpck.1169194664001" value="circle" />
+      <node role="actions" roleId="dvdp.8150960194433732823" type="dvdp.ButtonAction" typeId="dvdp.8150960194433732849" id="3082503220528291534" nodeInfo="ng">
+        <property name="caption" nameId="dvdp.8150960194433732874" value="circle" />
+      </node>
+    </node>
     <node role="appearance" roleId="dvdp.8150960194433823838" type="dvdp.Appearance" typeId="dvdp.8150960194433738453" id="8150960194434419049" nodeInfo="ng">
       <property name="name" nameId="tpck.1169194664001" value="classic" />
       <property name="form" nameId="dvdp.8150960194433738727" value="square" />
@@ -95,6 +103,7 @@
     <property name="name" nameId="tpck.1169194664001" value="TwoTimelinesAnalogStopwatch" />
     <property name="url" nameId="dvdp.8150960194433683226" value="https://upload.wikimedia.org/wikipedia/commons/d/d2/Stopwatch2.jpg" />
     <property name="type" nameId="dvdp.8150960194433663434" value="analog" />
+    <property name="circleTimes" nameId="dvdp.8791375046720356697" value="One" />
     <node role="maximumOperatingTime" roleId="dvdp.8150960194433717324" type="dvdp.Time" typeId="dvdp.8150960194433715360" id="2796129134711792425" nodeInfo="ng">
       <property name="value" nameId="dvdp.8150960194433721548" value="3" />
       <property name="unit" nameId="dvdp.8150960194433721550" value="h" />

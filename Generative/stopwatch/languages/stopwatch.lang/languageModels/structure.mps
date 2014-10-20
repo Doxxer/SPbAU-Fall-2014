@@ -22,6 +22,10 @@
       <property name="name" nameId="tpck.1169194664001" value="type" />
       <link role="dataType" roleId="tpce.1082985295845" targetNodeId="8150960194433664946" resolveInfo="StopwatchType" />
     </node>
+    <node role="propertyDeclaration" roleId="tpce.1071489727084" type="tpce.PropertyDeclaration" typeId="tpce.1071489288299" id="8791375046720356697" nodeInfo="ig">
+      <property name="name" nameId="tpck.1169194664001" value="circleTimes" />
+      <link role="dataType" roleId="tpce.1082985295845" targetNodeId="8791375046720356754" resolveInfo="CircleTimesType" />
+    </node>
     <node role="linkDeclaration" roleId="tpce.1071489727083" type="tpce.LinkDeclaration" typeId="tpce.1071489288298" id="8150960194433717324" nodeInfo="ig">
       <property name="metaClass" nameId="tpce.1071599937831" value="aggregation" />
       <property name="role" nameId="tpce.1071599776563" value="maximumOperatingTime" />
@@ -158,6 +162,10 @@
       <property name="externalValue" nameId="tpce.1083923523172" value="Reset" />
       <property name="internalValue" nameId="tpce.1083923523171" value="reset" />
     </node>
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="3082503220528289597" nodeInfo="ig">
+      <property name="externalValue" nameId="tpce.1083923523172" value="Circle" />
+      <property name="internalValue" nameId="tpce.1083923523171" value="circle" />
+    </node>
   </root>
   <root type="tpce.ConceptDeclaration" typeId="tpce.1071489090640" id="8150960194433738453" nodeInfo="ig">
     <property name="name" nameId="tpck.1169194664001" value="Appearance" />
@@ -211,6 +219,22 @@
       <property name="role" nameId="tpce.1071599776563" value="color" />
       <property name="sourceCardinality" nameId="tpce.1071599893252" value="1" />
       <link role="target" roleId="tpce.1071599976176" targetNodeId="tpee.1070462154015" resolveInfo="StaticFieldDeclaration" />
+    </node>
+  </root>
+  <root type="tpce.EnumerationDataTypeDeclaration" typeId="tpce.1082978164219" id="8791375046720356754" nodeInfo="ng">
+    <property name="name" nameId="tpck.1169194664001" value="CircleTimesType" />
+    <link role="memberDataType" roleId="tpce.1083171729157" targetNodeId="tpck.1082983041843" resolveInfo="string" />
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8791375046720356759" nodeInfo="ig">
+      <property name="internalValue" nameId="tpce.1083923523171" value="One" />
+      <property name="externalValue" nameId="tpce.1083923523172" value="One" />
+    </node>
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8791375046720356755" nodeInfo="ig">
+      <property name="internalValue" nameId="tpce.1083923523171" value="No" />
+      <property name="externalValue" nameId="tpce.1083923523172" value="No" />
+    </node>
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8791375046720356756" nodeInfo="ig">
+      <property name="internalValue" nameId="tpce.1083923523171" value="Infinity" />
+      <property name="externalValue" nameId="tpce.1083923523172" value="Infinity" />
     </node>
   </root>
 </model>

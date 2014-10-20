@@ -9,7 +9,8 @@ import jetbrains.mps.internal.collections.runtime.backports.LinkedList;
 public enum ButtonActionType {
   Start("Start", "start"),
   Pause("Pause", "pause"),
-  Reset("Reset", "reset");
+  Reset("Reset", "reset"),
+  Circle("Circle", "circle");
 
   private String myName;
 
@@ -26,6 +27,7 @@ public enum ButtonActionType {
     ListSequence.fromList(list).addElement(ButtonActionType.Start);
     ListSequence.fromList(list).addElement(ButtonActionType.Pause);
     ListSequence.fromList(list).addElement(ButtonActionType.Reset);
+    ListSequence.fromList(list).addElement(ButtonActionType.Circle);
     return list;
   }
 
@@ -45,6 +47,9 @@ public enum ButtonActionType {
     }
     if (value.equals(ButtonActionType.Reset.getValueAsString())) {
       return ButtonActionType.Reset;
+    }
+    if (value.equals(ButtonActionType.Circle.getValueAsString())) {
+      return ButtonActionType.Circle;
     }
     return ButtonActionType.getDefault();
   }

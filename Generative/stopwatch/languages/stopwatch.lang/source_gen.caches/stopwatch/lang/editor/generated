@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="-dq6j57gxaz6w8rxcrocdc4rv2v8skuh">
+<dependencies version="2" modelHash="aautcsbogqyqwsp7k84wqd3j97dqgxy">
   <dep model="f:java_stub#1ed103c3-3aa6-49b7-9c21-6765ee11f224#jetbrains.mps.nodeEditor.cellLayout(MPS.Editor/jetbrains.mps.nodeEditor.cellLayout@java_stub)" />
   <dep model="f:java_stub#1ed103c3-3aa6-49b7-9c21-6765ee11f224#jetbrains.mps.nodeEditor.cells(MPS.Editor/jetbrains.mps.nodeEditor.cells@java_stub)" />
   <dep model="f:java_stub#1ed103c3-3aa6-49b7-9c21-6765ee11f224#jetbrains.mps.openapi.editor.descriptor(MPS.Editor/jetbrains.mps.openapi.editor.descriptor@java_stub)" />
@@ -9,7 +9,7 @@
   <dep model="r:00000000-0000-4000-0000-011c89590303(jetbrains.mps.lang.smodel.generator.baseLanguage.template.main@generator)" hash="-8z73tx2nml9xagbxlfmq60ehji8q3f5" />
   <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="b4ewbuz42qcbg1awca5bacgi0vopxqt" />
   <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="a8elw7fctzg6sg8fe36u9gzu42axhdb" />
-  <dep model="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" hash="bkpr056i8fk6dbs824ykquwxqx4jaad" />
+  <dep model="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" hash="-ejih48ez2e4pqug029msoax7380jouo" />
   <common hash="csu0zc0af35ed5px9qqmfk4xbvl1xky" dependsOnNodes="true">
     <dep root="8150960194433846340" />
     <dep root="8150960194433880997" />
@@ -51,7 +51,7 @@
     <dep model="r:f6e377d6-48c3-419e-abde-ba9fae08b4ca(stopwatch.lang.structure)" />
     <file name="Button_Editor.java" />
   </source>
-  <source id="8150960194433906535" name="Stopwatch_Editor" hash="-arfsvokoooawgzyp1u2bbbjvu0op0f0">
+  <source id="8150960194433906535" name="Stopwatch_Editor" hash="-bfr0hg75i4p21hypi4jqd3w27smwiai">
     <dep model="f:java_stub#1ed103c3-3aa6-49b7-9c21-6765ee11f224#jetbrains.mps.nodeEditor.cellLayout(MPS.Editor/jetbrains.mps.nodeEditor.cellLayout@java_stub)" />
     <dep model="f:java_stub#1ed103c3-3aa6-49b7-9c21-6765ee11f224#jetbrains.mps.nodeEditor.cells(MPS.Editor/jetbrains.mps.nodeEditor.cells@java_stub)" />
     <dep model="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" />

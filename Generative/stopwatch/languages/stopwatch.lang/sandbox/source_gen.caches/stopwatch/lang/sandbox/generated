@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="6weavpy40v70shs9o5mz8pshmrxhfzz">
+<dependencies version="2" modelHash="-dmzgwu6i77ltudphvxb7zjishogk1fj">
   <common hash="-60aibypbv8okfje9y4j6ug1oq7wy9ue" />
-  <source id="8150960194433930655" name="SimpleAnalogStopwatch" hash="1em1rcoahljhih8zx3c52mj5ba1sl9c">
+  <source id="8150960194433930655" name="SimpleAnalogStopwatch" hash="anqeeniuugomtvxbpvbe9guhck6w2ow">
     <file name="SimpleAnalogStopwatch" />
   </source>
-  <source id="8150960194434419042" name="SimpleDigitalStopwatch" hash="ai6e7bix6n01h4el2ziewfvtkfda5na">
+  <source id="8150960194434419042" name="SimpleDigitalStopwatch" hash="dh2j2zoxr55sb2ifxg88qhb28ilg6d4">
     <file name="SimpleDigitalStopwatch" />
   </source>
-  <source id="2796129134711792424" name="TwoTimelinesAnalogStopwatch" hash="-5v0xqqsevq7iquoajl2fug580d0kiio">
+  <source id="2796129134711792424" name="TwoTimelinesAnalogStopwatch" hash="-4mkw00itdd8m7i80t9adnbj2re4izs0">
     <file name="TwoTimelinesAnalogStopwatch" />
   </source>
 </dependencies>
