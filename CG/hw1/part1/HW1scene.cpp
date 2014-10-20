@@ -2,13 +2,18 @@
 #include "HW1scene.hpp"
 #include "shader.hpp"
 
-HW1scene::HW1scene(OpenGLContext *openGLContext, string mode) : wireframe_(false), mode(mode), Scene(openGLContext) {
+HW1scene::HW1scene(OpenGLContext *openGLContext, string mode)
+        : offset_x(0), offset_y(0), scale(1.0f), wireframe_(false), mode(mode), Scene(openGLContext) {
     TwInit(TW_OPENGL_CORE, NULL);
 
     bar = TwNewBar("Parameters");
     TwDefine("Parameters size='500 150' color='70 100 120' valueswidth=220 iconpos=topleft");
 
-    TwAddVarRW(bar, "Wireframe mode", TW_TYPE_BOOLCPP, &wireframe_, " true='ON' false='OFF' key=W ");
+    TwAddVarRW(bar, "Wireframe mode", TW_TYPE_BOOLCPP, &wireframe_, " true='ON' false='OFF' key=Z ");
+
+    TwAddVarRW(bar, "offset x", TW_TYPE_FLOAT, &offset_x, " min=-2 max=2 step=0.1 keyincr=D keydecr=A");
+    TwAddVarRW(bar, "offset y", TW_TYPE_FLOAT, &offset_y, " min=-2 max=2 step=0.1 keyincr=W keydecr=S");
+    TwAddVarRW(bar, "scale", TW_TYPE_FLOAT, &this->scale, " min=1 max=8 step=0.1 keyincr=E keydecr=Q");
 
 //    TwAddButton(bar, "Fullscreen toggle", toggleFullscreen, NULL, " label='Toggle fullscreen mode' key=F");
 
@@ -38,15 +43,15 @@ void HW1scene::init_buffer() {
     glBindBuffer(GL_ARRAY_BUFFER, vx_buf_);
 
     if (mode == "4") {
-        float const side = 2.0f;
+        float const initial_size = 2.0f;
         vec2 const data[6] =
                 {
-                        vec2(-side, -side),
-                        vec2(side, -side),
-                        vec2(side, side),
-                        vec2(-side, -side),
-                        vec2(side, side),
-                        vec2(-side, side)
+                        vec2(-initial_size, -initial_size),
+                        vec2(initial_size, -initial_size),
+                        vec2(initial_size, initial_size),
+                        vec2(-initial_size, -initial_size),
+                        vec2(initial_size, initial_size),
+                        vec2(-initial_size, initial_size)
                 };
         glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * 6, data, GL_STATIC_DRAW);
     } else {
@@ -99,6 +104,12 @@ void HW1scene::draw(float timeFromStart) {
     glUniformMatrix4fv(glGetUniformLocation(program_, "model"), 1, GL_FALSE, &model[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(program_, "view"), 1, GL_FALSE, &view[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(program_, "proj"), 1, GL_FALSE, &proj[0][0]);
+
+    if (mode == "4") {
+        glUniform1f(glGetUniformLocation(program_, "scale"), scale);
+        glUniform1f(glGetUniformLocation(program_, "offset_y"), offset_y);
+        glUniform1f(glGetUniformLocation(program_, "offset_x"), offset_x);
+    }
 
     glBindVertexArray(vao_);
 

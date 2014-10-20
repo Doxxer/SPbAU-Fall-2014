@@ -26,6 +26,8 @@ private:
     quat rotation_by_control_;
     string mode;
 
+    float offset_x, offset_y, scale;
+
     void init_buffer();
 
     void init_vertex_array();

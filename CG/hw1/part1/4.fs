@@ -3,15 +3,19 @@
 
 in vs_output
 {
-   vec3 color;
    vec4 pos;
 } f_in;
 
 out vec3 o_color;
 
+uniform float scale;
+uniform float offset_x;
+uniform float offset_y;
+
 void main()
 {
-    dvec2 c = dvec2(f_in.pos.xy), z = c;
+    vec4 vertex_coords = vec4(f_in.pos.x + offset_x, f_in.pos.y + offset_y, 0, 1) / scale;
+    dvec2 c = dvec2(vertex_coords.xy), z = c;
     int i;
     int iter = 1000;
 
