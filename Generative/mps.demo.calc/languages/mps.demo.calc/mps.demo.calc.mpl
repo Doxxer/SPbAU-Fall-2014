@@ -2,7 +2,7 @@
 <language namespace="mps.demo.calc" uuid="471ef0ac-c7b2-4ee3-86a1-12b20e46ca39">
   <models>
     <modelRoot contentPath="${module}" type="default">
-      <sourceRoot location="languageModels" />
+      <sourceRoot path="${module}/languageModels" />
     </modelRoot>
   </models>
   <accessoryModels />
@@ -10,15 +10,16 @@
     <generator name="" generatorUID="mps.demo.calc#3541037617674586680" uuid="027055fb-d4b6-44ba-bf0d-4dcf53312089">
       <models>
         <modelRoot contentPath="${module}" type="default">
-          <sourceRoot location="generator/template" />
+          <sourceRoot path="${module}/generator/template" />
         </modelRoot>
       </models>
-      <external-templates />
+      <external-templates>
+        <generator generatorUID="857d0a79-6f44-4f46-84ed-9c5b42632011(jetbrains.mps.baseLanguage.closures#1199623535494)" />
+      </external-templates>
       <dependencies>
         <dependency reexport="false">6354ebe7-c22a-4a0f-ac54-50b52ab9b065(JDK)</dependency>
       </dependencies>
       <usedLanguages>
-        <usedLanguage>f2801650-65d5-424e-bb1b-463a8781b786(jetbrains.mps.baseLanguage.javadoc)</usedLanguage>
         <usedLanguage>b401a680-8325-4110-8fd3-84331ff25bef(jetbrains.mps.lang.generator)</usedLanguage>
         <usedLanguage>d7706f63-9be2-479c-a3da-ae92af1e64d5(jetbrains.mps.lang.generator.generationContext)</usedLanguage>
         <usedLanguage>471ef0ac-c7b2-4ee3-86a1-12b20e46ca39(mps.demo.calc)</usedLanguage>

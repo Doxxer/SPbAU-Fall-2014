@@ -15,7 +15,7 @@ public class BaseCalculator extends JFrame {
   private double value2;
   private _FunctionTypes._return_P2_E0<? extends Double, ? super Double, ? super Double> curOp = null;
 
-  private String input = "";
+  /*package*/ String input = "";
 
   private final JLabel indicator = new JLabel("0");
 

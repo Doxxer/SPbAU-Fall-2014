@@ -22,8 +22,6 @@ public class EditorAspectDescriptorImpl implements EditorAspectDescriptor {
       case 2:
         return Collections.<ConceptEditor>singletonList(new SetStatusExpression_Editor());
       case 3:
-        return Collections.<ConceptEditor>singletonList(new UI_Editor());
-      case 4:
         return Collections.<ConceptEditor>singletonList(new UserFunction_Editor());
       default:
     }
@@ -36,5 +34,5 @@ public class EditorAspectDescriptorImpl implements EditorAspectDescriptor {
 
 
 
-  private static String[] stringSwitchCases_xbvbvu_a0a0b = new String[]{"mps.demo.calc.structure.Calculator", "mps.demo.calc.structure.GetStatusExpression", "mps.demo.calc.structure.SetStatusExpression", "mps.demo.calc.structure.UI", "mps.demo.calc.structure.UserFunction"};
+  private static String[] stringSwitchCases_xbvbvu_a0a0b = new String[]{"mps.demo.calc.structure.Calculator", "mps.demo.calc.structure.GetStatusExpression", "mps.demo.calc.structure.SetStatusExpression", "mps.demo.calc.structure.UserFunction"};
 }

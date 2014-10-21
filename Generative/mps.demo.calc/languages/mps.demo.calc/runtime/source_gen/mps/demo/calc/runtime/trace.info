@@ -1,40 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <debugInfo>
-  <root nodeRef="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/2096629347734353751">
-    <nodeInfo nodeId="2096629347734686950" fileName="BaseCalculator.java" startLine="14" startPosition="0" endLine="15" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="value1" />
-    <nodeInfo nodeId="2096629347734687079" fileName="BaseCalculator.java" startLine="15" startPosition="0" endLine="16" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="value2" />
-    <nodeInfo nodeId="2096629347734687341" fileName="BaseCalculator.java" startLine="16" startPosition="0" endLine="17" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="curOp" />
-    <nodeInfo nodeId="2096629347734688025" fileName="BaseCalculator.java" startLine="18" startPosition="0" endLine="19" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="input" />
-    <nodeInfo nodeId="2096629347734688466" fileName="BaseCalculator.java" startLine="20" startPosition="0" endLine="21" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="indicator" />
-    <nodeInfo nodeId="2096629347734740625" fileName="BaseCalculator.java" startLine="23" startPosition="39" endLine="24" endPosition="20" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734742513" fileName="BaseCalculator.java" startLine="24" startPosition="20" endLine="25" endPosition="34" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734758031" fileName="BaseCalculator.java" startLine="25" startPosition="34" endLine="26" endPosition="39" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734762791" fileName="BaseCalculator.java" startLine="26" startPosition="39" endLine="27" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.Statement" />
-    <nodeInfo nodeId="2096629347734769504" fileName="BaseCalculator.java" startLine="27" startPosition="0" endLine="28" endPosition="44" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734771073" fileName="BaseCalculator.java" startLine="28" startPosition="44" endLine="29" endPosition="21" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734779961" fileName="BaseCalculator.java" startLine="35" startPosition="50" endLine="36" endPosition="19" conceptFqName="jetbrains.mps.baseLanguage.structure.SuperConstructorInvocation" />
-    <nodeInfo nodeId="2096629347734794905" fileName="BaseCalculator.java" startLine="38" startPosition="53" endLine="39" endPosition="25" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734794604" fileName="BaseCalculator.java" startLine="38" startPosition="0" endLine="41" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="actionPerformed#(Ljava/awt/event/ActionEvent;)V" />
-    <nodeInfo nodeId="2096629347734780735" fileName="BaseCalculator.java" startLine="36" startPosition="19" endLine="41" endPosition="9" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
-    <nodeInfo nodeId="2096629347734740127" fileName="BaseCalculator.java" startLine="23" startPosition="0" endLine="31" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="BaseCalculator#(Ljava/lang/String;)V" />
-    <nodeInfo nodeId="2096629347734779383" fileName="BaseCalculator.java" startLine="35" startPosition="0" endLine="43" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="Digit#(Ljava/lang/String;C)V" />
-    <scopeInfo nodeId="2096629347734794610" fileName="BaseCalculator.java" startLine="38" startPosition="53" endLine="39" endPosition="25" />
-    <scopeInfo nodeId="2096629347734794604" fileName="BaseCalculator.java" startLine="38" startPosition="0" endLine="41" endPosition="0">
-      <varInfo nodeId="2096629347734794608" varName="p0" />
-    </scopeInfo>
-    <scopeInfo nodeId="2096629347734740130" fileName="BaseCalculator.java" startLine="23" startPosition="39" endLine="29" endPosition="21" />
-    <scopeInfo nodeId="2096629347734779387" fileName="BaseCalculator.java" startLine="35" startPosition="50" endLine="41" endPosition="9" />
-    <scopeInfo nodeId="2096629347734740127" fileName="BaseCalculator.java" startLine="23" startPosition="0" endLine="31" endPosition="0">
-      <varInfo nodeId="2096629347734740451" varName="title" />
-    </scopeInfo>
-    <scopeInfo nodeId="2096629347734779383" fileName="BaseCalculator.java" startLine="35" startPosition="0" endLine="43" endPosition="0">
-      <varInfo nodeId="2096629347734779635" varName="label" />
-      <varInfo nodeId="2096629347734779673" varName="value" />
-    </scopeInfo>
-    <unitInfo nodeId="2096629347734794602" fileName="BaseCalculator.java" startLine="37" startPosition="28" endLine="41" endPosition="7" unitName="mps.demo.calc.runtime.BaseCalculator$1" />
-    <unitInfo nodeId="2096629347734777756" fileName="BaseCalculator.java" startLine="34" startPosition="0" endLine="44" endPosition="0" unitName="mps.demo.calc.runtime.BaseCalculator$Digit" />
-    <unitInfo nodeId="2096629347734353751" fileName="BaseCalculator.java" startLine="13" startPosition="0" endLine="45" endPosition="0" unitName="mps.demo.calc.runtime.BaseCalculator" />
-  </root>
   <root nodeRef="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/3541037617674733903">
     <nodeInfo nodeId="3541037617674734157" fileName="CalcStatus.java" startLine="10" startPosition="0" endLine="11" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticFieldDeclaration" propertyString="ourStatus" />
     <nodeInfo nodeId="3541037617674753244" fileName="CalcStatus.java" startLine="15" startPosition="44" endLine="16" endPosition="21" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
@@ -59,6 +24,41 @@
       <varInfo nodeId="3541037617674769297" varName="value" />
     </scopeInfo>
     <unitInfo nodeId="3541037617674733903" fileName="CalcStatus.java" startLine="9" startPosition="0" endLine="30" endPosition="0" unitName="mps.demo.calc.runtime.CalcStatus" />
+  </root>
+  <root nodeRef="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825462078">
+    <nodeInfo nodeId="4359921919825768885" fileName="BaseCalculator.java" startLine="14" startPosition="0" endLine="15" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="value1" />
+    <nodeInfo nodeId="4359921919825768935" fileName="BaseCalculator.java" startLine="15" startPosition="0" endLine="16" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="value2" />
+    <nodeInfo nodeId="4359921919825769062" fileName="BaseCalculator.java" startLine="16" startPosition="0" endLine="17" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="curOp" />
+    <nodeInfo nodeId="4359921919825771429" fileName="BaseCalculator.java" startLine="18" startPosition="0" endLine="19" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="input" />
+    <nodeInfo nodeId="4359921919825771650" fileName="BaseCalculator.java" startLine="20" startPosition="0" endLine="21" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="indicator" />
+    <nodeInfo nodeId="4359921919825788968" fileName="BaseCalculator.java" startLine="23" startPosition="39" endLine="24" endPosition="20" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825789369" fileName="BaseCalculator.java" startLine="24" startPosition="20" endLine="25" endPosition="34" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825809781" fileName="BaseCalculator.java" startLine="25" startPosition="34" endLine="26" endPosition="39" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825814230" fileName="BaseCalculator.java" startLine="26" startPosition="39" endLine="27" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.Statement" />
+    <nodeInfo nodeId="4359921919825815540" fileName="BaseCalculator.java" startLine="27" startPosition="0" endLine="28" endPosition="44" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825817180" fileName="BaseCalculator.java" startLine="28" startPosition="44" endLine="29" endPosition="21" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825837302" fileName="BaseCalculator.java" startLine="35" startPosition="50" endLine="36" endPosition="19" conceptFqName="jetbrains.mps.baseLanguage.structure.SuperConstructorInvocation" />
+    <nodeInfo nodeId="4359921919825883511" fileName="BaseCalculator.java" startLine="38" startPosition="53" endLine="39" endPosition="25" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825883196" fileName="BaseCalculator.java" startLine="38" startPosition="0" endLine="41" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="actionPerformed#(Ljava/awt/event/ActionEvent;)V" />
+    <nodeInfo nodeId="4359921919825837922" fileName="BaseCalculator.java" startLine="36" startPosition="19" endLine="41" endPosition="9" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4359921919825788607" fileName="BaseCalculator.java" startLine="23" startPosition="0" endLine="31" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="BaseCalculator#(Ljava/lang/String;)V" />
+    <nodeInfo nodeId="4359921919825834326" fileName="BaseCalculator.java" startLine="35" startPosition="0" endLine="43" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="Digit#(Ljava/lang/String;C)V" />
+    <scopeInfo nodeId="4359921919825883202" fileName="BaseCalculator.java" startLine="38" startPosition="53" endLine="39" endPosition="25" />
+    <scopeInfo nodeId="4359921919825883196" fileName="BaseCalculator.java" startLine="38" startPosition="0" endLine="41" endPosition="0">
+      <varInfo nodeId="4359921919825883200" varName="p0" />
+    </scopeInfo>
+    <scopeInfo nodeId="4359921919825788610" fileName="BaseCalculator.java" startLine="23" startPosition="39" endLine="29" endPosition="21" />
+    <scopeInfo nodeId="4359921919825834329" fileName="BaseCalculator.java" startLine="35" startPosition="50" endLine="41" endPosition="9" />
+    <scopeInfo nodeId="4359921919825788607" fileName="BaseCalculator.java" startLine="23" startPosition="0" endLine="31" endPosition="0">
+      <varInfo nodeId="4359921919825788829" varName="title" />
+    </scopeInfo>
+    <scopeInfo nodeId="4359921919825834326" fileName="BaseCalculator.java" startLine="35" startPosition="0" endLine="43" endPosition="0">
+      <varInfo nodeId="4359921919825834531" varName="label" />
+      <varInfo nodeId="4359921919825834547" varName="value" />
+    </scopeInfo>
+    <unitInfo nodeId="4359921919825883194" fileName="BaseCalculator.java" startLine="37" startPosition="28" endLine="41" endPosition="7" unitName="mps.demo.calc.runtime.BaseCalculator$1" />
+    <unitInfo nodeId="4359921919825822571" fileName="BaseCalculator.java" startLine="34" startPosition="0" endLine="44" endPosition="0" unitName="mps.demo.calc.runtime.BaseCalculator$Digit" />
+    <unitInfo nodeId="4359921919825462078" fileName="BaseCalculator.java" startLine="13" startPosition="0" endLine="45" endPosition="0" unitName="mps.demo.calc.runtime.BaseCalculator" />
   </root>
 </debugInfo>
 
