@@ -1,3 +1,5 @@
+package ru.spbau.turaevt.CG.IncrementalCH.Geom;
+
 /**
  * Point orientation
  *

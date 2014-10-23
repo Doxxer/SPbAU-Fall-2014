@@ -1,9 +1,35 @@
-package treap;
+package ru.spbau.turaevt.CG.IncrementalCH.Treap;
 
 public class Treap<T extends Comparable<T>> {
     private Node<T> root = null;
 
-    private Node<T> merge(Node<T> left, Node<T> right) {
+    public Treap(Node<T> root) {
+        this.root = root;
+    }
+
+    public Treap() {
+
+    }
+
+    public void setRoot(Node<T> root) {
+        this.root = root;
+    }
+
+    public Node<T> remove(Node<T> node, T element) {
+        if (node == null) {
+            return null;
+        }
+        if (node.getData().equals(element)) {
+            return merge(node.left, node.right);
+        } else if (element.compareTo(node.getData()) < 0) {
+            node.left = remove(node.left, element);
+        } else {
+            node.right = remove(node.right, element);
+        }
+        return node;
+    }
+
+    public Node<T> merge(Node<T> left, Node<T> right) {
         if (right == null) return left;
         if (left == null) return right;
 
@@ -38,36 +64,39 @@ public class Treap<T extends Comparable<T>> {
 
     public void add(T key) {
         Pair<Node<T>, Node<T>> splittedNodes = split(key);
-        root = merge(merge(splittedNodes.first, new Node<>(key)), splittedNodes.second);
+        Node<T> node = new Node<>(key);
+
+        Node<T> max = splittedNodes.first != null ? splittedNodes.first.max() : null;
+        Node<T> min = splittedNodes.second != null ? splittedNodes.second.min() : null;
+
+        if (max != null) {
+            max.setNext(node);
+            node.setPrev(max);
+        }
+        if (min != null) {
+            node.setNext(min);
+            min.setPrev(node);
+        }
+        root = merge(merge(splittedNodes.first, node), splittedNodes.second);
     }
 
-    public Pair<T, T> find(T key) {
+    public Pair<T, T> findBounds(T key) {
         Pair<Node<T>, Node<T>> split = split(root, key);
 
         Pair<T, T> result = new Pair<>(
-                split.first != null ? max(split.first).getData() : null,
-                split.second != null ? min(split.second).getData() : null);
-        if (result.first != null && result.first.compareTo(key) == 0) result.second = result.first;
+                split.first != null ? split.first.max().getData() : null,
+                split.second != null ? split.second.min().getData() : null);
+        if (result.first != null && key.equals(result.first)) result.second = result.first;
 
         root = merge(split.first, split.second);
         return result;
     }
 
-    private Node<T> max(Node<T> node) {
-        if (node.right == null) {
-            return node;
-        }
-        return max(node.right);
+    public Node<T> getRoot() {
+        return root;
     }
 
-    private Node<T> min(Node<T> node) {
-        if (node.left == null) {
-            return node;
-        }
-        return min(node.left);
-    }
-
-    private Pair<Node<T>, Node<T>> split(T key) {
+    public Pair<Node<T>, Node<T>> split(T key) {
         Pair<Node<T>, Node<T>> splitted = split(root, key);
         return new Pair<>(splitted.first, splitted.second);
     }
