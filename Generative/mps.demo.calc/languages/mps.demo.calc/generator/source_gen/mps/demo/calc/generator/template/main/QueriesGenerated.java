@@ -26,4 +26,8 @@ public class QueriesGenerated {
   public static boolean ifMacro_Condition_4359921919826306933(final IfMacroContext _context) {
     return SPropertyOperations.getBoolean(_context.getNode(), "digits");
   }
+
+  public static boolean ifMacro_Condition_5991479566475383099(final IfMacroContext _context) {
+    return SPropertyOperations.getBoolean(_context.getNode(), "stdOps");
+  }
 }

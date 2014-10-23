@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="9sj19yjkhnttlu120hwnly54tfroe7z">
+<dependencies version="2" modelHash="672jr1ua4u2d22wr5t3oanuxqw4ggal">
   <dep model="f:java_stub#6ed54515-acc8-4d1e-a16c-9fd6cfe951ea#jetbrains.mps.generator.runtime(MPS.Core/jetbrains.mps.generator.runtime@java_stub)" />
   <dep model="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" hash="5sdbpqxziyuazpb9j1p4zdk6bnvbn49" />
   <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="303xz1b2lyseld0axia86q3lpvucmq6" />
@@ -9,7 +9,7 @@
   <dep model="r:c2c61bec-e8f3-4009-a1a5-a9a48977fc61(mps.demo.calc.structure)" hash="91c0za0rfotnxk7ixrm66frd7helqbu" />
   <dep model="r:c3548bac-30eb-4a2a-937c-0111d5697309(jetbrains.mps.lang.smodel.generator.smodelAdapter)" hash="e5zswcvgdspmt039m3gg97emcadi0ez" />
   <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="a8elw7fctzg6sg8fe36u9gzu42axhdb" />
-  <common hash="-u0uubzjlkyjd6mhnpgxmodlkyx6577" dependsOnNodes="true">
+  <common hash="-nmx5igeh76q0gv93f6frmbr7730nlh" dependsOnNodes="true">
     <dep root="1668115546282225345" />
     <dep root="4359921919825889022" />
     <dep model="f:java_stub#6ed54515-acc8-4d1e-a16c-9fd6cfe951ea#jetbrains.mps.generator.runtime(MPS.Core/jetbrains.mps.generator.runtime@java_stub)" />
@@ -26,7 +26,7 @@
     <dep model="r:00000000-0000-4000-0000-011c895902e9(jetbrains.mps.lang.generator.generator.baseLanguage.template.main@generator)" />
   </source>
   <source id="1668115546282225345" name="reduce_GetStatusExpression" hash="cp2hpzvhue6e5wmub39umaceo26z6ci" />
-  <source id="4359921919825889022" name="Calculator" hash="ba4vst9xbjihr6yv5y9eotu42xhwsdr">
+  <source id="4359921919825889022" name="Calculator" hash="753c6f2ydb72lg5m9pq45h1z8322xn0">
     <dep model="f:java_stub#6ed54515-acc8-4d1e-a16c-9fd6cfe951ea#jetbrains.mps.generator.runtime(MPS.Core/jetbrains.mps.generator.runtime@java_stub)" />
   </source>
 </dependencies>

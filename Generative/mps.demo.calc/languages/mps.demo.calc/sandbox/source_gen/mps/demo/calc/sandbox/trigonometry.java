@@ -8,6 +8,8 @@ public class trigonometry extends BaseCalculator {
   public trigonometry() {
     super("trigonometry");
 
+
+    setSize(300, 300);
   }
 
 

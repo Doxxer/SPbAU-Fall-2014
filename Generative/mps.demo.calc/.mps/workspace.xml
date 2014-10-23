@@ -21,7 +21,7 @@
       <list>
         <TabState>
           <option name="title" value="Console" />
-          <option name="history" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;model modelUID=&quot;r:7e0160d6-87f9-4094-a26d-246e037467a4(TempModel_13020412417922)&quot;&gt;&#13;&#10;  &lt;persistence version=&quot;8&quot; /&gt;&#13;&#10;  &lt;language namespace=&quot;de1ad86d-6e50-4a02-b306-d4d17f64c375(jetbrains.mps.console.base)&quot; /&gt;&#13;&#10;  &lt;language namespace=&quot;f26691d2-0def-4c06-aec6-2cb90c4af0a4(jetbrains.mps.console.scripts)&quot; /&gt;&#13;&#10;  &lt;language namespace=&quot;1a8554c4-eb84-43ba-8c34-6f0d90c6e75a(jetbrains.mps.console.blCommand)&quot; /&gt;&#13;&#10;  &lt;language namespace=&quot;a5e4de53-46a3-44da-aab3-68fdf1c34ed0(jetbrains.mps.console.ideCommands)&quot; /&gt;&#13;&#10;  &lt;language namespace=&quot;995a7394-7f76-4b8b-a929-c53448708106(jetbrains.mps.console.internalCommands)&quot; /&gt;&#13;&#10;  &lt;devkit namespace=&quot;fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)&quot; /&gt;&#13;&#10;  &lt;import index=&quot;eynw&quot; modelUID=&quot;r:359b1d2b-77c4-46df-9bf2-b25cbea32254(jetbrains.mps.console.base.structure)&quot; version=&quot;1&quot; /&gt;&#13;&#10;  &lt;import index=&quot;z2sp&quot; modelUID=&quot;r:e712f353-5c3c-4288-adce-87c956a52ffb(jetbrains.mps.console.scripts.structure)&quot; version=&quot;0&quot; /&gt;&#13;&#10;  &lt;import index=&quot;3xdn&quot; modelUID=&quot;r:935ba0ee-7291-4caa-a807-d76e8fc69391(jetbrains.mps.console.blCommand.structure)&quot; version=&quot;3&quot; /&gt;&#13;&#10;  &lt;import index=&quot;caxt&quot; modelUID=&quot;r:135a606f-0376-4c5c-9ab8-4030f051a062(jetbrains.mps.console.ideCommands.structure)&quot; version=&quot;-1&quot; /&gt;&#13;&#10;  &lt;import index=&quot;wns9&quot; modelUID=&quot;r:90445206-a973-4c1d-b760-30e5c77b7497(jetbrains.mps.console.internalCommands.structure)&quot; version=&quot;-1&quot; /&gt;&#13;&#10;  &lt;import index=&quot;w1zt&quot; modelUID=&quot;r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)&quot; version=&quot;-1&quot; /&gt;&#13;&#10;  &lt;import index=&quot;tpee&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)&quot; version=&quot;-1&quot; /&gt;&#13;&#10;  &lt;import index=&quot;tp2c&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c89590338(jetbrains.mps.baseLanguage.closures.structure)&quot; version=&quot;3&quot; implicit=&quot;yes&quot; /&gt;&#13;&#10;  &lt;import index=&quot;tpck&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)&quot; version=&quot;0&quot; implicit=&quot;yes&quot; /&gt;&#13;&#10;  &lt;import index=&quot;tp25&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)&quot; version=&quot;16&quot; implicit=&quot;yes&quot; /&gt;&#13;&#10;  &lt;import index=&quot;tp2q&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c8959032e(jetbrains.mps.baseLanguage.collections.structure)&quot; version=&quot;7&quot; implicit=&quot;yes&quot; /&gt;&#13;&#10;  &lt;root type=&quot;eynw.ConsoleRoot&quot; typeId=&quot;eynw.1583916890557930028&quot; id=&quot;4057997922166353978&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;    &lt;node role=&quot;history&quot; roleId=&quot;eynw.1583916890557930415&quot; type=&quot;eynw.History&quot; typeId=&quot;eynw.757553790980850366&quot; id=&quot;3541037617674586683&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;      &lt;node role=&quot;item&quot; roleId=&quot;eynw.7195119950189425818&quot; type=&quot;eynw.CommandHolder&quot; typeId=&quot;eynw.351968380916615243&quot; id=&quot;1668115546281606651&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;        &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;CommandHolder&quot; /&gt;&#13;&#10;        &lt;node role=&quot;command&quot; roleId=&quot;eynw.351968380916615460&quot; type=&quot;3xdn.BLExpression&quot; typeId=&quot;3xdn.7656298970878093785&quot; id=&quot;1668115546281606652&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;          &lt;node role=&quot;expression&quot; roleId=&quot;3xdn.7656298970878093890&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281606653&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;            &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281606654&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;              &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;eynw.PastedNodeReference&quot; typeId=&quot;eynw.5842059399443118718&quot; id=&quot;1668115546281606655&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;                &lt;link role=&quot;target&quot; roleId=&quot;eynw.328850564588043375&quot; targetNodeId=&quot;w1zt.3541037617674720582&quot; /&gt;&#13;&#10;              &lt;/node&gt;&#13;&#10;              &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_GetDescendantsOperation&quot; typeId=&quot;tp25.1171305280644&quot; id=&quot;1668115546281606656&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp25.1144104376918&quot; type=&quot;tp25.OperationParm_Concept&quot; typeId=&quot;tp25.1144101972840&quot; id=&quot;1668115546281606657&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;                  &lt;node role=&quot;conceptArgument&quot; roleId=&quot;tp25.1207343664468&quot; type=&quot;tp25.RefConcept_Reference&quot; typeId=&quot;tp25.1177026924588&quot; id=&quot;1668115546281606658&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                    &lt;link role=&quot;conceptDeclaration&quot; roleId=&quot;tp25.1177026940964&quot; targetNodeId=&quot;tpee.1070534513062&quot; resolveInfo=&quot;DoubleType&quot; /&gt;&#13;&#10;                  &lt;/node&gt;&#13;&#10;                &lt;/node&gt;&#13;&#10;              &lt;/node&gt;&#13;&#10;            &lt;/node&gt;&#13;&#10;            &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp2q.VisitAllOperation&quot; typeId=&quot;tp2q.1204980550705&quot; id=&quot;1668115546281606659&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;              &lt;node role=&quot;closure&quot; roleId=&quot;tp2q.1204796294226&quot; type=&quot;tp2c.ClosureLiteral&quot; typeId=&quot;tp2c.1199569711397&quot; id=&quot;1668115546281606660&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                &lt;node role=&quot;body&quot; roleId=&quot;tp2c.1199569916463&quot; type=&quot;tpee.StatementList&quot; typeId=&quot;tpee.1068580123136&quot; id=&quot;1668115546281606661&quot; nodeInfo=&quot;sn&quot;&gt;&#13;&#10;                  &lt;node role=&quot;statement&quot; roleId=&quot;tpee.1068581517665&quot; type=&quot;tpee.ExpressionStatement&quot; typeId=&quot;tpee.1068580123155&quot; id=&quot;1668115546281606662&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                    &lt;node role=&quot;expression&quot; roleId=&quot;tpee.1068580123156&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281606663&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                      &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.VariableReference&quot; typeId=&quot;tpee.1068498886296&quot; id=&quot;1668115546281606664&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                        &lt;link role=&quot;variableDeclaration&quot; roleId=&quot;tpee.1068581517664&quot; targetNodeId=&quot;1668115546281606666&quot; resolveInfo=&quot;it&quot; /&gt;&#13;&#10;                      &lt;/node&gt;&#13;&#10;                      &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_ReplaceWithNewOperation&quot; typeId=&quot;tp25.1139867745658&quot; id=&quot;1668115546281606665&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                        &lt;link role=&quot;concept&quot; roleId=&quot;tp25.1139867957129&quot; targetNodeId=&quot;tpee.1070534370425&quot; resolveInfo=&quot;IntegerType&quot; /&gt;&#13;&#10;                      &lt;/node&gt;&#13;&#10;                    &lt;/node&gt;&#13;&#10;                  &lt;/node&gt;&#13;&#10;                &lt;/node&gt;&#13;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp2c.1199569906740&quot; type=&quot;tp2q.SmartClosureParameterDeclaration&quot; typeId=&quot;tp2q.1203518072036&quot; id=&quot;1668115546281606666&quot; nodeInfo=&quot;ig&quot;&gt;&#13;&#10;                  &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;it&quot; /&gt;&#13;&#10;                  &lt;node role=&quot;type&quot; roleId=&quot;tpee.5680397130376446158&quot; type=&quot;tpee.UndefinedType&quot; typeId=&quot;tpee.4836112446988635817&quot; id=&quot;1668115546281606667&quot; nodeInfo=&quot;in&quot; /&gt;&#13;&#10;                &lt;/node&gt;&#13;&#10;              &lt;/node&gt;&#13;&#10;            &lt;/node&gt;&#13;&#10;          &lt;/node&gt;&#13;&#10;        &lt;/node&gt;&#13;&#10;      &lt;/node&gt;&#13;&#10;      &lt;node role=&quot;item&quot; roleId=&quot;eynw.7195119950189425818&quot; type=&quot;eynw.CommandHolder&quot; typeId=&quot;eynw.351968380916615243&quot; id=&quot;1668115546281633420&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;        &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;CommandHolder&quot; /&gt;&#13;&#10;        &lt;node role=&quot;command&quot; roleId=&quot;eynw.351968380916615460&quot; type=&quot;3xdn.BLExpression&quot; typeId=&quot;3xdn.7656298970878093785&quot; id=&quot;1668115546281633421&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;          &lt;node role=&quot;expression&quot; roleId=&quot;3xdn.7656298970878093890&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281633422&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;            &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281633423&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;              &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;eynw.PastedNodeReference&quot; typeId=&quot;eynw.5842059399443118718&quot; id=&quot;1668115546281633424&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;                &lt;link role=&quot;target&quot; roleId=&quot;eynw.328850564588043375&quot; targetNodeId=&quot;w1zt.3541037617674719625&quot; /&gt;&#13;&#10;              &lt;/node&gt;&#13;&#10;              &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_GetDescendantsOperation&quot; typeId=&quot;tp25.1171305280644&quot; id=&quot;1668115546281633425&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp25.1144104376918&quot; type=&quot;tp25.OperationParm_Concept&quot; typeId=&quot;tp25.1144101972840&quot; id=&quot;1668115546281633426&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;                  &lt;node role=&quot;conceptArgument&quot; roleId=&quot;tp25.1207343664468&quot; type=&quot;tp25.RefConcept_Reference&quot; typeId=&quot;tp25.1177026924588&quot; id=&quot;1668115546281633427&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                    &lt;link role=&quot;conceptDeclaration&quot; roleId=&quot;tp25.1177026940964&quot; targetNodeId=&quot;tpee.1070534370425&quot; resolveInfo=&quot;IntegerType&quot; /&gt;&#13;&#10;                  &lt;/node&gt;&#13;&#10;                &lt;/node&gt;&#13;&#10;              &lt;/node&gt;&#13;&#10;            &lt;/node&gt;&#13;&#10;            &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp2q.VisitAllOperation&quot; typeId=&quot;tp2q.1204980550705&quot; id=&quot;1668115546281633428&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;              &lt;node role=&quot;closure&quot; roleId=&quot;tp2q.1204796294226&quot; type=&quot;tp2c.ClosureLiteral&quot; typeId=&quot;tp2c.1199569711397&quot; id=&quot;1668115546281633429&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                &lt;node role=&quot;body&quot; roleId=&quot;tp2c.1199569916463&quot; type=&quot;tpee.StatementList&quot; typeId=&quot;tpee.1068580123136&quot; id=&quot;1668115546281633430&quot; nodeInfo=&quot;sn&quot;&gt;&#13;&#10;                  &lt;node role=&quot;statement&quot; roleId=&quot;tpee.1068581517665&quot; type=&quot;tpee.ExpressionStatement&quot; typeId=&quot;tpee.1068580123155&quot; id=&quot;1668115546281633431&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                    &lt;node role=&quot;expression&quot; roleId=&quot;tpee.1068580123156&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281633432&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                      &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.VariableReference&quot; typeId=&quot;tpee.1068498886296&quot; id=&quot;1668115546281633433&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                        &lt;link role=&quot;variableDeclaration&quot; roleId=&quot;tpee.1068581517664&quot; targetNodeId=&quot;1668115546281633435&quot; resolveInfo=&quot;it&quot; /&gt;&#13;&#10;                      &lt;/node&gt;&#13;&#10;                      &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_ReplaceWithNewOperation&quot; typeId=&quot;tp25.1139867745658&quot; id=&quot;1668115546281633434&quot; nodeInfo=&quot;nn&quot;&gt;&#13;&#10;                        &lt;link role=&quot;concept&quot; roleId=&quot;tp25.1139867957129&quot; targetNodeId=&quot;tpee.1070534513062&quot; resolveInfo=&quot;DoubleType&quot; /&gt;&#13;&#10;                      &lt;/node&gt;&#13;&#10;                    &lt;/node&gt;&#13;&#10;                  &lt;/node&gt;&#13;&#10;                &lt;/node&gt;&#13;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp2c.1199569906740&quot; type=&quot;tp2q.SmartClosureParameterDeclaration&quot; typeId=&quot;tp2q.1203518072036&quot; id=&quot;1668115546281633435&quot; nodeInfo=&quot;ig&quot;&gt;&#13;&#10;                  &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;it&quot; /&gt;&#13;&#10;                  &lt;node role=&quot;type&quot; roleId=&quot;tpee.5680397130376446158&quot; type=&quot;tpee.UndefinedType&quot; typeId=&quot;tpee.4836112446988635817&quot; id=&quot;1668115546281633436&quot; nodeInfo=&quot;in&quot; /&gt;&#13;&#10;                &lt;/node&gt;&#13;&#10;              &lt;/node&gt;&#13;&#10;            &lt;/node&gt;&#13;&#10;          &lt;/node&gt;&#13;&#10;        &lt;/node&gt;&#13;&#10;      &lt;/node&gt;&#13;&#10;    &lt;/node&gt;&#13;&#10;    &lt;node role=&quot;commandHolder&quot; roleId=&quot;eynw.1583916890557930417&quot; type=&quot;eynw.CommandHolder&quot; typeId=&quot;eynw.351968380916615243&quot; id=&quot;4057997922166353979&quot; nodeInfo=&quot;ng&quot;&gt;&#13;&#10;      &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;CommandHolder&quot; /&gt;&#13;&#10;    &lt;/node&gt;&#13;&#10;  &lt;/root&gt;&#13;&#10;&lt;/model&gt;&#13;&#10;&#13;&#10;" />
+          <option name="history" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;model modelUID=&quot;r:00c414f8-73f5-498b-a3d0-94f7f5d02935(TempModel_1413886412009938000)&quot;&gt;&#10;  &lt;persistence version=&quot;8&quot; /&gt;&#10;  &lt;language namespace=&quot;de1ad86d-6e50-4a02-b306-d4d17f64c375(jetbrains.mps.console.base)&quot; /&gt;&#10;  &lt;language namespace=&quot;f26691d2-0def-4c06-aec6-2cb90c4af0a4(jetbrains.mps.console.scripts)&quot; /&gt;&#10;  &lt;language namespace=&quot;1a8554c4-eb84-43ba-8c34-6f0d90c6e75a(jetbrains.mps.console.blCommand)&quot; /&gt;&#10;  &lt;language namespace=&quot;a5e4de53-46a3-44da-aab3-68fdf1c34ed0(jetbrains.mps.console.ideCommands)&quot; /&gt;&#10;  &lt;language namespace=&quot;995a7394-7f76-4b8b-a929-c53448708106(jetbrains.mps.console.internalCommands)&quot; /&gt;&#10;  &lt;devkit namespace=&quot;fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)&quot; /&gt;&#10;  &lt;import index=&quot;eynw&quot; modelUID=&quot;r:359b1d2b-77c4-46df-9bf2-b25cbea32254(jetbrains.mps.console.base.structure)&quot; version=&quot;1&quot; /&gt;&#10;  &lt;import index=&quot;z2sp&quot; modelUID=&quot;r:e712f353-5c3c-4288-adce-87c956a52ffb(jetbrains.mps.console.scripts.structure)&quot; version=&quot;0&quot; /&gt;&#10;  &lt;import index=&quot;3xdn&quot; modelUID=&quot;r:935ba0ee-7291-4caa-a807-d76e8fc69391(jetbrains.mps.console.blCommand.structure)&quot; version=&quot;3&quot; /&gt;&#10;  &lt;import index=&quot;caxt&quot; modelUID=&quot;r:135a606f-0376-4c5c-9ab8-4030f051a062(jetbrains.mps.console.ideCommands.structure)&quot; version=&quot;-1&quot; /&gt;&#10;  &lt;import index=&quot;wns9&quot; modelUID=&quot;r:90445206-a973-4c1d-b760-30e5c77b7497(jetbrains.mps.console.internalCommands.structure)&quot; version=&quot;-1&quot; /&gt;&#10;  &lt;import index=&quot;w1zt&quot; modelUID=&quot;r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)&quot; version=&quot;-1&quot; /&gt;&#10;  &lt;import index=&quot;tpee&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)&quot; version=&quot;-1&quot; /&gt;&#10;  &lt;import index=&quot;tp2c&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c89590338(jetbrains.mps.baseLanguage.closures.structure)&quot; version=&quot;3&quot; implicit=&quot;yes&quot; /&gt;&#10;  &lt;import index=&quot;tpck&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)&quot; version=&quot;0&quot; implicit=&quot;yes&quot; /&gt;&#10;  &lt;import index=&quot;tp25&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)&quot; version=&quot;16&quot; implicit=&quot;yes&quot; /&gt;&#10;  &lt;import index=&quot;tp2q&quot; modelUID=&quot;r:00000000-0000-4000-0000-011c8959032e(jetbrains.mps.baseLanguage.collections.structure)&quot; version=&quot;7&quot; implicit=&quot;yes&quot; /&gt;&#10;  &lt;root type=&quot;eynw.ConsoleRoot&quot; typeId=&quot;eynw.1583916890557930028&quot; id=&quot;5991479566474289134&quot; nodeInfo=&quot;ng&quot;&gt;&#10;    &lt;node role=&quot;history&quot; roleId=&quot;eynw.1583916890557930415&quot; type=&quot;eynw.History&quot; typeId=&quot;eynw.757553790980850366&quot; id=&quot;3541037617674586683&quot; nodeInfo=&quot;ng&quot;&gt;&#10;      &lt;node role=&quot;item&quot; roleId=&quot;eynw.7195119950189425818&quot; type=&quot;eynw.CommandHolder&quot; typeId=&quot;eynw.351968380916615243&quot; id=&quot;1668115546281606651&quot; nodeInfo=&quot;ng&quot;&gt;&#10;        &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;CommandHolder&quot; /&gt;&#10;        &lt;node role=&quot;command&quot; roleId=&quot;eynw.351968380916615460&quot; type=&quot;3xdn.BLExpression&quot; typeId=&quot;3xdn.7656298970878093785&quot; id=&quot;1668115546281606652&quot; nodeInfo=&quot;ng&quot;&gt;&#10;          &lt;node role=&quot;expression&quot; roleId=&quot;3xdn.7656298970878093890&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281606653&quot; nodeInfo=&quot;nn&quot;&gt;&#10;            &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281606654&quot; nodeInfo=&quot;nn&quot;&gt;&#10;              &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;eynw.PastedNodeReference&quot; typeId=&quot;eynw.5842059399443118718&quot; id=&quot;1668115546281606655&quot; nodeInfo=&quot;ng&quot;&gt;&#10;                &lt;link role=&quot;target&quot; roleId=&quot;eynw.328850564588043375&quot; targetNodeId=&quot;w1zt.3541037617674720582&quot; /&gt;&#10;              &lt;/node&gt;&#10;              &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_GetDescendantsOperation&quot; typeId=&quot;tp25.1171305280644&quot; id=&quot;1668115546281606656&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp25.1144104376918&quot; type=&quot;tp25.OperationParm_Concept&quot; typeId=&quot;tp25.1144101972840&quot; id=&quot;1668115546281606657&quot; nodeInfo=&quot;ng&quot;&gt;&#10;                  &lt;node role=&quot;conceptArgument&quot; roleId=&quot;tp25.1207343664468&quot; type=&quot;tp25.RefConcept_Reference&quot; typeId=&quot;tp25.1177026924588&quot; id=&quot;1668115546281606658&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                    &lt;link role=&quot;conceptDeclaration&quot; roleId=&quot;tp25.1177026940964&quot; targetNodeId=&quot;tpee.1070534513062&quot; resolveInfo=&quot;DoubleType&quot; /&gt;&#10;                  &lt;/node&gt;&#10;                &lt;/node&gt;&#10;              &lt;/node&gt;&#10;            &lt;/node&gt;&#10;            &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp2q.VisitAllOperation&quot; typeId=&quot;tp2q.1204980550705&quot; id=&quot;1668115546281606659&quot; nodeInfo=&quot;nn&quot;&gt;&#10;              &lt;node role=&quot;closure&quot; roleId=&quot;tp2q.1204796294226&quot; type=&quot;tp2c.ClosureLiteral&quot; typeId=&quot;tp2c.1199569711397&quot; id=&quot;1668115546281606660&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                &lt;node role=&quot;body&quot; roleId=&quot;tp2c.1199569916463&quot; type=&quot;tpee.StatementList&quot; typeId=&quot;tpee.1068580123136&quot; id=&quot;1668115546281606661&quot; nodeInfo=&quot;sn&quot;&gt;&#10;                  &lt;node role=&quot;statement&quot; roleId=&quot;tpee.1068581517665&quot; type=&quot;tpee.ExpressionStatement&quot; typeId=&quot;tpee.1068580123155&quot; id=&quot;1668115546281606662&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                    &lt;node role=&quot;expression&quot; roleId=&quot;tpee.1068580123156&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281606663&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                      &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.VariableReference&quot; typeId=&quot;tpee.1068498886296&quot; id=&quot;1668115546281606664&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                        &lt;link role=&quot;variableDeclaration&quot; roleId=&quot;tpee.1068581517664&quot; targetNodeId=&quot;1668115546281606666&quot; resolveInfo=&quot;it&quot; /&gt;&#10;                      &lt;/node&gt;&#10;                      &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_ReplaceWithNewOperation&quot; typeId=&quot;tp25.1139867745658&quot; id=&quot;1668115546281606665&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                        &lt;link role=&quot;concept&quot; roleId=&quot;tp25.1139867957129&quot; targetNodeId=&quot;tpee.1070534370425&quot; resolveInfo=&quot;IntegerType&quot; /&gt;&#10;                      &lt;/node&gt;&#10;                    &lt;/node&gt;&#10;                  &lt;/node&gt;&#10;                &lt;/node&gt;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp2c.1199569906740&quot; type=&quot;tp2q.SmartClosureParameterDeclaration&quot; typeId=&quot;tp2q.1203518072036&quot; id=&quot;1668115546281606666&quot; nodeInfo=&quot;ig&quot;&gt;&#10;                  &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;it&quot; /&gt;&#10;                  &lt;node role=&quot;type&quot; roleId=&quot;tpee.5680397130376446158&quot; type=&quot;tpee.UndefinedType&quot; typeId=&quot;tpee.4836112446988635817&quot; id=&quot;1668115546281606667&quot; nodeInfo=&quot;in&quot; /&gt;&#10;                &lt;/node&gt;&#10;              &lt;/node&gt;&#10;            &lt;/node&gt;&#10;          &lt;/node&gt;&#10;        &lt;/node&gt;&#10;      &lt;/node&gt;&#10;      &lt;node role=&quot;item&quot; roleId=&quot;eynw.7195119950189425818&quot; type=&quot;eynw.CommandHolder&quot; typeId=&quot;eynw.351968380916615243&quot; id=&quot;1668115546281633420&quot; nodeInfo=&quot;ng&quot;&gt;&#10;        &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;CommandHolder&quot; /&gt;&#10;        &lt;node role=&quot;command&quot; roleId=&quot;eynw.351968380916615460&quot; type=&quot;3xdn.BLExpression&quot; typeId=&quot;3xdn.7656298970878093785&quot; id=&quot;1668115546281633421&quot; nodeInfo=&quot;ng&quot;&gt;&#10;          &lt;node role=&quot;expression&quot; roleId=&quot;3xdn.7656298970878093890&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281633422&quot; nodeInfo=&quot;nn&quot;&gt;&#10;            &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281633423&quot; nodeInfo=&quot;nn&quot;&gt;&#10;              &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;eynw.PastedNodeReference&quot; typeId=&quot;eynw.5842059399443118718&quot; id=&quot;1668115546281633424&quot; nodeInfo=&quot;ng&quot;&gt;&#10;                &lt;link role=&quot;target&quot; roleId=&quot;eynw.328850564588043375&quot; targetNodeId=&quot;w1zt.3541037617674719625&quot; /&gt;&#10;              &lt;/node&gt;&#10;              &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_GetDescendantsOperation&quot; typeId=&quot;tp25.1171305280644&quot; id=&quot;1668115546281633425&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp25.1144104376918&quot; type=&quot;tp25.OperationParm_Concept&quot; typeId=&quot;tp25.1144101972840&quot; id=&quot;1668115546281633426&quot; nodeInfo=&quot;ng&quot;&gt;&#10;                  &lt;node role=&quot;conceptArgument&quot; roleId=&quot;tp25.1207343664468&quot; type=&quot;tp25.RefConcept_Reference&quot; typeId=&quot;tp25.1177026924588&quot; id=&quot;1668115546281633427&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                    &lt;link role=&quot;conceptDeclaration&quot; roleId=&quot;tp25.1177026940964&quot; targetNodeId=&quot;tpee.1070534370425&quot; resolveInfo=&quot;IntegerType&quot; /&gt;&#10;                  &lt;/node&gt;&#10;                &lt;/node&gt;&#10;              &lt;/node&gt;&#10;            &lt;/node&gt;&#10;            &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp2q.VisitAllOperation&quot; typeId=&quot;tp2q.1204980550705&quot; id=&quot;1668115546281633428&quot; nodeInfo=&quot;nn&quot;&gt;&#10;              &lt;node role=&quot;closure&quot; roleId=&quot;tp2q.1204796294226&quot; type=&quot;tp2c.ClosureLiteral&quot; typeId=&quot;tp2c.1199569711397&quot; id=&quot;1668115546281633429&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                &lt;node role=&quot;body&quot; roleId=&quot;tp2c.1199569916463&quot; type=&quot;tpee.StatementList&quot; typeId=&quot;tpee.1068580123136&quot; id=&quot;1668115546281633430&quot; nodeInfo=&quot;sn&quot;&gt;&#10;                  &lt;node role=&quot;statement&quot; roleId=&quot;tpee.1068581517665&quot; type=&quot;tpee.ExpressionStatement&quot; typeId=&quot;tpee.1068580123155&quot; id=&quot;1668115546281633431&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                    &lt;node role=&quot;expression&quot; roleId=&quot;tpee.1068580123156&quot; type=&quot;tpee.DotExpression&quot; typeId=&quot;tpee.1197027756228&quot; id=&quot;1668115546281633432&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                      &lt;node role=&quot;operand&quot; roleId=&quot;tpee.1197027771414&quot; type=&quot;tpee.VariableReference&quot; typeId=&quot;tpee.1068498886296&quot; id=&quot;1668115546281633433&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                        &lt;link role=&quot;variableDeclaration&quot; roleId=&quot;tpee.1068581517664&quot; targetNodeId=&quot;1668115546281633435&quot; resolveInfo=&quot;it&quot; /&gt;&#10;                      &lt;/node&gt;&#10;                      &lt;node role=&quot;operation&quot; roleId=&quot;tpee.1197027833540&quot; type=&quot;tp25.Node_ReplaceWithNewOperation&quot; typeId=&quot;tp25.1139867745658&quot; id=&quot;1668115546281633434&quot; nodeInfo=&quot;nn&quot;&gt;&#10;                        &lt;link role=&quot;concept&quot; roleId=&quot;tp25.1139867957129&quot; targetNodeId=&quot;tpee.1070534513062&quot; resolveInfo=&quot;DoubleType&quot; /&gt;&#10;                      &lt;/node&gt;&#10;                    &lt;/node&gt;&#10;                  &lt;/node&gt;&#10;                &lt;/node&gt;&#10;                &lt;node role=&quot;parameter&quot; roleId=&quot;tp2c.1199569906740&quot; type=&quot;tp2q.SmartClosureParameterDeclaration&quot; typeId=&quot;tp2q.1203518072036&quot; id=&quot;1668115546281633435&quot; nodeInfo=&quot;ig&quot;&gt;&#10;                  &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;it&quot; /&gt;&#10;                  &lt;node role=&quot;type&quot; roleId=&quot;tpee.5680397130376446158&quot; type=&quot;tpee.UndefinedType&quot; typeId=&quot;tpee.4836112446988635817&quot; id=&quot;1668115546281633436&quot; nodeInfo=&quot;in&quot; /&gt;&#10;                &lt;/node&gt;&#10;              &lt;/node&gt;&#10;            &lt;/node&gt;&#10;          &lt;/node&gt;&#10;        &lt;/node&gt;&#10;      &lt;/node&gt;&#10;    &lt;/node&gt;&#10;    &lt;node role=&quot;commandHolder&quot; roleId=&quot;eynw.1583916890557930417&quot; type=&quot;eynw.CommandHolder&quot; typeId=&quot;eynw.351968380916615243&quot; id=&quot;5991479566474289135&quot; nodeInfo=&quot;ng&quot;&gt;&#10;      &lt;property name=&quot;name&quot; nameId=&quot;tpck.1169194664001&quot; value=&quot;CommandHolder&quot; /&gt;&#10;    &lt;/node&gt;&#10;  &lt;/root&gt;&#10;&lt;/model&gt;&#10;&#10;" />
         </TabState>
       </list>
     </option>
@@ -42,127 +42,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="trigonometry" pinned="false" current="false" current-in-tab="false">
-        <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/trigonometry">
-          <provider selected="true" editor-type-id="MPSFileEditor">
-            <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-              <memento viewPositionX="0" viewPositionY="0">
-                <selectionStack>
-                  <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                    <property name="hasNonTrivialSelection" value="false" />
-                    <property name="caretXRelative" value="24" />
-                    <property name="caretX" value="417" />
-                    <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="property_key" cellNumber="0" isInList="false">
-                      <node node_reference="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/1668115546281967401" />
-                    </cellInfo>
-                  </stackElement>
-                </selectionStack>
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-                <selectionStack />
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </inspectorMemento>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CalcStatus" pinned="false" current="false" current-in-tab="false">
-        <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/CalcStatus">
-          <provider selected="true" editor-type-id="MPSFileEditor">
-            <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-              <memento viewPositionX="0" viewPositionY="0">
-                <selectionStack>
-                  <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                    <property name="hasNonTrivialSelection" value="false" />
-                    <property name="caretXRelative" value="84" />
-                    <property name="caretX" value="223" />
-                    <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="ReferencePresentation_91bvrs_a0a0" cellNumber="0" isInList="false">
-                      <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/3541037617674753166" />
-                    </cellInfo>
-                  </stackElement>
-                </selectionStack>
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-                <selectionStack />
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </inspectorMemento>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test" pinned="false" current="false" current-in-tab="false">
-        <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/test">
-          <provider selected="true" editor-type-id="MPSFileEditor">
-            <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-              <memento viewPositionX="0" viewPositionY="0">
-                <selectionStack>
-                  <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                    <property name="hasNonTrivialSelection" value="false" />
-                    <property name="caretXRelative" value="20" />
-                    <property name="caretX" value="119" />
-                    <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="property_name" cellNumber="0" isInList="false">
-                      <node node_reference="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674599088" />
-                    </cellInfo>
-                  </stackElement>
-                </selectionStack>
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-                <selectionStack />
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </inspectorMemento>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main" pinned="false" current="false" current-in-tab="false">
-        <entry file="mps://node://mps.demo.calc#3541037617674586680/mps.demo.calc.generator.template.main@generator/main">
-          <provider selected="true" editor-type-id="MPSFileEditor">
-            <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-              <memento viewPositionX="0" viewPositionY="0">
-                <selectionStack>
-                  <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                    <property name="hasNonTrivialSelection" value="false" />
-                    <property name="caretXRelative" value="44" />
-                    <property name="caretX" value="333" />
-                    <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="templateName" cellNumber="0" isInList="false">
-                      <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/4359921919825885243" />
-                    </cellInfo>
-                  </stackElement>
-                </selectionStack>
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-                <selectionStack />
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </inspectorMemento>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Calculator" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Calculator" pinned="false" current="true" current-in-tab="true">
         <entry file="mps://node://mps.demo.calc/mps.demo.calc.structure/Calculator">
           <provider selected="true" editor-type-id="MPSFileEditor">
             <state class="jetbrains.mps.ide.editorTabs.TabbedEditor$TabbedEditorState">
@@ -170,11 +50,11 @@
                 <selectionStack>
                   <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                     <property name="hasNonTrivialSelection" value="false" />
-                    <property name="caretXRelative" value="12" />
-                    <property name="caretX" value="470" />
+                    <property name="caretXRelative" value="0" />
+                    <property name="caretX" value="47" />
                     <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="property_value" cellNumber="0" isInList="false">
-                      <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/7428975694069640237" />
+                    <cellInfo cellId="Constant_7h2wce_a" cellNumber="0" isInList="false">
+                      <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475641380" />
                     </cellInfo>
                   </stackElement>
                 </selectionStack>
@@ -182,7 +62,7 @@
                 <folded />
                 <enabledHints />
               </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+              <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475641380" viewPositionX="0" viewPositionY="0">
                 <selectionStack />
                 <errorLabels />
                 <folded />
@@ -193,59 +73,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="previewm.d.calc.sandbox/test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
-              <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GetStatusExpression" pinned="false" current="false" current-in-tab="false">
-        <entry file="mps://node://mps.demo.calc/mps.demo.calc.structure/GetStatusExpression">
-          <provider selected="true" editor-type-id="MPSFileEditor">
-            <state class="jetbrains.mps.ide.editorTabs.TabbedEditor$TabbedEditorState">
-              <memento viewPositionX="0" viewPositionY="0">
-                <selectionStack>
-                  <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                    <property name="hasNonTrivialSelection" value="false" />
-                    <property name="caretXRelative" value="4" />
-                    <property name="caretX" value="87" />
-                    <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="property_name" cellNumber="0" isInList="false">
-                      <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/1668115546282225345" />
-                    </cellInfo>
-                  </stackElement>
-                </selectionStack>
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-                <selectionStack />
-                <errorLabels />
-                <folded />
-                <enabledHints />
-              </inspectorMemento>
-              <node node_ref="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/1668115546282225345" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseCalculator" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BaseCalculator" pinned="false" current="false" current-in-tab="false">
         <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/BaseCalculator">
           <provider selected="true" editor-type-id="MPSFileEditor">
             <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-              <memento viewPositionX="0" viewPositionY="0">
+              <memento viewPositionX="0" viewPositionY="1150">
                 <selectionStack>
                   <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                     <property name="hasNonTrivialSelection" value="false" />
                     <property name="caretXRelative" value="12" />
-                    <property name="caretX" value="385" />
+                    <property name="caretX" value="175" />
                     <property name="sideSelectDirection" value="NONE" />
-                    <cellInfo cellId="Constant_msf9u8_a1a" cellNumber="0" isInList="false">
-                      <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" />
+                    <cellInfo cellId="property_name" cellNumber="0" isInList="false">
+                      <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/5991479566475594716" />
                     </cellInfo>
                   </stackElement>
                 </selectionStack>
@@ -253,7 +93,7 @@
                 <folded />
                 <enabledHints />
               </memento>
-              <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+              <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475641380" viewPositionX="0" viewPositionY="0">
                 <selectionStack />
                 <errorLabels />
                 <folded />
@@ -282,10 +122,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1496" />
-    <option name="y" value="-128" />
-    <option name="width" value="1595" />
-    <option name="height" value="1152" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -394,14 +232,6 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="mps">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="mps.demo.calc.generator.template.main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Empty">
@@ -467,7 +297,7 @@
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="FullScreen" value="false" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RunManager" selected="Java Application.Node test">
     <configuration default="false" name="Node test" type="Java Application" factoryName="Java" temporary="true">
@@ -593,40 +423,40 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration" myUseAcceleration="nothing" SSL_PROTOCOLS="all">
-    <configuration>C:\Users\mike\AppData\Roaming\Subversion</configuration>
+    <configuration>$USER_HOME$/.subversion</configuration>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1496" y="-128" width="1595" height="1152" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Usages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Supertypes" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Migration" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Model Checker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="24" side_tool="false" content_ui="tabs" />
       <window_info id="Bookmarks" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Generation Tracer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22479126" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905138" sideWeight="0.49919614" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270142" sideWeight="0.49919614" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24979524" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Classpath Explorer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="RefactoringView" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.4995905" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspector" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3078125" sideWeight="0.5008039" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspector" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30687204" sideWeight="0.5008039" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Node Explorer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Typesystem Trace" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6912367" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Typechecker State" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Dependencies Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30731225" sideWeight="0.49919614" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30687204" sideWeight="0.49919614" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Class Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Cell Explorer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="22" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
@@ -639,8 +469,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Supertypes" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Migration" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Model Checker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="24" side_tool="false" content_ui="tabs" />
@@ -784,24 +614,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/BaseCalculator">
-      <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-          <memento viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </memento>
-          <inspectorMemento currentlyEditedNode="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674599088" viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </inspectorMemento>
-        </state>
-      </provider>
-    </entry>
     <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/trigonometry">
       <provider selected="true" editor-type-id="MPSFileEditor">
         <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
@@ -912,24 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/BaseCalculator">
-      <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-          <memento viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </memento>
-          <inspectorMemento currentlyEditedNode="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674599088" viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </inspectorMemento>
-        </state>
-      </provider>
-    </entry>
     <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/trigonometry">
       <provider selected="true" editor-type-id="MPSFileEditor">
         <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
@@ -1023,24 +817,6 @@
       </provider>
     </entry>
     <entry file="mps://node://JDK/java.awt@java_stub/GridLayout">
-      <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-          <memento viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </memento>
-          <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/4359921919826306930" viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </inspectorMemento>
-        </state>
-      </provider>
-    </entry>
-    <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/BaseCalculator">
       <provider selected="true" editor-type-id="MPSFileEditor">
         <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
           <memento viewPositionX="0" viewPositionY="0">
@@ -1496,8 +1272,8 @@
                 </cellInfo>
               </stackElement>
               <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                <property name="selectionEnd" value="28" />
                 <property name="hasNonTrivialSelection" value="true" />
+                <property name="selectionEnd" value="28" />
                 <property name="caretXRelative" value="140" />
                 <property name="selectionStart" value="0" />
                 <property name="caretX" value="417" />
@@ -1553,34 +1329,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/trigonometry">
-      <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-          <memento viewPositionX="0" viewPositionY="0">
-            <selectionStack>
-              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="24" />
-                <property name="caretX" value="417" />
-                <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="property_key" cellNumber="0" isInList="false">
-                  <node node_reference="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/1668115546281967401" />
-                </cellInfo>
-              </stackElement>
-            </selectionStack>
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </inspectorMemento>
-        </state>
-      </provider>
-    </entry>
     <entry file="mps://node://mps.demo.calc/mps.demo.calc.structure/GetStatusExpression">
       <provider selected="true" editor-type-id="MPSFileEditor">
         <state class="jetbrains.mps.ide.editorTabs.TabbedEditor$TabbedEditorState">
@@ -1589,10 +1337,10 @@
               <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                 <property name="hasNonTrivialSelection" value="false" />
                 <property name="caretXRelative" value="4" />
-                <property name="caretX" value="87" />
+                <property name="caretX" value="183" />
                 <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="property_name" cellNumber="0" isInList="false">
-                  <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/1668115546282225345" />
+                <cellInfo cellId="property_conceptShortDescription" cellNumber="0" isInList="false">
+                  <node node_reference="r:c2c61bec-e8f3-4009-a1a5-a9a48977fc61(mps.demo.calc.structure)/1668115546281636612" />
                 </cellInfo>
               </stackElement>
             </selectionStack>
@@ -1600,13 +1348,13 @@
             <folded />
             <enabledHints />
           </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+          <inspectorMemento currentlyEditedNode="r:c2c61bec-e8f3-4009-a1a5-a9a48977fc61(mps.demo.calc.structure)/1668115546281636612" viewPositionX="0" viewPositionY="0">
             <selectionStack />
             <errorLabels />
             <folded />
             <enabledHints />
           </inspectorMemento>
-          <node node_ref="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/1668115546282225345" />
+          <node node_ref="r:c2c61bec-e8f3-4009-a1a5-a9a48977fc61(mps.demo.calc.structure)/1668115546281636612" />
         </state>
       </provider>
     </entry>
@@ -1617,11 +1365,11 @@
             <selectionStack>
               <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                 <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="84" />
-                <property name="caretX" value="223" />
+                <property name="caretXRelative" value="0" />
+                <property name="caretX" value="15" />
                 <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="ReferencePresentation_91bvrs_a0a0" cellNumber="0" isInList="false">
-                  <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/3541037617674753166" />
+                <cellInfo cellId="ALIAS_EDITOR_COMPONENT" cellNumber="0" isInList="false">
+                  <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/3541037617674733904" />
                 </cellInfo>
               </stackElement>
             </selectionStack>
@@ -1629,69 +1377,12 @@
             <folded />
             <enabledHints />
           </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/3541037617674733904" viewPositionX="0" viewPositionY="0">
             <selectionStack />
             <errorLabels />
             <folded />
             <enabledHints />
           </inspectorMemento>
-        </state>
-      </provider>
-    </entry>
-    <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/BaseCalculator">
-      <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
-          <memento viewPositionX="0" viewPositionY="0">
-            <selectionStack>
-              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="12" />
-                <property name="caretX" value="385" />
-                <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="Constant_msf9u8_a1a" cellNumber="0" isInList="false">
-                  <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" />
-                </cellInfo>
-              </stackElement>
-            </selectionStack>
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </inspectorMemento>
-        </state>
-      </provider>
-    </entry>
-    <entry file="mps://node://mps.demo.calc/mps.demo.calc.structure/UserFunction">
-      <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editorTabs.TabbedEditor$TabbedEditorState">
-          <memento viewPositionX="0" viewPositionY="0">
-            <selectionStack>
-              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
-                <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="4" />
-                <property name="caretX" value="451" />
-                <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="Constant_29llnk_a0" cellNumber="0" isInList="false">
-                  <node node_reference="r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)/3541037617674719383" />
-                </cellInfo>
-              </stackElement>
-            </selectionStack>
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </memento>
-          <inspectorMemento currentlyEditedNode="r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)/3541037617674719383" viewPositionX="0" viewPositionY="0">
-            <selectionStack />
-            <errorLabels />
-            <folded />
-            <enabledHints />
-          </inspectorMemento>
-          <node node_ref="r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)/3541037617674591973" />
         </state>
       </provider>
     </entry>
@@ -1722,18 +1413,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/test">
+    <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/trigonometry">
       <provider selected="true" editor-type-id="MPSFileEditor">
         <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
           <memento viewPositionX="0" viewPositionY="0">
             <selectionStack>
               <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                 <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="20" />
-                <property name="caretX" value="119" />
+                <property name="caretXRelative" value="4" />
+                <property name="caretX" value="103" />
                 <property name="sideSelectDirection" value="NONE" />
                 <cellInfo cellId="property_name" cellNumber="0" isInList="false">
-                  <node node_reference="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674599088" />
+                  <node node_reference="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674727393" />
                 </cellInfo>
               </stackElement>
             </selectionStack>
@@ -1741,7 +1432,7 @@
             <folded />
             <enabledHints />
           </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+          <inspectorMemento currentlyEditedNode="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674727393" viewPositionX="0" viewPositionY="0">
             <selectionStack />
             <errorLabels />
             <folded />
@@ -1750,18 +1441,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="mps://node://mps.demo.calc#3541037617674586680/mps.demo.calc.generator.template.main@generator/main">
+    <entry file="mps://node://mps.demo.calc/mps.demo.calc.structure/UserFunction">
       <provider selected="true" editor-type-id="MPSFileEditor">
-        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
+        <state class="jetbrains.mps.ide.editorTabs.TabbedEditor$TabbedEditorState">
           <memento viewPositionX="0" viewPositionY="0">
             <selectionStack>
               <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                 <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="44" />
-                <property name="caretX" value="333" />
+                <property name="caretXRelative" value="4" />
+                <property name="caretX" value="231" />
                 <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="templateName" cellNumber="0" isInList="false">
-                  <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/4359921919825885243" />
+                <cellInfo cellId="property_name" cellNumber="0" isInList="false">
+                  <node node_reference="r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)/3541037617674591976" />
                 </cellInfo>
               </stackElement>
             </selectionStack>
@@ -1769,12 +1460,13 @@
             <folded />
             <enabledHints />
           </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+          <inspectorMemento currentlyEditedNode="r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)/3541037617674591976" viewPositionX="0" viewPositionY="0">
             <selectionStack />
             <errorLabels />
             <folded />
             <enabledHints />
           </inspectorMemento>
+          <node node_ref="r:bfe389b5-6770-43ab-99bd-893965a9fd3e(mps.demo.calc.typesystem)/3541037617674591973" />
         </state>
       </provider>
     </entry>
@@ -1785,11 +1477,11 @@
             <selectionStack>
               <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
                 <property name="hasNonTrivialSelection" value="false" />
-                <property name="caretXRelative" value="12" />
-                <property name="caretX" value="470" />
+                <property name="caretXRelative" value="0" />
+                <property name="caretX" value="47" />
                 <property name="sideSelectDirection" value="NONE" />
-                <cellInfo cellId="property_value" cellNumber="0" isInList="false">
-                  <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/7428975694069640237" />
+                <cellInfo cellId="Constant_7h2wce_a" cellNumber="0" isInList="false">
+                  <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475641380" />
                 </cellInfo>
               </stackElement>
             </selectionStack>
@@ -1797,13 +1489,126 @@
             <folded />
             <enabledHints />
           </memento>
-          <inspectorMemento currentlyEditedNode="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/4359921919825883194" viewPositionX="0" viewPositionY="0">
+          <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475641380" viewPositionX="0" viewPositionY="0">
             <selectionStack />
             <errorLabels />
             <folded />
             <enabledHints />
           </inspectorMemento>
           <node node_ref="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/4359921919825889022" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="mps://node://mps.demo.calc#3541037617674586680/mps.demo.calc.generator.template.main@generator/main">
+      <provider selected="true" editor-type-id="MPSFileEditor">
+        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
+          <memento viewPositionX="0" viewPositionY="0">
+            <selectionStack>
+              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
+                <property name="hasNonTrivialSelection" value="false" />
+                <property name="caretXRelative" value="36" />
+                <property name="caretX" value="325" />
+                <property name="sideSelectDirection" value="NONE" />
+                <cellInfo cellId="templateName" cellNumber="0" isInList="false">
+                  <node node_reference="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/4359921919825885243" />
+                </cellInfo>
+              </stackElement>
+            </selectionStack>
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </memento>
+          <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475105817" viewPositionX="0" viewPositionY="0">
+            <selectionStack />
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </inspectorMemento>
+        </state>
+      </provider>
+    </entry>
+    <entry file="mps://node://mps.demo.calc.sandbox/mps.demo.calc.sandbox/test">
+      <provider selected="true" editor-type-id="MPSFileEditor">
+        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
+          <memento viewPositionX="0" viewPositionY="0">
+            <selectionStack>
+              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
+                <property name="hasNonTrivialSelection" value="false" />
+                <property name="caretXRelative" value="36" />
+                <property name="caretX" value="231" />
+                <property name="sideSelectDirection" value="NONE" />
+                <cellInfo cellId="property_stdOps" cellNumber="0" isInList="false">
+                  <node node_reference="r:801632ea-c8a0-43bd-8638-55a16cc50fd8(mps.demo.calc.sandbox)/3541037617674599088" />
+                </cellInfo>
+              </stackElement>
+            </selectionStack>
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </memento>
+          <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475532286" viewPositionX="0" viewPositionY="0">
+            <selectionStack />
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </inspectorMemento>
+        </state>
+      </provider>
+    </entry>
+    <entry file="mps://node://mps.demo.calc.runtime/mps.demo.calc.runtime/BaseCalculator">
+      <provider selected="true" editor-type-id="MPSFileEditor">
+        <state class="jetbrains.mps.ide.editor.BaseNodeEditor$BaseEditorState">
+          <memento viewPositionX="0" viewPositionY="1150">
+            <selectionStack>
+              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
+                <property name="hasNonTrivialSelection" value="false" />
+                <property name="caretXRelative" value="12" />
+                <property name="caretX" value="175" />
+                <property name="sideSelectDirection" value="NONE" />
+                <cellInfo cellId="property_name" cellNumber="0" isInList="false">
+                  <node node_reference="r:bdbe17a1-deb9-4302-8eef-29e52358ba63(mps.demo.calc.runtime)/5991479566475594716" />
+                </cellInfo>
+              </stackElement>
+            </selectionStack>
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </memento>
+          <inspectorMemento currentlyEditedNode="r:e9b20125-2a55-454a-9652-2f5ffffc0d04(mps.demo.calc.generator.template.main@generator)/5991479566475641380" viewPositionX="0" viewPositionY="0">
+            <selectionStack />
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </inspectorMemento>
+        </state>
+      </provider>
+    </entry>
+    <entry file="mps://node://jetbrains.mps.baseLanguage.closures/jetbrains.mps.baseLanguage.closures.structure/FunctionType">
+      <provider selected="true" editor-type-id="MPSFileEditor">
+        <state class="jetbrains.mps.ide.editorTabs.TabbedEditor$TabbedEditorState">
+          <memento viewPositionX="0" viewPositionY="0">
+            <selectionStack>
+              <stackElement className="jetbrains.mps.nodeEditor.selection.EditorCellLabelSelection">
+                <property name="hasNonTrivialSelection" value="false" />
+                <property name="caretXRelative" value="0" />
+                <property name="caretX" value="15" />
+                <property name="sideSelectDirection" value="NONE" />
+                <cellInfo cellId="Constant_ueqr71_c0a" cellNumber="0" isInList="false">
+                  <node node_reference="r:00000000-0000-4000-0000-011c89590338(jetbrains.mps.baseLanguage.closures.structure)/1199542442495" />
+                </cellInfo>
+              </stackElement>
+            </selectionStack>
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </memento>
+          <inspectorMemento currentlyEditedNode="r:00000000-0000-4000-0000-011c89590338(jetbrains.mps.baseLanguage.closures.structure)/1199542442495" viewPositionX="0" viewPositionY="0">
+            <selectionStack />
+            <errorLabels />
+            <folded />
+            <enabledHints />
+          </inspectorMemento>
+          <node node_ref="r:00000000-0000-4000-0000-011c89590338(jetbrains.mps.baseLanguage.closures.structure)/1199542442495" />
         </state>
       </provider>
     </entry>

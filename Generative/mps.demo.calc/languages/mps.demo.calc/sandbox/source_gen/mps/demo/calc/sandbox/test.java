@@ -6,6 +6,7 @@ import mps.demo.calc.runtime.BaseCalculator;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import jetbrains.mps.baseLanguage.closures.runtime._FunctionTypes;
 
 public class test extends BaseCalculator {
   public test() {
@@ -16,8 +17,35 @@ public class test extends BaseCalculator {
       for (char digit : new char[]{'7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'}) {
         digits.add(new BaseCalculator.Digit(digit + "", digit));
       }
+      digits.add(new BaseCalculator.Sign("-"));
       add(digits, BorderLayout.WEST);
     }
+    {
+      JPanel stdOps = new JPanel(new GridLayout(0, 1, 10, 10));
+      stdOps.add(new BaseCalculator.BinOp("+", new _FunctionTypes._return_P2_E0<Double, Double, Double>() {
+        public Double invoke(Double a, Double b) {
+          return a + b;
+        }
+      }));
+      stdOps.add(new BaseCalculator.BinOp("-", new _FunctionTypes._return_P2_E0<Double, Double, Double>() {
+        public Double invoke(Double a, Double b) {
+          return a - b;
+        }
+      }));
+      stdOps.add(new BaseCalculator.BinOp("*", new _FunctionTypes._return_P2_E0<Double, Double, Double>() {
+        public Double invoke(Double a, Double b) {
+          return a * b;
+        }
+      }));
+      stdOps.add(new BaseCalculator.BinOp("/", new _FunctionTypes._return_P2_E0<Double, Double, Double>() {
+        public Double invoke(Double a, Double b) {
+          return a / b;
+        }
+      }));
+
+    }
+
+    setSize(300, 300);
   }
 
 

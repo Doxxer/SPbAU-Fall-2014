@@ -12,6 +12,7 @@
   <root type="zqqo.Calculator" typeId="zqqo.3541037617674586790" id="3541037617674599088" nodeInfo="ng">
     <property name="name" nameId="tpck.1169194664001" value="test" />
     <property name="digits" nameId="zqqo.3541037617674586847" value="true" />
+    <property name="stdOps" nameId="zqqo.3541037617674586856" value="true" />
     <node role="userFun" roleId="zqqo.3541037617674599142" type="zqqo.UserFunction" typeId="zqqo.3541037617674591945" id="3541037617674610503" nodeInfo="ng">
       <property name="label" nameId="zqqo.3541037617674591948" value="pi" />
       <node role="function" roleId="zqqo.3541037617674591946" type="tp2c.ClosureLiteral" typeId="tp2c.1199569711397" id="3541037617674617197" nodeInfo="nn">

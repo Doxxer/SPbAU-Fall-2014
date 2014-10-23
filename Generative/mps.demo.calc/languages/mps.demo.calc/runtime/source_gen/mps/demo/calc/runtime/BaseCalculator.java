@@ -31,12 +31,138 @@ public class BaseCalculator extends JFrame {
 
 
 
+  public void updateDisplay() {
+    if ((input != null && input.length() > 0)) {
+      indicator.setText(input);
+    } else {
+      indicator.setText(value1 + "");
+    }
+  }
+
+
+
+  protected void addToInput(char ch) {
+    if (ch == '0' && input.equals("0")) {
+    } else if (ch == '.' && input.contains(".")) {
+    } else {
+      input += ch;
+    }
+  }
+
+
+
+  protected void applyUnOp(_FunctionTypes._return_P1_E0<? extends Double, ? super Double> op) {
+    curOp = null;
+    if ((input != null && input.length() > 0)) {
+      value1 = Double.parseDouble(input);
+      input = "";
+    }
+    value1 = op.invoke(value1);
+  }
+
+
+
+  protected void applyBinOp() {
+    if ((input != null && input.length() > 0)) {
+      value1 = Double.parseDouble(input);
+      input = "";
+      value1 = curOp.invoke(value2, value1);
+    }
+  }
+
+
+
   public class Digit extends JButton {
     public Digit(String label, final char value) {
       super(label);
       addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent p0) {
-          input += value;
+          addToInput(value);
+          updateDisplay();
+        }
+      });
+    }
+  }
+
+
+
+  public class Sign extends JButton {
+    public Sign(String label) {
+      super(label);
+
+      addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent p0) {
+          if (input.startsWith("-")) {
+            input = input.substring(1);
+          } else {
+            input = "-" + input;
+          }
+          updateDisplay();
+        }
+      });
+    }
+  }
+
+
+
+  public class UnOp extends JButton {
+    public UnOp(String label, final _FunctionTypes._return_P1_E0<? extends Double, ? super Double> op) {
+      super(label);
+      addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent p0) {
+          applyUnOp(op);
+          updateDisplay();
+        }
+      });
+    }
+  }
+
+
+
+  public class BinOp extends JButton {
+    public BinOp(String label, final _FunctionTypes._return_P2_E0<? extends Double, ? super Double, ? super Double> op) {
+      super(label);
+      addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent p0) {
+          if ((input != null && input.length() > 0)) {
+            value1 = Double.parseDouble(input);
+            input = "";
+          }
+          if (curOp != null) {
+            applyBinOp();
+          }
+          value2 = value1;
+          curOp = op;
+          updateDisplay();
+        }
+      });
+    }
+  }
+
+
+
+  public class NulOp extends JButton {
+    public NulOp(String label, final _FunctionTypes._return_P0_E0<? extends Double> op) {
+      super(label);
+      addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent p0) {
+          input = "";
+          value1 = op.invoke();
+        }
+      });
+    }
+  }
+
+
+
+
+  public class Equals extends JButton {
+    public Equals(String label) {
+      super(label);
+      addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent p0) {
+          applyBinOp();
+          updateDisplay();
         }
       });
     }
