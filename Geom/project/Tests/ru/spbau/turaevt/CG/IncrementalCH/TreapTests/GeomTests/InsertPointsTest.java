@@ -39,15 +39,15 @@ public class InsertPointsTest extends TestPolygon {
 
             init();
             deletedPoints = convexHull.insertPointToTreap(convexHull.getUpperTreap(), new Point(0, 9, 5, Point.UPPER_CHAIN), PointToLinePosition.Right);
-            Assert.assertArrayEquals(getPointsFromIndexToIndex(0, 1), deletedPoints.toArray());
+            Assert.assertArrayEquals(getPointsFromIndexToIndex(1, 1), deletedPoints.toArray());
 
             init();
             deletedPoints = convexHull.insertPointToTreap(convexHull.getUpperTreap(), new Point(0, 8, 5, Point.UPPER_CHAIN), PointToLinePosition.Right);
-            Assert.assertArrayEquals(getPointsFromIndexToIndex(0, 1), deletedPoints.toArray());
+            Assert.assertArrayEquals(getPointsFromIndexToIndex(1, 1), deletedPoints.toArray());
 
             init();
             deletedPoints = convexHull.insertPointToTreap(convexHull.getUpperTreap(), new Point(0, 7, 5, Point.UPPER_CHAIN), PointToLinePosition.Right);
-            Assert.assertArrayEquals(getPointsFromIndexToIndex(0, 1), deletedPoints.toArray());
+            Assert.assertArrayEquals(getPointsFromIndexToIndex(1, 1), deletedPoints.toArray());
 
             init();
             deletedPoints = convexHull.insertPointToTreap(convexHull.getUpperTreap(), new Point(1, 9, 5, Point.UPPER_CHAIN), PointToLinePosition.Right);
@@ -173,7 +173,7 @@ public class InsertPointsTest extends TestPolygon {
 
         init();
         deletedPoints = convexHull.insertPointToTreap(convexHull.getLowerTreap(), new Point(14, 0, 10, Point.LOWER_CHAIN), PointToLinePosition.Left);
-        Assert.assertArrayEquals(getPointsFromIndexToIndex(7, 8), deletedPoints.toArray());
+        Assert.assertArrayEquals(getPointsFromIndexToIndex(7, 7), deletedPoints.toArray());
 
         init();
         deletedPoints = convexHull.insertPointToTreap(convexHull.getLowerTreap(), new Point(6, 1, 10, Point.LOWER_CHAIN), PointToLinePosition.Left);

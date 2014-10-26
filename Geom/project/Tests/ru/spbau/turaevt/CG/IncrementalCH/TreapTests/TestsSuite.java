@@ -14,6 +14,7 @@ import ru.spbau.turaevt.CG.IncrementalCH.TreapTests.TreapTests.TreapFindTest;
         LocateTest.class,
         FindSupportPoints.class,
         InsertPointsTest.class,
+        TestDrawPolygon.class,
 })
 public class TestsSuite {
 

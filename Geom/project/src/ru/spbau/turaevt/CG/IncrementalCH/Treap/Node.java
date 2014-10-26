@@ -62,4 +62,13 @@ public class Node<T> {
     public int getPriority() {
         return priority;
     }
+
+    public int size() {
+        int result = 1;
+        if (left != null)
+            result += left.size();
+        if (right != null)
+            result += right.size();
+        return result;
+    }
 }

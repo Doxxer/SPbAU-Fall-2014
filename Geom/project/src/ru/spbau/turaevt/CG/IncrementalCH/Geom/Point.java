@@ -12,13 +12,15 @@ public class Point implements Cloneable, Comparable<Point> {
     private final long x;
     private final long y;
     private final int index;
-    public int chain;
+    private int chain;
+    private boolean margin;
 
     public Point(long x, long y, int index) {
         this.x = x;
         this.y = y;
         this.index = index;
         chain = 0;
+        margin = false;
     }
 
     public Point(long x, long y, int index, int chain) {
@@ -26,7 +28,7 @@ public class Point implements Cloneable, Comparable<Point> {
         this.y = y;
         this.index = index;
         this.chain = chain;
-
+        margin = false;
     }
 
     public Point(Point p) {
@@ -34,7 +36,20 @@ public class Point implements Cloneable, Comparable<Point> {
         y = p.y;
         index = p.index;
         chain = p.chain;
+        margin = false;
     }
+
+    public Point(Point p, int chain) {
+        x = p.x;
+        y = p.y;
+        index = p.index;
+        this.chain = chain;
+        margin = false;
+    }
+
+//    public void setChain(int chain) {
+//        this.chain = chain;
+//    }
 
     public PointToLinePosition classify(Edge edge) {
         Point p = this;
@@ -111,10 +126,7 @@ public class Point implements Cloneable, Comparable<Point> {
     }
 
     private boolean isEqual(Point point) {
-        if (x != point.x) return false;
-        if (y != point.y) return false;
-
-        return true;
+        return x == point.x && y == point.y;
     }
 
     @Override
@@ -135,10 +147,10 @@ public class Point implements Cloneable, Comparable<Point> {
             throw new IllegalStateException("Other point must have chain");
         }
         if (x == other.x) {
-            if (other.isOnUpperChain())
+//            if (other.isOnUpperChain()) TODO delete comments
                 return (int) (y - other.y);
-            else
-                return (int) (other.y - y);
+//            else
+//                return (int) (other.y - y);
         } else return (int) (x - other.x);
     }
 
@@ -150,8 +162,8 @@ public class Point implements Cloneable, Comparable<Point> {
         return (chain & LOWER_CHAIN) != 0;
     }
 
-    public boolean isOnBothChains() {
-        return isOnUpperChain() && isOnBottomChain();
+    public boolean isMargin() {
+        return margin;
     }
 
     public long getX() {
@@ -164,5 +176,9 @@ public class Point implements Cloneable, Comparable<Point> {
 
     public long getY() {
         return y;
+    }
+
+    public void setMargin(boolean margin) {
+        this.margin = margin;
     }
 }

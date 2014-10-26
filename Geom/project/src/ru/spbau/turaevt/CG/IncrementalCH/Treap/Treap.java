@@ -100,4 +100,9 @@ public class Treap<T extends Comparable<T>> {
         Pair<Node<T>, Node<T>> splitted = split(root, key);
         return new Pair<>(splitted.first, splitted.second);
     }
+
+    public int size()
+    {
+        return root == null ? 0 : root.size();
+    }
 }

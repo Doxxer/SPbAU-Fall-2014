@@ -1,13 +1,14 @@
 JFLAGS = -g
 JC = javac
 JVM= java
-MAIN = Main
+MAIN = ru.spbau.turaevt.CG.IncrementalCH.Main
 
 src = src
 builddir = out
+package = ru/spbau/turaevt/CG/IncrementalCH
 
 .SUFFIXES: .java .class
-CLASSES = $(wildcard $(src)/*.java)
+CLASSES = $(wildcard $(src)/$(package)/*.java)
 
 default: $(builddir) classes
 
@@ -20,7 +21,7 @@ classes: $(CLASSES:.java=.class)
 	$(JC) $(JFLAGS) $*.java -d $(builddir) -cp $(src)
 
 run:
-	$(JVM) -cp $(builddir) $(MAIN) input.txt
+	$(JVM) -cp $(builddir) $(MAIN)
 
 clean:
 	rm -rf $(builddir)

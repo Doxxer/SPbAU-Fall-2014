@@ -9,9 +9,9 @@ import java.awt.*;
 class Main implements GUIDelegate {
     private final Polygon polygon;
     private int index;
-    private GUI gui;
+    private final GUI gui;
 
-    public Main() {
+    private Main() {
         index = 0;
         gui = new GUI(this, 800, 600);
         polygon = new Polygon();
@@ -19,10 +19,6 @@ class Main implements GUIDelegate {
 
     public static void main(String[] args) {
         new Main();
-    }
-
-    @Override
-    public void mouseMoved(int x, int y) {
     }
 
     @Override
@@ -44,7 +40,6 @@ class Main implements GUIDelegate {
 
         if (keyCode == 27) {
             reset();
-
         }
     }
 

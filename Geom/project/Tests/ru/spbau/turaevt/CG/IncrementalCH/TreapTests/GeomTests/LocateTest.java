@@ -39,8 +39,13 @@ public class LocateTest extends TestPolygon {
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(33, 14, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(-1, 4, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(110, 0, 0)) == expected);
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(14, 0, 0)) != expected);
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 0, 0)) != expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(14, 0, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 0, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 7, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 71, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 2, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 0, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(14, 1, 0)) == expected);
         }
     }
 
@@ -64,12 +69,11 @@ public class LocateTest extends TestPolygon {
         for (int i = 0; i < testsCount; i++) {
             init();
             PointToConvexHullPosition expected = PointToConvexHullPosition.ABOVE;
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 7, 0)) == expected);
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 71, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(1, 9, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(2, 10, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(6, 10, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(10, 10, 0)) == expected);
+            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(12, 9, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(112, 10, 0)) != expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(10, 8, 0)) != expected);
         }
@@ -80,10 +84,7 @@ public class LocateTest extends TestPolygon {
         for (int i = 0; i < testsCount; i++) {
             init();
             PointToConvexHullPosition expected = PointToConvexHullPosition.BELOW;
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 2, 0)) == expected);
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(0, 0, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(4, 1, 0)) == expected);
-            Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(14, 1, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(2, -10, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(6, -10, 0)) == expected);
             Assert.assertTrue(convexHull.LocatePointPositionToConvexHull(new Point(10, -10, 0)) == expected);

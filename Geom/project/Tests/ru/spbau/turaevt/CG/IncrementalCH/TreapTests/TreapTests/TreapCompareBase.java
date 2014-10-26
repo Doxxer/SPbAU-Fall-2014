@@ -9,7 +9,7 @@ import ru.spbau.turaevt.CG.IncrementalCH.Treap.Node;
  * Created by Turaev Timur on 22.10.14.
  */
 public class TreapCompareBase {
-    protected void checkLessEqual(Node<Point> node, Point key) {
+    void checkLessEqual(Node<Point> node, Point key) {
         if (node == null) {
             return;
         }
@@ -18,7 +18,7 @@ public class TreapCompareBase {
         checkLessEqual(node.right, key);
     }
 
-    protected void checkGreater(Node<Point> node, Point key) {
+    void checkGreater(Node<Point> node, Point key) {
         if (node == null) {
             return;
         }

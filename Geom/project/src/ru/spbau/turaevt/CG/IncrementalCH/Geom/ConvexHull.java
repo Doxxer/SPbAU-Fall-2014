@@ -3,7 +3,6 @@ package ru.spbau.turaevt.CG.IncrementalCH.Geom;
 import ru.spbau.turaevt.CG.IncrementalCH.Treap.Node;
 import ru.spbau.turaevt.CG.IncrementalCH.Treap.Pair;
 import ru.spbau.turaevt.CG.IncrementalCH.Treap.Treap;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -14,6 +13,9 @@ import java.util.ArrayList;
 public class ConvexHull {
     private Treap<Point> upperTreap;
     private Treap<Point> lowerTreap;
+
+    private Point lastAddedToUpperTreap;
+    private Point lastAddedToLowerTreap;
 
     public ConvexHull() {
         upperTreap = new Treap<>();
@@ -36,61 +38,75 @@ public class ConvexHull {
      * @param p point to be inserted
      * @throws UnlocatablePosition if point position is unlocatable
      */
-    public void insertPoint(Point p) throws UnlocatablePosition, NotImplementedException {
+    public void insertPoint(Point p) throws UnlocatablePosition {
         PointToConvexHullPosition position = LocatePointPositionToConvexHull(p);
         switch (position) {
             case IN:
             case ON:
-                p.chain = 0;
                 break;
             case ABOVE:
-                p.chain = Point.UPPER_CHAIN;
-                insertPointToTreap(upperTreap, p, PointToLinePosition.Right);
+                insertToUpperChain(p);
                 break;
             case BELOW:
-                p.chain = Point.LOWER_CHAIN;
-                insertPointToTreap(lowerTreap, p, PointToLinePosition.Left);
+                insertToLowerChain(p);
                 break;
             case OUT:
-                p.chain = Point.LOWER_CHAIN + Point.UPPER_CHAIN;
-                insertPointToTreap(upperTreap, p, PointToLinePosition.Right);
-                insertPointToTreap(lowerTreap, p, PointToLinePosition.Left);
+                insertToUpperChain(p);
+                insertToLowerChain(p);
                 break;
         }
+    }
+
+    private void insertToLowerChain(Point p) throws UnlocatablePosition {
+        if (lastAddedToLowerTreap != null)
+            lastAddedToLowerTreap.setMargin(false);
+        Point pointToInsert = new Point(p, Point.LOWER_CHAIN);
+        insertPointToTreap(lowerTreap, pointToInsert, PointToLinePosition.Left);
+        lastAddedToLowerTreap = pointToInsert;
+    }
+
+    private void insertToUpperChain(Point p) throws UnlocatablePosition {
+        if (lastAddedToUpperTreap != null)
+            lastAddedToLowerTreap.setMargin(false);
+        Point pointToInsert = new Point(p, Point.UPPER_CHAIN);
+        insertPointToTreap(upperTreap, pointToInsert, PointToLinePosition.Right);
+        lastAddedToUpperTreap = pointToInsert;
     }
 
     public ArrayList<Point> insertPointToTreap(Treap<Point> treap, Point p, PointToLinePosition insidePosition) throws UnlocatablePosition {
         Pair<Point, Point> supportPoints = findSupportPoints(treap, p, insidePosition);
         Point left = supportPoints.first;
         Point right = supportPoints.second;
+        ArrayList<Point> result = new ArrayList<>();
 
-        if (right == null || left == null) {
-            treap.add(new Point(p));
-            return new ArrayList<>();
+        if (right != null && left != null) {
+            Pair<Node<Point>, Node<Point>> splitLeft = treap.split(left);
+            Node<Point> L = splitLeft.first;
+            L = treap.remove(L, left);
+
+            Pair<Node<Point>, Node<Point>> splitRight = new Treap<>(splitLeft.second).split(right);
+            Node<Point> removedWithRight = splitRight.first;
+            Node<Point> R = splitRight.second;
+
+            result = convertToArray(removedWithRight, right);
+
+            treap.setRoot(treap.merge(L, R));
+            if (p.compareTo(right) < 0) {
+                treap.add(right);
+            } else {
+                result.add(right);
+            }
+            treap.add(p);
+            if (left.compareTo(p) < 0) {
+                treap.add(left);
+            } else {
+                result.add(0, left);
+            }
+        } else if (left != null || right != null || treap.size() < 2) {
+            treap.add(p);
         }
-
-        Pair<Node<Point>, Node<Point>> splitLeft = treap.split(left);
-        Node<Point> L = splitLeft.first;
-        L = treap.remove(L, left);
-
-        Pair<Node<Point>, Node<Point>> splitRight = new Treap<>(splitLeft.second).split(right);
-        Node<Point> removedWithRight = splitRight.first;
-        Node<Point> R = splitRight.second;
-
-        ArrayList<Point> result = convertToArray(removedWithRight, right);
-
-        treap.setRoot(treap.merge(L, R));
-        if (p.getX() < right.getX()) {
-            treap.add(right);
-        } else {
-            result.add(right);
-        }
-        treap.add(new Point(p));
-        if (left.getX() < p.getX()) {
-            treap.add(left);
-        } else {
-            result.add(0, left);
-        }
+        treap.getRoot().min().getData().setMargin(true);
+        treap.getRoot().max().getData().setMargin(true);
         return result;
     }
 
@@ -119,25 +135,43 @@ public class ConvexHull {
 
     public PointToConvexHullPosition LocatePointPositionToConvexHull(Point p) throws UnlocatablePosition {
         Pair<Edge, Edge> bounds = LocateBoundEdges(p);
+
         VerticalPosition up = p.classifyVerticalPosition(bounds.first);
         VerticalPosition down = p.classifyVerticalPosition(bounds.second);
-
-        if (up == VerticalPosition.OUT || down == VerticalPosition.OUT) {
-            return PointToConvexHullPosition.OUT;
-        }
         if (up == VerticalPosition.ON || down == VerticalPosition.ON) {
             return PointToConvexHullPosition.ON;
+        }
+        if (up != down) {
+            return PointToConvexHullPosition.IN;
+        }
+        if (isOnMargin(p, bounds.first) || isOnMargin(p, bounds.second)) {
+            return PointToConvexHullPosition.OUT;
+        }
+
+        if (up == VerticalPosition.OUT) {
+            return PointToConvexHullPosition.OUT;
         }
         if (up == VerticalPosition.ABOVE) {
             return PointToConvexHullPosition.ABOVE;
         }
-        if (down == VerticalPosition.BELOW) {
+        if (up == VerticalPosition.BELOW) {
             return PointToConvexHullPosition.BELOW;
         }
-        return PointToConvexHullPosition.IN;
+        throw new UnlocatablePosition("wat");
     }
 
-    public Pair<Point, Point> findSupportPoints(Treap<Point> treap, Point p, PointToLinePosition insidePosition) throws UnlocatablePosition {
+    private boolean isOnMargin(Point p, Edge edge) {
+        if (edge == null) {
+            return false;
+        }
+        if (edge.first != null && edge.first.isMargin() && p.getX() == edge.first.getX())
+            return true;
+        if (edge.second != null && edge.second.isMargin() && p.getX() == edge.second.getX())
+            return true;
+        return false;
+    }
+
+    public Pair<Point, Point> findSupportPoints(Treap<Point> treap, Point p, PointToLinePosition insidePosition) {
         Pair<Edge, Edge> boundEdges = LocateBoundEdges(p);
         Edge edge = insidePosition == PointToLinePosition.Right ? boundEdges.first : boundEdges.second;
 

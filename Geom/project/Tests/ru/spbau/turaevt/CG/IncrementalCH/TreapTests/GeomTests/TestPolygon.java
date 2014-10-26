@@ -8,37 +8,40 @@ import java.util.ArrayList;
 
 /**
  * Test Polygon
- *
+ * <p/>
  * Created by Turaev Timur on 22.10.14.
  */
 public class TestPolygon {
-    protected ConvexHull convexHull;
-    protected ArrayList<Point> pointList;
+    ConvexHull convexHull;
+    ArrayList<Point> pointList;
 
-    protected void init() {
+    void init() {
         convexHull = new ConvexHull();
 
         Treap<Point> upper = new Treap<>();
         Treap<Point> lower = new Treap<>();
 
         pointList = new ArrayList<>();
-        pointList.add(new Point(0, 4, 0));
-        pointList.add(new Point(1, 7, 1));
-        pointList.add(new Point(6, 9, 2));
-        pointList.add(new Point(12, 8, 3));
-        pointList.add(new Point(14, 5, 4));
+        pointList.add(new Point(0, 4, 0, Point.UPPER_CHAIN));
+        pointList.add(new Point(1, 7, 1, Point.UPPER_CHAIN));
+        pointList.add(new Point(6, 9, 2, Point.UPPER_CHAIN));
+        pointList.add(new Point(12, 8, 3, Point.UPPER_CHAIN));
+        pointList.add(new Point(14, 5, 4, Point.UPPER_CHAIN));
 
-        pointList.add(new Point(0, 4, 5));
-        pointList.add(new Point(4, 2, 6));
-        pointList.add(new Point(10, 3, 7));
-        pointList.add(new Point(14, 5, 8));
+        pointList.add(new Point(0, 4, 5, Point.LOWER_CHAIN));
+        pointList.add(new Point(4, 2, 6, Point.LOWER_CHAIN));
+        pointList.add(new Point(10, 3, 7, Point.LOWER_CHAIN));
+        pointList.add(new Point(14, 5, 8, Point.LOWER_CHAIN));
 
         for (Point p : pointList) {
+            if (p.getIndex() == 0 ||
+                    p.getIndex() == 4 ||
+                    p.getIndex() == 14) {
+                p.setMargin(true);
+            }
             if (p.getIndex() <= 4) {
-                p.chain += Point.UPPER_CHAIN;
-                upper.add(p);                
+                upper.add(p);
             } else {
-                p.chain += Point.LOWER_CHAIN;
                 lower.add(p);
             }
         }

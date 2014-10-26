@@ -1,11 +1,12 @@
 package ru.spbau.turaevt.CG.IncrementalCH;
 
-import ru.spbau.turaevt.CG.IncrementalCH.Geom.*;
 import ru.spbau.turaevt.CG.IncrementalCH.Geom.Point;
+import ru.spbau.turaevt.CG.IncrementalCH.Geom.UnlocatablePosition;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +15,8 @@ import java.util.ArrayList;
  * Created by Turaev Timur on 23.10.14.
  */
 public class GUI {
-    private static final int POINT_RADIUS = 16;
+    private static final int POINT_RADIUS = 10;
 
-    private final GUIDelegate delegate;
     private final Canvas canvas;
     private final int width;
     private final int height;
@@ -26,25 +26,12 @@ public class GUI {
         this.height = height;
         assert delegate != null;
 
-        this.delegate = delegate;
         JFrame frame = new JFrame();
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(width, height);
 
         canvas = new Canvas();
-        canvas.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                delegate.mouseMoved(e.getX(), e.getY());
-            }
-        });
-
         canvas.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -59,6 +46,18 @@ public class GUI {
             @Override
             public void keyReleased(KeyEvent e) {
 
+            }
+        });
+
+        canvas.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                System.out.println(MessageFormat.format("X = {0}, Y = {1}", e.getX(), e.getY()));
             }
         });
 
@@ -92,7 +91,7 @@ public class GUI {
 
             }
         });
-        canvas.setSize(width, height);
+        canvas.setSize(width, height-200);
 
         frame.add(canvas);
         frame.setVisible(true);
@@ -101,7 +100,7 @@ public class GUI {
     public void drawPoints(ArrayList<Point> points, Color color) {
         Graphics graphics = canvas.getGraphics();
         graphics.setColor(color);
-        for(Point p : points) {
+        for (Point p : points) {
             graphics.drawOval((int) p.getX() - POINT_RADIUS / 2, (int) p.getY() - POINT_RADIUS / 2, POINT_RADIUS, POINT_RADIUS);
         }
     }
