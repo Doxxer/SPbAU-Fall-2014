@@ -13,4 +13,6 @@ interface GUIDelegate {
     void errorOccurred(String message);
 
     void keyPressed(int keyCode);
+
+    void mouseMovedTo(int x, int y);
 }

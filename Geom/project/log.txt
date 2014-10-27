@@ -1,0 +1,7 @@
+Mouse clicked in: 226 246
+Mouse clicked in: 503 219
+Mouse clicked in: 591 389
+Mouse clicked in: 283 451
+Mouse clicked in: 152 325
+Key pressed: 157
+Key pressed: 81

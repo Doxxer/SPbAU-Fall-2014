@@ -6,7 +6,6 @@ import ru.spbau.turaevt.CG.IncrementalCH.Geom.UnlocatablePosition;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +13,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by Turaev Timur on 23.10.14.
  */
-public class GUI {
+class GUI {
     private static final int POINT_RADIUS = 10;
 
     private final Canvas canvas;
@@ -57,7 +56,7 @@ public class GUI {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                System.out.println(MessageFormat.format("X = {0}, Y = {1}", e.getX(), convert(e.getY())));
+                delegate.mouseMovedTo(e.getX(), convert(e.getY()));
             }
         });
 

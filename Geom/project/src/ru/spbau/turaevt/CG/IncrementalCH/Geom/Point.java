@@ -12,7 +12,7 @@ public class Point implements Cloneable, Comparable<Point> {
     private final long x;
     private final long y;
     private final int index;
-    private int chain;
+    private final int chain;
     private boolean margin;
 
     public Point(long x, long y, int index) {
@@ -30,26 +30,6 @@ public class Point implements Cloneable, Comparable<Point> {
         this.chain = chain;
         margin = false;
     }
-
-    public Point(Point p) {
-        x = p.x;
-        y = p.y;
-        index = p.index;
-        chain = p.chain;
-        margin = false;
-    }
-
-    public Point(Point p, int chain) {
-        x = p.x;
-        y = p.y;
-        index = p.index;
-        this.chain = chain;
-        margin = false;
-    }
-
-//    public void setChain(int chain) {
-//        this.chain = chain;
-//    }
 
     public PointToLinePosition classify(Edge edge) {
         Point p = this;
@@ -137,7 +117,7 @@ public class Point implements Cloneable, Comparable<Point> {
     }
 
     @Override
-    public Point clone() {
+    public Point clone() throws CloneNotSupportedException {
         return new Point(this.x, this.y, this.index);
     }
 
@@ -147,10 +127,7 @@ public class Point implements Cloneable, Comparable<Point> {
             throw new IllegalStateException("Other point must have chain");
         }
         if (x == other.x) {
-//            if (other.isOnUpperChain()) TODO delete comments
-                return (int) (y - other.y);
-//            else
-//                return (int) (other.y - y);
+            return (int) (y - other.y);
         } else return (int) (x - other.x);
     }
 
@@ -166,19 +143,19 @@ public class Point implements Cloneable, Comparable<Point> {
         return margin;
     }
 
-    public long getX() {
-        return x;
+    public void setMargin(boolean margin) {
+        this.margin = margin;
     }
 
-    public int getIndex() {
-        return index;
+    public long getX() {
+        return x;
     }
 
     public long getY() {
         return y;
     }
 
-    public void setMargin(boolean margin) {
-        this.margin = margin;
+    public int getIndex() {
+        return index;
     }
 }

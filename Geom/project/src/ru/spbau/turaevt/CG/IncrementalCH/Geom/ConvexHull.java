@@ -57,23 +57,23 @@ public class ConvexHull {
         }
     }
 
-    private void insertToLowerChain(Point p) throws UnlocatablePosition {
+    private void insertToLowerChain(Point p) {
         if (lastAddedToLowerTreap != null)
             lastAddedToLowerTreap.setMargin(false);
-        Point pointToInsert = new Point(p, Point.LOWER_CHAIN);
+        Point pointToInsert = new Point(p.getX(), p.getY(), p.getIndex(), Point.LOWER_CHAIN);
         insertPointToTreap(lowerTreap, pointToInsert, PointToLinePosition.Left);
         lastAddedToLowerTreap = pointToInsert;
     }
 
-    private void insertToUpperChain(Point p) throws UnlocatablePosition {
+    private void insertToUpperChain(Point p) {
         if (lastAddedToUpperTreap != null)
             lastAddedToLowerTreap.setMargin(false);
-        Point pointToInsert = new Point(p, Point.UPPER_CHAIN);
+        Point pointToInsert = new Point(p.getX(), p.getY(), p.getIndex(), Point.UPPER_CHAIN);
         insertPointToTreap(upperTreap, pointToInsert, PointToLinePosition.Right);
         lastAddedToUpperTreap = pointToInsert;
     }
 
-    public ArrayList<Point> insertPointToTreap(Treap<Point> treap, Point p, PointToLinePosition insidePosition) throws UnlocatablePosition {
+    public ArrayList<Point> insertPointToTreap(Treap<Point> treap, Point p, PointToLinePosition insidePosition) {
         Pair<Point, Point> supportPoints = findSupportPoints(treap, p, insidePosition);
         Point left = supportPoints.first;
         Point right = supportPoints.second;

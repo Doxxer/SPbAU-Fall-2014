@@ -5,16 +5,26 @@ import ru.spbau.turaevt.CG.IncrementalCH.Geom.Polygon;
 import ru.spbau.turaevt.CG.IncrementalCH.Geom.UnlocatablePosition;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.text.MessageFormat;
 
 class Main implements GUIDelegate {
     private final Polygon polygon;
-    private int index;
     private final GUI gui;
+    private Logger logger;
+    private int index;
 
     private Main() {
         index = 0;
         gui = new GUI(this, 800, 600);
         polygon = new Polygon();
+        try {
+            logger = new Logger(new PrintStream(new FileOutputStream("log.txt")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
@@ -26,21 +36,28 @@ class Main implements GUIDelegate {
         index += 1;
         polygon.addPoint(new Point(x, y, index));
         redrawPolygon();
-        System.out.printf("Mouse clicked in: %d %d%n", x, y);
+        logger.info(MessageFormat.format("Mouse clicked in: {0} {1}", x, y));
     }
 
     @Override
     public void errorOccurred(String message) {
-        System.out.println(message);
+        logger.error(message);
     }
 
     @Override
     public void keyPressed(int keyCode) {
-        System.out.printf("Key pressed: %d%n", keyCode);
+        logger.info(MessageFormat.format("Key pressed: {0}", keyCode));
 
         if (keyCode == 27) {
             reset();
         }
+    }
+
+    @Override
+    public void mouseMovedTo(int x, int y)
+    {
+        // do nothing
+        // logger.info(MessageFormat.format("X = {0}, Y = {1}", x, y));
     }
 
     private void reset() {
