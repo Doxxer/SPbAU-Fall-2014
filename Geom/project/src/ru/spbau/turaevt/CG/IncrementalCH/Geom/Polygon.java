@@ -17,8 +17,10 @@ public class Polygon {
     }
 
     public void addPoint(Point p) throws UnlocatablePosition {
-        convexHull.insertPoint(p);
-        points.add(p);
+        if (!points.contains(p)) {
+            convexHull.insertPoint(p);
+            points.add(p);
+        }
     }
 
     public ArrayList<Point> getPoints() {

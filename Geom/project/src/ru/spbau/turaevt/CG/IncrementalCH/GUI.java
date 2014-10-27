@@ -57,7 +57,7 @@ public class GUI {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                System.out.println(MessageFormat.format("X = {0}, Y = {1}", e.getX(), e.getY()));
+                System.out.println(MessageFormat.format("X = {0}, Y = {1}", e.getX(), convert(e.getY())));
             }
         });
 
@@ -65,7 +65,7 @@ public class GUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    delegate.mouseClicked(e.getX(), e.getY());
+                    delegate.mouseClicked(e.getX(), convert(e.getY()));
                 } catch (UnlocatablePosition ex) {
                     delegate.errorOccurred(ex.toString());
                 }
@@ -97,11 +97,15 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    private int convert(int y) {
+        return this.canvas.getHeight() - y;
+    }
+
     public void drawPoints(ArrayList<Point> points, Color color) {
         Graphics graphics = canvas.getGraphics();
         graphics.setColor(color);
         for (Point p : points) {
-            graphics.drawOval((int) p.getX() - POINT_RADIUS / 2, (int) p.getY() - POINT_RADIUS / 2, POINT_RADIUS, POINT_RADIUS);
+            graphics.drawOval((int) p.getX() - POINT_RADIUS / 2, convert((int) p.getY()) - POINT_RADIUS / 2, POINT_RADIUS, POINT_RADIUS);
         }
     }
 
@@ -114,7 +118,7 @@ public class GUI {
 
         for (int i = 0; i < points.size(); i++) {
             x[i] = (int) points.get(i).getX();
-            y[i] = (int) points.get(i).getY();
+            y[i] = convert((int) points.get(i).getY());
         }
         graphics.drawPolyline(x, y, points.size());
     }
