@@ -1,0 +1,40 @@
+---
+title: "Task 2.1 (teemgambling). Тураев Тимур."
+output: html_document
+---
+```{r, echo=FALSE}
+library(lattice)
+library(MASS)
+```
+
+Загружаем данные:
+```{r}
+df <- read.table("data/teengambling.txt")
+df$sex <- factor(df$sex, labels = c("male", "female"))
+contrasts(df$sex) <- contr.sum
+```
+
+Ну, посмотрим что нам пришло:
+```{r}
+l <- lm(gamble ~ ., data=df)
+summary(l)
+```
+
+Хочется избавиться от незначимых status и verbal:
+```{r}
+stepAIC(l)
+```
+
+AIC не удалил признак verbal, но видно, что удалив его, уменьшим значение критерия Акаике всего на несколько десятых долей. Проверим его незначимость в новой модели и выкинем:
+```{r}
+l <- update(l, . ~ . -status)
+summary(l)
+l <- update(l, . ~ . -verbal)
+summary(l)
+```
+
+Интерпретация.
+```{r}
+bwplot(sex ~ gamble, data=df)
+```
+
