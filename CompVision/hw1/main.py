@@ -8,16 +8,17 @@ def show_image(window_title, image):
 
 
 image_filename = "text.bmp"
-source_image = cv2.imread(image_filename, cv2.IMREAD_GRAYSCALE)
+source_image = cv2.imread(image_filename, 1)
 
-gaussian_kernel_size = 3
-blurred_image = cv2.GaussianBlur(source_image, (gaussian_kernel_size, gaussian_kernel_size), 0)
-cv2.imwrite("{0}x{0}_blurred.bmp".format(str(gaussian_kernel_size)), blurred_image)
+gaussian_kernel_size_x = 39
+gaussian_kernel_size_y = 21
+blurred_image = cv2.GaussianBlur(source_image, (gaussian_kernel_size_x, gaussian_kernel_size_y), 0)
+cv2.imwrite("{0}x{1}_blurred.bmp".format(str(gaussian_kernel_size_x), str(gaussian_kernel_size_y)), blurred_image)
 
-laplacian = cv2.Laplacian(blurred_image, cv2.CV_32F)
-cv2.imwrite("{0}x{0}_laplacian.png".format(str(gaussian_kernel_size)), laplacian)
+laplacian = cv2.Laplacian(blurred_image, cv2.CV_32F, ksize=gaussian_kernel_size_y)
+cv2.imwrite("{0}x{1}_laplacian.bmp".format(str(gaussian_kernel_size_x), str(gaussian_kernel_size_y)), laplacian)
 
-_, result_image = cv2.threshold(laplacian, 0, 255, cv2.THRESH_BINARY)
-cv2.imwrite("{0}x{0}_result_image.bmp".format(str(gaussian_kernel_size)), result_image)
+result_image = cv2.threshold(laplacian, 0, 255, cv2.THRESH_BINARY)[1]
+cv2.imwrite("{0}x{1}_result_image.bmp".format(str(gaussian_kernel_size_x), str(gaussian_kernel_size_y)), result_image)
 
 show_image("result", result_image)
