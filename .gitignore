@@ -11,3 +11,6 @@
 *.pyc
 *.class
 *target
+.Rproj.user
+.Rdata
+.Rhistory

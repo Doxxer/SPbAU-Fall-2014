@@ -1,0 +1,88 @@
+---
+title: "Task1 (advertising) Тураев Тимур"
+output: html_document
+---
+```{r, echo=FALSE}
+library(lattice)
+```
+
+Загружаем данные:
+```{r}
+df <- read.csv("data/Advertising.csv", row.names = NULL)
+df$X <- NULL
+df.size <- nrow(df)
+splom(~df)
+```
+
+Строим обучающую и тестовые выборки в отношении 2/1:
+```{r}
+indices.train <- sample(df.size, size=df.size*0.6666)
+df.train <- df[indices.train, ]
+df.test <- df[-indices.train, ]
+```
+
+Регрессия на обучающей выборке:
+```{r}
+df.lm.train <- lm(Sales ~ ., data=df.train)
+summary(df.lm.train)
+```
+
+Предсказание по полученной модели для тестового куска:
+```{r}
+df.pred.test <- predict(df.lm.train, df.test)
+```
+
+Графички:
+```{r}
+panel.custom = function(...) { panel.xyplot(...); panel.loess(...); panel.lmline(...) }
+xyplot(fitted(df.lm.train) ~ df.train$Sales, pch=19, panel=panel.custom)
+xyplot(df.pred.test ~ df.test$Sales, pch=19, panel=panel.custom)
+```
+
+Видны ошибки на низких значениях Sales в той и другой выборке.
+
+RSS (summary(lm) уже содержит в себе RSS, проверим что эти значения равны):
+```{r}
+rss <- function(r, d) sqrt(sum(r^2) / (length(r) - d))
+summary(df.lm.train)$sigma
+c(rss(df.lm.train$residuals, 4),
+  rss(df.pred.test - df.test$Sales, 4))
+```
+
+Уберем незначительный признак из модели (это были газеты):
+```{r}
+df.lm.train.cut <- update(df.lm.train, . ~ . -Newspaper)
+df.pred.test.cut <- predict(df.lm.train.cut, df.test)
+c(rss(df.lm.train.cut$residuals, 3),
+  rss(df.pred.test.cut - df.test$Sales, 3))
+```
+Модель стала вести себя немного лучше после удаления незначимого признака: уменьшились ошибки; стало быть он только мешал.
+
+Поудаляем еще чего-нибудь, телевидение, например:
+```{r}
+df.lm.train.cut <- update(df.lm.train, . ~ . -TV)
+df.pred.test.cut <- predict(df.lm.train.cut, df.test)
+c(rss(df.lm.train.cut$residuals, 3),
+  rss(df.pred.test.cut - df.test$Sales, 3))
+```
+Очень плохо.
+
+Или радио:
+```{r}
+df.lm.train.cut <- update(df.lm.train, . ~ . -Radio)
+df.pred.test.cut <- predict(df.lm.train.cut, df.test)
+c(rss(df.lm.train.cut$residuals, 3),
+  rss(df.pred.test.cut - df.test$Sales, 3))
+```
+Тоже плохо.
+
+Или удалим вообще все признаки, оставив только сдвиг:
+```{r}
+df.lm.train.cut <- lm(Sales ~ 1, data=df.train)
+df.pred.test.cut <- predict(df.lm.train.cut, df.test)
+c(rss(df.lm.train.cut$residuals, 1),
+  rss(df.pred.test.cut - df.test$Sales, 1))
+```
+И это тоже плохо.
+
+Это и понятно, после удаления значимых признаков, модель ведет себя сильно хуже.
