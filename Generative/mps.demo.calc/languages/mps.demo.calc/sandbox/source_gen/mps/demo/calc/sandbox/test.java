@@ -42,9 +42,27 @@ public class test extends BaseCalculator {
           return a / b;
         }
       }));
-
+      stdOps.add(new BaseCalculator.Equals("="));
+      add(stdOps, BorderLayout.CENTER);
     }
+    JPanel userOps = new JPanel(new GridLayout(0, 1, 10, 10));
 
+    userOps.add(new BaseCalculator.NulOp("pi", new _FunctionTypes._return_P0_E0<Double>() {
+      public Double invoke() {
+        return 3.14;
+      }
+    }));
+    userOps.add(new BaseCalculator.NulOp("e", new _FunctionTypes._return_P0_E0<Double>() {
+      public Double invoke() {
+        return 2.71;
+      }
+    }));
+    userOps.add(new BaseCalculator.BinOp("+", new _FunctionTypes._return_P2_E0<Double, Double, Double>() {
+      public Double invoke(Double a, Double b) {
+        return a + b;
+      }
+    }));
+    add(userOps, BorderLayout.EAST);
     setSize(300, 300);
   }
 

@@ -11,8 +11,8 @@
   <import index="e2lb" modelUID="f:java_stub#6354ebe7-c22a-4a0f-ac54-50b52ab9b065#java.lang(JDK/java.lang@java_stub)" version="-1" implicit="yes" />
   <root type="zqqo.Calculator" typeId="zqqo.3541037617674586790" id="3541037617674599088" nodeInfo="ng">
     <property name="name" nameId="tpck.1169194664001" value="test" />
-    <property name="digits" nameId="zqqo.3541037617674586847" value="true" />
     <property name="stdOps" nameId="zqqo.3541037617674586856" value="true" />
+    <property name="digits" nameId="zqqo.3541037617674586847" value="true" />
     <node role="userFun" roleId="zqqo.3541037617674599142" type="zqqo.UserFunction" typeId="zqqo.3541037617674591945" id="3541037617674610503" nodeInfo="ng">
       <property name="label" nameId="zqqo.3541037617674591948" value="pi" />
       <node role="function" roleId="zqqo.3541037617674591946" type="tp2c.ClosureLiteral" typeId="tp2c.1199569711397" id="3541037617674617197" nodeInfo="nn">
@@ -27,8 +27,14 @@
     </node>
     <node role="userFun" roleId="zqqo.3541037617674599142" type="zqqo.UserFunction" typeId="zqqo.3541037617674591945" id="3541037617674617088" nodeInfo="ng">
       <property name="label" nameId="zqqo.3541037617674591948" value="e" />
-      <node role="function" roleId="zqqo.3541037617674591946" type="tpee.FloatingPointConstant" typeId="tpee.1111509017652" id="3541037617674704182" nodeInfo="nn">
-        <property name="value" nameId="tpee.1113006610751" value="2.7" />
+      <node role="function" roleId="zqqo.3541037617674591946" type="tp2c.ClosureLiteral" typeId="tp2c.1199569711397" id="3730903359846676063" nodeInfo="nn">
+        <node role="body" roleId="tp2c.1199569916463" type="tpee.StatementList" typeId="tpee.1068580123136" id="3730903359846676065" nodeInfo="sn">
+          <node role="statement" roleId="tpee.1068581517665" type="tpee.ExpressionStatement" typeId="tpee.1068580123155" id="3730903359846676254" nodeInfo="nn">
+            <node role="expression" roleId="tpee.1068580123156" type="tpee.FloatingPointConstant" typeId="tpee.1111509017652" id="3730903359846676258" nodeInfo="nn">
+              <property name="value" nameId="tpee.1113006610751" value="2.71" />
+            </node>
+          </node>
+        </node>
       </node>
     </node>
     <node role="userFun" roleId="zqqo.3541037617674599142" type="zqqo.UserFunction" typeId="zqqo.3541037617674591945" id="3541037617674724048" nodeInfo="ng">
@@ -96,6 +102,11 @@
                   </node>
                 </node>
               </node>
+            </node>
+          </node>
+          <node role="statement" roleId="tpee.1068581517665" type="tpee.ExpressionStatement" typeId="tpee.1068580123155" id="1194642912385963131" nodeInfo="nn">
+            <node role="expression" roleId="tpee.1068580123156" type="tpee.FloatingPointConstant" typeId="tpee.1111509017652" id="1194642912385963130" nodeInfo="nn">
+              <property name="value" nameId="tpee.1113006610751" value="0.0" />
             </node>
           </node>
         </node>

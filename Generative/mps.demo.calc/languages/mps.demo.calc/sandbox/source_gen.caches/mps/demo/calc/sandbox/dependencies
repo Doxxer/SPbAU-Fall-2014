@@ -10,7 +10,15 @@
     <classNode extendsClassName="mps.demo.calc.runtime.BaseCalculator" />
   </dependency>
   <dependency className="mps.demo.calc.sandbox.trigonometry" file="trigonometry.java">
+    <classNode dependClassName="java.awt.BorderLayout" />
+    <classNode dependClassName="java.awt.GridLayout" />
+    <classNode dependClassName="java.lang.Boolean" />
+    <classNode dependClassName="java.lang.Double" />
+    <classNode dependClassName="java.lang.Math" />
     <classNode dependClassName="java.lang.String" />
+    <classNode dependClassName="javax.swing.JPanel" />
+    <classNode dependClassName="jetbrains.mps.baseLanguage.closures.runtime._FunctionTypes" />
+    <classNode dependClassName="mps.demo.calc.runtime.CalcStatus" />
     <classNode extendsClassName="mps.demo.calc.runtime.BaseCalculator" />
   </dependency>
 </dependenciesRoot>

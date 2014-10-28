@@ -3,8 +3,22 @@
   <unitInfo fileName="BehaviorAspectDescriptor.java" startLine="9" startPosition="0" endLine="32" endPosition="0" unitName="mps.demo.calc.behavior.BehaviorAspectDescriptor" />
   <unitInfo fileName="Calculator_BehaviorDescriptor.java" startLine="12" startPosition="0" endLine="33" endPosition="0" unitName="mps.demo.calc.behavior.Calculator_BehaviorDescriptor" />
   <unitInfo fileName="GetStatusExpression_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.GetStatusExpression_BehaviorDescriptor" />
-  <unitInfo fileName="SetStatusExpression_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.SetStatusExpression_BehaviorDescriptor" />
+  <unitInfo fileName="SetStatusExpression_BehaviorDescriptor.java" startLine="8" startPosition="0" endLine="21" endPosition="0" unitName="mps.demo.calc.behavior.SetStatusExpression_BehaviorDescriptor" />
   <unitInfo fileName="UI_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.UI_BehaviorDescriptor" />
   <unitInfo fileName="UserFunction_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="mps.demo.calc.behavior.UserFunction_BehaviorDescriptor" />
+  <root nodeRef="r:f29fe219-883f-479c-abe0-976e7b369a50(mps.demo.calc.behavior)/1194642912385873163">
+    <nodeInfo nodeId="1194642912385880151" fileName="SetStatusExpression_Behavior.java" startLine="11" startPosition="82" endLine="12" endPosition="16" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="1194642912385873163" fileName="SetStatusExpression_Behavior.java" startLine="8" startPosition="0" endLine="10" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticMethodDeclaration" propertyString="init#(Lorg/jetbrains/mps/openapi/model/SNode;)V" />
+    <nodeInfo nodeId="1194642912385873163" fileName="SetStatusExpression_Behavior.java" startLine="11" startPosition="0" endLine="14" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticMethodDeclaration" propertyString="virtual_isLegalAsStatement_1239211900844#(Lorg/jetbrains/mps/openapi/model/SNode;)Z" />
+    <scopeInfo nodeId="1194642912385875265" fileName="SetStatusExpression_Behavior.java" startLine="8" startPosition="43" endLine="8" endPosition="43" />
+    <scopeInfo nodeId="1194642912385876813" fileName="SetStatusExpression_Behavior.java" startLine="11" startPosition="82" endLine="12" endPosition="16" />
+    <scopeInfo nodeId="1194642912385873163" fileName="SetStatusExpression_Behavior.java" startLine="8" startPosition="0" endLine="10" endPosition="0">
+      <varInfo nodeId="1194642912385873163" varName="thisNode" />
+    </scopeInfo>
+    <scopeInfo nodeId="1194642912385873163" fileName="SetStatusExpression_Behavior.java" startLine="11" startPosition="0" endLine="14" endPosition="0">
+      <varInfo nodeId="1194642912385873163" varName="thisNode" />
+    </scopeInfo>
+    <unitInfo nodeId="1194642912385873163" fileName="SetStatusExpression_Behavior.java" startLine="7" startPosition="0" endLine="15" endPosition="0" unitName="mps.demo.calc.behavior.SetStatusExpression_Behavior" />
+  </root>
 </debugInfo>
 

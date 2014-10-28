@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="6f86v9tzumec606r8r82leyhctdq9pd">
+<dependencies version="2" modelHash="3bc8b83em7haay7jjvw17qxhnmu6h5i">
   <dep model="r:00000000-0000-4000-0000-011c89590282(jetbrains.mps.lang.core.behavior)" hash="61wht9cj3icmq9lpyigsv7597eepxrl" />
   <dep model="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" hash="5sdbpqxziyuazpb9j1p4zdk6bnvbn49" />
   <dep model="r:00000000-0000-4000-0000-011c895902c0(jetbrains.mps.baseLanguage.behavior)" hash="7jr361mn7jl5zzzs4rwot7th5xywr4b" />
@@ -12,7 +12,8 @@
   <dep model="r:c2c61bec-e8f3-4009-a1a5-a9a48977fc61(mps.demo.calc.structure)" hash="91c0za0rfotnxk7ixrm66frd7helqbu" />
   <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="a8elw7fctzg6sg8fe36u9gzu42axhdb" />
   <dep model="r:fa713d69-08ea-4732-b1f2-cb07f9e103ef(jetbrains.mps.execution.util.structure)" hash="efpygk1iagsrvh0j1nroncwiyw07vp1" />
-  <common hash="6f86v9tzumec606r8r82leyhctdq9pd" dependsOnNodes="true">
+  <common hash="djta7nu2ubuzowt8n9p4va0pv40rxki" dependsOnNodes="true">
+    <dep root="1194642912385873163" />
     <dep model="r:00000000-0000-4000-0000-011c89590282(jetbrains.mps.lang.core.behavior)" />
     <dep model="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" />
     <dep model="r:00000000-0000-4000-0000-011c895902c0(jetbrains.mps.baseLanguage.behavior)" />
@@ -32,5 +33,11 @@
     <file name="UI_BehaviorDescriptor.java" />
     <file name="UserFunction_BehaviorDescriptor.java" />
   </common>
+  <source id="1194642912385873163" name="SetStatusExpression_Behavior" hash="d5bv8v487utg7jip5glh6u9w17v8lnr">
+    <dep model="r:00000000-0000-4000-0000-011c895902c0(jetbrains.mps.baseLanguage.behavior)" />
+    <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" />
+    <dep model="r:c2c61bec-e8f3-4009-a1a5-a9a48977fc61(mps.demo.calc.structure)" />
+    <file name="SetStatusExpression_Behavior.java" />
+  </source>
 </dependencies>
 

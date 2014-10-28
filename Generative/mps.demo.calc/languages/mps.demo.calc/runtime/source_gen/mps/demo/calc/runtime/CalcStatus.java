@@ -23,7 +23,7 @@ public class CalcStatus {
     return MapSequence.fromMap(myMap).get(key);
   }
 
-  public void setStatus(String key, Object value) {
-    MapSequence.fromMap(myMap).put(key, value);
+  public Object setStatus(String key, Object value) {
+    return MapSequence.fromMap(myMap).put(key, value);
   }
 }
