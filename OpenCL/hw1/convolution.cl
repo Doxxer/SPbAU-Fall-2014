@@ -4,19 +4,22 @@ __kernel void convolution(__global float * first,
                           int firstSize,
                           int secondSize)
 {
-   int idx_x = get_global_id(0);
-   int idx_y = get_global_id(1);
+   int row = get_global_id(0);
+   int col = get_global_id(1);
+
+   if (row >= firstSize || col >= firstSize)
+        return;
 
    float result = 0.0;
    for (int i = 0; i < secondSize; ++i) {
 	   for (int j = 0; j < secondSize; ++j) {
-		   int input_idx_x = idx_x + i - secondSize / 2;
-		   int input_idx_y = idx_y + j - secondSize / 2;
+		   int input_idx_x = row + i - secondSize / 2;
+		   int input_idx_y = col + j - secondSize / 2;
 
 		   if (input_idx_x >= 0 && input_idx_x < firstSize && input_idx_y >= 0 && input_idx_y < firstSize)
 			   result += first[input_idx_x * firstSize + input_idx_y] * second[i * secondSize + j];
 	   }
    }
 
-   output[idx_x * firstSize + idx_y] = result;
+   output[row * firstSize + col] = result;
 }
