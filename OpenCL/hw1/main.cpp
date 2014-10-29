@@ -44,6 +44,8 @@ int main() {
         cl::Platform::get(&platforms);
         platforms[0].getDevices(CL_DEVICE_TYPE_GPU, &devices);
 
+//        std::cout << platforms[0].getInfo<CL_PLATFORM_NAME>() << std::endl;
+//        std::cout << devices[0].getInfo<CL_DEVICE_NAME>() << std::endl;
         // create context
         cl::Context context(devices);
 
