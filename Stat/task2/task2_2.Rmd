@@ -1,0 +1,82 @@
+---
+title: "Task 2.2 (universities). Тураев Тимур."
+output: html_document
+---
+```{r, echo=FALSE}
+library(lattice)
+library(latticeExtra)
+library(MASS)
+```
+
+Загружаем данные, все как на паре:
+```{r}
+df <- read.csv2(file = "data/I.csv")
+df <- subset(df, select = c(PPIND, AVRCOMB, NEW10, FULLTIME, IN_STATE, ROOM, ADD_FEE, PH_D, GRADUAT, SAL_FULL, NUM_FULL))
+df$PPIND <- factor(df$PPIND, labels = c("Public", "Private"))
+df <- na.exclude(df)
+df.private <- subset(df, PPIND == "Private")
+```
+
+Строим регрессию, прологарифмировав денежные данные:
+```{r}
+l <- lm(NEW10 ~ AVRCOMB + FULLTIME + log(IN_STATE) + log(ROOM) + log(ADD_FEE) + log(SAL_FULL) + PH_D + GRADUAT + NUM_FULL, data = df.private)
+summary(l)
+```
+
+С отличниками у меня интерпретация как-то стопортися, тут сложнее, чем с государственными. Тут отличники не такой уж и показательный фактор. Так или иначе, отличники там, где много очников, спасибо КО. Можно попробовать удалить, так же как на паре, этот предиктор.
+
+```{r}
+l <- lm(NEW10 ~ FULLTIME + log(IN_STATE) + log(ROOM) + log(ADD_FEE) + log(SAL_FULL) + PH_D + GRADUAT + NUM_FULL, data = df.private)
+summary(l)
+```
+
+Тут не очень понятно: идти туда, где больше выпускаются, вроде логично, но идти туда где больше платить? Не знаю уж что за "частные" в Америке университеты, может логика там "чем дороже - тем лучше"?
+
+Убираем незначимые признаки:
+```{r}
+l.aic <- stepAIC(l)
+summary(l.aic)
+```
+
+И PH_D тоже:
+```{r}
+l.aic <- update(l.aic, . ~ . -PH_D)
+summary(l.aic)
+```
+
+Попробуем выкинуть еще что-нибудь:
+```{r}
+l.aic.room <- update(l.aic, . ~ . -log(ROOM))
+l.aic.add_fee <- update(l.aic, . ~ . -log(ADD_FEE))
+l.aic.add_fee.room <- update(l.aic, . ~ . -log(ADD_FEE) -log(ROOM))
+anova(l.aic, l.aic.room, l.aic.add_fee, l.aic.add_fee.room)
+```
+
+Больше ничего не выкинуть.
+```{r}
+l <- l.aic
+summary(l)
+```
+
+Итоги: поступают там где больше выпускаются (то же, что и для государственных) и там где больше платить (логика непонятна, но может "раз нужно платить - то чего мелочиться")
+
+------
+
+Вторая часть задания: построить модель для всех университетов, используя эффекты взаимодействия с фактором PPIND. Строим и выкидываем незначимое.
+```{r}
+contrasts(df$PPIND) <- contr.sum
+l <- lm(NEW10 ~ FULLTIME * PPIND + log(IN_STATE) * PPIND + log(ROOM) * PPIND + GRADUAT * PPIND, data = df)
+summary(l)
+l.aic <- stepAIC(l)
+summary(l.aic)
+```
+
+Контрасты:
+```{r}
+contrasts(df$PPIND)
+```
+
+Поступать туда, откуда выпускаются - это мы видели
+Связь платы за обучение и типа университета хорошо проглядывается: значение сильно отрицательное.
+Закончить немного важнее в частных (видимо, чтобы деньги не пропали)
+А сам тип университета, думаю, означает, что NEW10 идут в государственные университеты.
