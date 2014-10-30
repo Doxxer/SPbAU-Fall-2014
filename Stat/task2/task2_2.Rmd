@@ -17,7 +17,7 @@ df <- subset(df, select = c(PPIND, AVRCOMB, NEW10, FULLTIME, IN_STATE, ROOM, ADD
 df$PPIND <- factor(df$PPIND, labels = c("Public", "Private"))
 df <- na.exclude(df)
 df.private <- subset(df, PPIND == "Private")
-df.private <- df.private[!rownames(df.private) %in% 129, ]
+# df.private <- df.private[!rownames(df.private) %in% 129, ]
 ```
 
 Строим регрессию, прологарифмировав денежные данные:
