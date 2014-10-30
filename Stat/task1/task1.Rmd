@@ -4,6 +4,8 @@ output: html_document
 ---
 ```{r, echo=FALSE}
 library(lattice)
+library(MASS)
+library(e1071)
 ```
 
 Загружаем данные:
@@ -41,20 +43,19 @@ xyplot(df.pred.test ~ df.test$Sales, pch=19, panel=panel.custom)
 
 Видны ошибки на низких значениях Sales в той и другой выборке.
 
-RSS (summary(lm) уже содержит в себе RSS, проверим что эти значения равны):
+RSS:
 ```{r}
-rss <- function(r, d) sqrt(sum(r^2) / (length(r) - d))
-summary(df.lm.train)$sigma
-c(rss(df.lm.train$residuals, 4),
-  rss(df.pred.test - df.test$Sales, 4))
+rss <- function(r) sqrt(sum(r^2) / length(r))
+c(rss(df.lm.train$residuals),
+  rss(df.pred.test - df.test$Sales))
 ```
 
 Уберем незначительный признак из модели (это были газеты):
 ```{r}
 df.lm.train.cut <- update(df.lm.train, . ~ . -Newspaper)
 df.pred.test.cut <- predict(df.lm.train.cut, df.test)
-c(rss(df.lm.train.cut$residuals, 3),
-  rss(df.pred.test.cut - df.test$Sales, 3))
+c(rss(df.lm.train.cut$residuals),
+  rss(df.pred.test.cut - df.test$Sales))
 ```
 Модель стала вести себя немного лучше после удаления незначимого признака: уменьшились ошибки; стало быть он только мешал.
 
@@ -62,8 +63,8 @@ c(rss(df.lm.train.cut$residuals, 3),
 ```{r}
 df.lm.train.cut <- update(df.lm.train, . ~ . -TV)
 df.pred.test.cut <- predict(df.lm.train.cut, df.test)
-c(rss(df.lm.train.cut$residuals, 3),
-  rss(df.pred.test.cut - df.test$Sales, 3))
+c(rss(df.lm.train.cut$residuals),
+  rss(df.pred.test.cut - df.test$Sales))
 ```
 Очень плохо.
 
@@ -71,8 +72,8 @@ c(rss(df.lm.train.cut$residuals, 3),
 ```{r}
 df.lm.train.cut <- update(df.lm.train, . ~ . -Radio)
 df.pred.test.cut <- predict(df.lm.train.cut, df.test)
-c(rss(df.lm.train.cut$residuals, 3),
-  rss(df.pred.test.cut - df.test$Sales, 3))
+c(rss(df.lm.train.cut$residuals),
+  rss(df.pred.test.cut - df.test$Sales))
 ```
 Тоже плохо.
 
@@ -80,9 +81,60 @@ c(rss(df.lm.train.cut$residuals, 3),
 ```{r}
 df.lm.train.cut <- lm(Sales ~ 1, data=df.train)
 df.pred.test.cut <- predict(df.lm.train.cut, df.test)
-c(rss(df.lm.train.cut$residuals, 1),
-  rss(df.pred.test.cut - df.test$Sales, 1))
+c(rss(df.lm.train.cut$residuals),
+  rss(df.pred.test.cut - df.test$Sales))
 ```
 И это тоже плохо.
 
 Это и понятно, после удаления значимых признаков, модель ведет себя сильно хуже.
+
+------------
+```{r}
+model <- function(f) {
+  lm <- lm(f, data = df)
+  print(summary(lm))
+  lm <- stepAIC(lm)
+  print(summary(lm))
+  print(c(summary(lm)$sigma, AIC(lm)))
+  lm
+}
+```
+
+Посмотрим на разные модели. Выше функция, которая строить линейную регрессию, улучшает ее stepAIC, и выводи значение критерия и RSE.
+
+Обычная
+```{r}
+lm.default <- model(Sales ~ .)
+```
+Из нее удалились газеты.
+
+Теперь полиномиальная второй степени:
+```{r}
+lm.all <- model(Sales ~ poly(TV, Radio, degree = 2))
+```
+Модель явно улучшилась.
+
+Все же удалим не очень значимый признак:
+```{r}
+lm.all2 <- model(Sales ~ (TV + Radio)^2 + I(TV^2))
+```
+Еще немного лучше.
+
+```{r}
+tune(lm, lm.default$call$formula, data = df, tunecontrol = tune.control(sampling = "fix"))
+tune(lm, lm.all$call$formula, data = df, tunecontrol = tune.control(sampling = "fix"))
+tune(lm, lm.all2$call$formula, data = df, tunecontrol = tune.control(sampling = "fix"))
+xyplot(lm.all2$residuals ~ lm.all2$fitted.values)
+```
+
+Получается, что с введением монотонной нелинейности модель улучшилась, уменьшились ошибки и немного снизили излишнюю оптиимстичность в начале графика.
+
+Посмотрим поведение на наших тренировочных выборках:
+```{r}
+lm.all2.train <- lm(Sales ~ (TV + Radio)^2 + I(TV^2), data=df.train)
+df.pred2.test <- predict(lm.all2.train, df.test)
+xyplot(lm.all2.train$fitted.values ~ df.train$Sales, pch=19, panel=panel.custom)
+xyplot(df.pred2.test ~ df.test$Sales, pch=19, panel=panel.custom)
+```
+
+Круто, модель стала более лучшей.
