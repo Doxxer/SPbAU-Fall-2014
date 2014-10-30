@@ -13,83 +13,88 @@ library(MASS)
 Загружаем данные, все как на паре:
 ```{r}
 df <- read.csv2(file = "data/I.csv")
-df <- subset(df, select = c(PPIND, AVRCOMB, NEW10, FULLTIME, IN_STATE, ROOM, ADD_FEE, PH_D, GRADUAT, SAL_FULL, NUM_FULL))
+df <- subset(df, select = c(PPIND, AVRCOMB, NEW10, FULLTIME, IN_STATE, ROOM, ADD_FEE, GRADUAT, SAL_FULL, NUM_FULL))
 df$PPIND <- factor(df$PPIND, labels = c("Public", "Private"))
 df <- na.exclude(df)
 df.private <- subset(df, PPIND == "Private")
-# df.private <- df.private[!rownames(df.private) %in% 129, ]
+df.public <- subset(df, PPIND == "Public")
 ```
 
-Строим регрессию, прологарифмировав денежные данные:
+Строим регрессию, прологарифмировав денежные данные, удалив отличников:
 ```{r}
-l <- lm(NEW10 ~ AVRCOMB + FULLTIME + log(IN_STATE) + log(ROOM) + log(ADD_FEE) + log(SAL_FULL) + PH_D + GRADUAT + NUM_FULL, data = df.private)
-summary(l)
+analysis <- function(dataframe) {
+  l <- lm(NEW10 ~ FULLTIME + log(IN_STATE) + log(ROOM) + log(ADD_FEE) + log(SAL_FULL) + GRADUAT + NUM_FULL, data = dataframe)
+  print(summary(l))
+  l.aic <- stepAIC(l)
+  
+  # Попробуем выкинуть еще что-нибудь:
+  l.aic.room <- update(l.aic, . ~ . -log(ROOM))
+  l.aic.add_fee <- update(l.aic, . ~ . -log(ADD_FEE))
+  l.aic.add_fee.room <- update(l.aic, . ~ . -log(ADD_FEE) -log(ROOM))
+  anova(l.aic, l.aic.room, l.aic.add_fee, l.aic.add_fee.room)
+  
+  #Больше ничего не выкинуть
+  l <- l.aic
+  print(summary(l))
+}
 ```
 
-С отличниками у меня интерпретация как-то стопортися, тут сложнее, чем с государственными. Тут отличники не такой уж и показательный фактор. Так или иначе, отличники там, где много очников, спасибо КО. Можно попробовать удалить, так же как на паре, этот предиктор.
+Проанализируем все частные университеты:
+```{r}
+lm.private.full <- analysis(df.private)
+```
+
+Итог: поступают там где больше выпускаются (то же, что и для государственных) и там где больше платить: "раз нужно платить - то чего мелочиться"
+
+Теперь удалим выбивающиеся университеты, из частных это University of Delawa, Fordham University, University of Pennsy.
+Из государственных College of William a. У них слишком высокие ADD_FEE и/или ROOM, IN_STATE
+```{r}
+splom(~df.public)
+splom(~df.private)
+df.private.cut <- df.private[!rownames(df.private) %in% c(129, 99, 25), ]
+df.public.cut <- df.public[!rownames(df.public) %in% 152, ]
+df.cut <- df[!rownames(df) %in% c(25, 99, 129, 152), ]
+splom(~df.public.cut)
+splom(~df.private.cut)
+```
 
 ```{r}
-l <- lm(NEW10 ~ FULLTIME + log(IN_STATE) + log(ROOM) + log(ADD_FEE) + log(SAL_FULL) + PH_D + GRADUAT + NUM_FULL, data = df.private)
-summary(l)
+lm.private.cut <- analysis(df.private.cut)
 ```
 
-Тут не очень понятно: идти туда, где больше выпускаются, вроде логично, но идти туда где больше платить? Не знаю уж что за "частные" в Америке университеты, может логика там "чем дороже - тем лучше"?
-
-Убираем незначимые признаки:
-```{r}
-l.aic <- stepAIC(l)
-summary(l.aic)
-```
-
-И PH_D тоже:
-```{r}
-l.aic <- update(l.aic, . ~ . -PH_D)
-summary(l.aic)
-```
-
-Попробуем выкинуть еще что-нибудь:
-```{r}
-l.aic.room <- update(l.aic, . ~ . -log(ROOM))
-l.aic.add_fee <- update(l.aic, . ~ . -log(ADD_FEE))
-l.aic.add_fee.room <- update(l.aic, . ~ . -log(ADD_FEE) -log(ROOM))
-anova(l.aic, l.aic.room, l.aic.add_fee, l.aic.add_fee.room)
-```
-
-Больше ничего не выкинуть.
-```{r}
-l <- l.aic
-summary(l)
-```
-
-Итоги: поступают там где больше выпускаются (то же, что и для государственных) и там где больше платить (логика непонятна, но может "раз нужно платить - то чего мелочиться")
 
 ------
 
 Вторая часть задания: построить модель для всех университетов, используя эффекты взаимодействия с фактором PPIND. Строим и выкидываем незначимое.
+
 ```{r}
-contrasts(df$PPIND) <- contr.sum
-l <- lm(NEW10 ~ FULLTIME * PPIND + log(IN_STATE) * PPIND + log(ROOM) * PPIND + GRADUAT * PPIND, data = df)
-summary(l)
-l.aic <- stepAIC(l)
-summary(l.aic)
+analysis2 <- function(dataframe) {
+  contrasts(dataframe$PPIND) <- contr.sum
+  print(contrasts(dataframe$PPIND))
+  lm <- lm(NEW10 ~ FULLTIME * PPIND + log(IN_STATE) * PPIND + log(ROOM) * PPIND + log(SAL_FULL) * PPIND + GRADUAT * PPIND, data = dataframe)
+  lm <- stepAIC(lm)
+  print(summary(lm))
+}
 ```
 
-Контрасты:
+Сначала для всех университетов:
 ```{r}
-contrasts(df$PPIND)
+lm <- analysis2(df)
 ```
 
-Поступать туда, откуда выпускаются - это мы видели
-Связь платы за обучение и типа университета хорошо проглядывается: значение сильно отрицательное.
-Закончить немного важнее в частных (видимо, чтобы деньги не пропали)
-А сам тип университета, думаю, означает, что NEW10 идут в государственные университеты.
+Теперь для усеченных, с выброшенными выбивающимися:
+```{r}
+lm <- analysis2(df.cut)
+```
+Поступать туда, откуда выпускаются - это мы видели.
 
----
+--
 Дополнение
----
+--
 
+Получается интересная вещь, видимо тут причина та же, что в gambling: очень мало данных. Из частных университетов удалили 3: один значимый до этого признак улетел вовсе. В задаче по всем университетам: модель тоже сильно изменилась, видимо эти 4 университета делали почти всю картину, плюс ко всему и ошибка уменьшилась.
+
+График зависимости:
 ```{r}
-xyplot(df$PPIND ~ df$NEW10, pch=19)
-splom(df.private)
+xyplot(df.cut$PPIND ~ df.cut$NEW10, pch=19)
 ```
-
