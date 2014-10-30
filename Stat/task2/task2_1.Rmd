@@ -1,6 +1,8 @@
 ---
 title: "Task 2.1 (teengambling). Тураев Тимур."
-output: html_document
+output:
+  html_document:
+    self_contained: no
 ---
 ```{r, echo=FALSE}
 library(lattice)
