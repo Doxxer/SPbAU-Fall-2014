@@ -1,6 +1,8 @@
 ---
 title: "Task 2.2 (universities). Тураев Тимур."
-output: html_document
+output:
+  html_document:
+    self_contained: no
 ---
 ```{r, echo=FALSE}
 library(lattice)
@@ -15,6 +17,7 @@ df <- subset(df, select = c(PPIND, AVRCOMB, NEW10, FULLTIME, IN_STATE, ROOM, ADD
 df$PPIND <- factor(df$PPIND, labels = c("Public", "Private"))
 df <- na.exclude(df)
 df.private <- subset(df, PPIND == "Private")
+df.private <- df.private[!rownames(df.private) %in% 129, ]
 ```
 
 Строим регрессию, прологарифмировав денежные данные:
@@ -80,3 +83,13 @@ contrasts(df$PPIND)
 Связь платы за обучение и типа университета хорошо проглядывается: значение сильно отрицательное.
 Закончить немного важнее в частных (видимо, чтобы деньги не пропали)
 А сам тип университета, думаю, означает, что NEW10 идут в государственные университеты.
+
+---
+Дополнение
+---
+
+```{r}
+xyplot(df$PPIND ~ df$NEW10, pch=19)
+splom(df.private)
+```
+
