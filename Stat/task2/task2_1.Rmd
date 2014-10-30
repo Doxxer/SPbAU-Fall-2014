@@ -8,6 +8,7 @@ output:
 library(lattice)
 library(latticeExtra)
 library(MASS)
+library(e1071)
 ```
 
 Загружаем данные:
@@ -77,10 +78,41 @@ l.female <- update(l.female, . ~ . -verbal)
 summary(l.female)
 ```
 
-Давайте попробуем удалить ненужный статус:
+Давайте попробуем удалить ненужный предиктор:
 ```{r}
 l.female.cut <- update(l.female, . ~ . -income)
 summary(l.female.cut)
 ```
 
 У девочек оказался значимым только статус: чем он выше, тем больше тратится денег на игру.
+
+---
+Дополнение
+---
+
+Мне видятся какие-то то ли недостаточные, то ли неустойчивые данные по девочкам: там очень много нулей или почти нулей в поле gamble и есть небольшие выбросы на их фоне: 19.6, 12.0 и пр, возможно из-за этого некоторые признаки оказываются переоцененными.
+
+Построим модель со взаимным влиянием:
+```{r}
+model <- function(f) {
+  lm <- lm(f, data = df.female)
+  print(summary(lm))
+  lm <- stepAIC(lm)
+  print(summary(lm))
+  print(c(summary(lm)$sigma, AIC(lm)))
+  lm
+}
+```
+
+```{r}
+female.all <- model(gamble ~ (.)^2)
+female.all <- update(female.all, . ~ . - income)
+
+tune(lm, l.female$call$formula, data = df.female, tunecontrol = tune.control(sampling = "fix"))
+tune(lm, l.female.cut$call$formula, data = df.female, tunecontrol = tune.control(sampling = "fix"))
+tune(lm, female.all$call$formula, data = df.female, tunecontrol = tune.control(sampling = "fix"))
+
+summary(female.all)
+```
+Появился значимый признак в виде комбинации вербала и статуса, но все равно это как-то сложно проанализировать: вероятно это случайность, данные слишком неоднородны.
+Да и tune не говорит определенно, какая модель лучше, от запуска к запуску хороша то одна, то другая, то третья, что, я думаю, тоже является следствием особенностей в данных.

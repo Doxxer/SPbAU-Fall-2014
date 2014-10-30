@@ -206,170 +206,125 @@ summary(l.cross)</code></pre>
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Видно, что модель со взаимным влиянием предикторов лучше, и она показывает, что больше всего играют мальчики с высоким доходом.</p>
-<hr />
-<p>Посмотрим теперь на такой график:</p>
-<pre class="r"><code>marginal.plot(df, data=df, groups=sex)</code></pre>
-<p><img src="task2_1_files/figure-html/unnamed-chunk-7-1.png" title="" alt="" width="672" /></p>
-<p>Данные сильно неоднородны, поэтому имеет смысл рассмотреть данные отдельно по полам. Сначала мальчики:</p>
-<pre class="r"><code>df.male &lt;- subset(df, sex==&quot;male&quot;)
-df.male$sex &lt;- NULL
-l.male &lt;- lm(gamble ~ ., data=df.male)
-summary(l.male)</code></pre>
+<div class="section level2">
+<h2>Дополнение</h2>
+<p>Мне видятся какие-то то ли недостаточные, то ли неустойчивые данные по девочкам: там очень много нулей или почти нулей в поле gamble и есть небольшие выбросы на их фоне: 19.6, 12.0 и пр, возможно из-за этого некоторые признаки оказываются переоцененными.</p>
+<p>Построим модель со взаимным влиянием:</p>
+<pre class="r"><code>model &lt;- function(f) {
+  lm &lt;- lm(f, data = df.female)
+  print(summary(lm))
+  lm &lt;- stepAIC(lm)
+  print(summary(lm))
+  print(c(summary(lm)$sigma, AIC(lm)))
+  lm
+}</code></pre>
+<pre class="r"><code>female.all &lt;- model(gamble ~ (.)^2)</code></pre>
 <pre><code>## 
 ## Call:
-## lm(formula = gamble ~ ., data = df.male)
+## lm(formula = f, data = df.female)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -56.654 -12.104  -2.061   7.729  83.903 
+## -9.2533 -1.0273  0.4649  1.5728  4.3059 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  27.6354    22.2192   1.244 0.225600    
-## status       -0.1456     0.4181  -0.348 0.730748    
-## income        6.0291     1.3288   4.537 0.000135 ***
-## verbal       -2.9748     3.0596  -0.972 0.340617    
+##               Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)   54.88384   23.81745   2.304   0.0399 * 
+## status        -1.82723    0.64079  -2.852   0.0146 * 
+## income         0.02605    1.96898   0.013   0.9897   
+## verbal        -8.11430    3.30376  -2.456   0.0303 * 
+## status:income  0.06039    0.05263   1.147   0.2736   
+## status:verbal  0.26724    0.07891   3.387   0.0054 **
+## income:verbal -0.17338    0.26955  -0.643   0.5322   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 26.45 on 24 degrees of freedom
-## Multiple R-squared:  0.5536, Adjusted R-squared:  0.4977 
-## F-statistic: 9.919 on 3 and 24 DF,  p-value: 0.0001936</code></pre>
-<pre class="r"><code>stepAIC(l.male)</code></pre>
-<pre><code>## Start:  AIC=187.1
-## gamble ~ status + income + verbal
+## Residual standard error: 3.506 on 12 degrees of freedom
+## Multiple R-squared:  0.6911, Adjusted R-squared:  0.5366 
+## F-statistic: 4.474 on 6 and 12 DF,  p-value: 0.01319
 ## 
-##          Df Sum of Sq   RSS    AIC
-## - status  1      84.8 16877 185.24
-## - verbal  1     661.4 17454 186.18
-## &lt;none&gt;                16792 187.10
-## - income  1   14404.2 31197 202.44
+## Start:  AIC=52.94
+## gamble ~ (status + income + verbal)^2
 ## 
-## Step:  AIC=185.24
-## gamble ~ income + verbal
+##                 Df Sum of Sq    RSS    AIC
+## - income:verbal  1     5.086 152.61 51.585
+## - status:income  1    16.183 163.71 52.919
+## &lt;none&gt;                       147.52 52.941
+## - status:verbal  1   140.989 288.51 63.686
 ## 
-##          Df Sum of Sq   RSS    AIC
-## &lt;none&gt;                16877 185.24
-## - verbal  1    1578.9 18456 185.75
-## - income  1   16576.4 33454 202.40</code></pre>
-<pre><code>## 
+## Step:  AIC=51.59
+## gamble ~ status + income + verbal + status:income + status:verbal
+## 
+##                 Df Sum of Sq    RSS    AIC
+## - status:income  1    12.876 165.48 51.124
+## &lt;none&gt;                       152.61 51.585
+## - status:verbal  1   181.352 333.96 64.465
+## 
+## Step:  AIC=51.12
+## gamble ~ status + income + verbal + status:verbal
+## 
+##                 Df Sum of Sq    RSS    AIC
+## &lt;none&gt;                       165.48 51.124
+## - income         1    26.613 192.10 51.958
+## - status:verbal  1   205.652 371.14 64.470
+## 
 ## Call:
-## lm(formula = gamble ~ income + verbal, data = df.male)
-## 
-## Coefficients:
-## (Intercept)       income       verbal  
-##      23.834        6.168       -3.629</code></pre>
-<pre class="r"><code>l.male &lt;- lm(gamble ~ income, data=df.male)
-summary(l.male)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = gamble ~ income, data = df.male)
+## lm(formula = gamble ~ status + income + verbal + status:verbal, 
+##     data = df.female)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -56.522 -16.402  -2.342   7.901  93.478 
+## -9.3683 -1.4212  0.4831  1.3392  5.3486 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   -2.660      8.021  -0.332    0.743    
-## income         6.518      1.255   5.195 2.01e-05 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   48.28443   13.79035   3.501 0.003526 ** 
+## status        -1.42593    0.39808  -3.582 0.003004 ** 
+## income         0.53933    0.35943   1.500 0.155698    
+## verbal        -8.02396    1.99569  -4.021 0.001264 ** 
+## status:verbal  0.23755    0.05695   4.171 0.000942 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 26.64 on 26 degrees of freedom
-## Multiple R-squared:  0.5093, Adjusted R-squared:  0.4905 
-## F-statistic: 26.99 on 1 and 26 DF,  p-value: 2.01e-05</code></pre>
-<p>Все предикторы теперь значимы, Аик удалил статус, а verbal мы стерли сами, чтобы упростить модель, ибо он погоды не делает. Но, так как данные по мальчикам сильно превалировали, общую картину показывали именно они, и в сечении ничего нового: без денег нет трат, плюс - чем больше денег, тем больше трат.</p>
-<p>И вторая часть: девочки.</p>
-<pre class="r"><code>df.female &lt;- subset(df, sex==&quot;female&quot;)
-df.female$sex &lt;- NULL
-l.female &lt;- lm(gamble ~ ., data=df.female)
-summary(l.female)</code></pre>
+## Residual standard error: 3.438 on 14 degrees of freedom
+## Multiple R-squared:  0.6535, Adjusted R-squared:  0.5545 
+## F-statistic:   6.6 on 4 and 14 DF,  p-value: 0.003345
+## 
+## [1]   3.438059 107.043878</code></pre>
+<pre class="r"><code>female.all &lt;- update(female.all, . ~ . - income)
+
+tune(lm, l.female$call$formula, data = df.female, tunecontrol = tune.control(sampling = &quot;fix&quot;))</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using fixed training/validation set: 11.16996</code></pre>
+<pre class="r"><code>tune(lm, l.female.cut$call$formula, data = df.female, tunecontrol = tune.control(sampling = &quot;fix&quot;))</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using fixed training/validation set: 40.17878</code></pre>
+<pre class="r"><code>tune(lm, female.all$call$formula, data = df.female, tunecontrol = tune.control(sampling = &quot;fix&quot;))</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using fixed training/validation set: 5.561975</code></pre>
+<pre class="r"><code>summary(female.all)</code></pre>
 <pre><code>## 
 ## Call:
-## lm(formula = gamble ~ ., data = df.female)
+## lm(formula = gamble ~ status + verbal + status:verbal, data = df.female)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -8.6972 -2.0567 -0.5836  2.6533 11.2536 
+## -9.7951 -0.7608  0.2259  1.3943  5.6864 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  -5.3778     7.1848  -0.749   0.4657  
-## status        0.2073     0.1038   1.997   0.0643 .
-## income        0.6813     0.5177   1.316   0.2079  
-## verbal       -0.1392     0.9259  -0.150   0.8825  
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   54.42097   13.70839   3.970 0.001233 ** 
+## status        -1.52993    0.40803  -3.750 0.001933 ** 
+## verbal        -8.35256    2.06473  -4.045 0.001057 ** 
+## status:verbal  0.24564    0.05901   4.163 0.000834 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 4.974 on 15 degrees of freedom
-## Multiple R-squared:  0.2228, Adjusted R-squared:  0.06738 
-## F-statistic: 1.433 on 3 and 15 DF,  p-value: 0.2723</code></pre>
-<pre class="r"><code>stepAIC(l.female)</code></pre>
-<pre><code>## Start:  AIC=64.47
-## gamble ~ status + income + verbal
-## 
-##          Df Sum of Sq    RSS    AIC
-## - verbal  1     0.560 371.70 62.499
-## &lt;none&gt;                371.14 64.470
-## - income  1    42.854 413.99 64.547
-## - status  1    98.666 469.80 66.950
-## 
-## Step:  AIC=62.5
-## gamble ~ status + income
-## 
-##          Df Sum of Sq    RSS    AIC
-## &lt;none&gt;                371.70 62.499
-## - income  1    43.643 415.34 62.608
-## - status  1   102.127 473.82 65.111</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = gamble ~ status + income, data = df.female)
-## 
-## Coefficients:
-## (Intercept)       status       income  
-##     -6.1437       0.2031       0.6862</code></pre>
-<pre class="r"><code>l.female &lt;- update(l.female, . ~ . -verbal)
-summary(l.female)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = gamble ~ status + income, data = df.female)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -8.5269 -2.0648 -0.4493  2.7694 11.1694 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept) -6.14371    4.91115  -1.251   0.2289  
-## status       0.20311    0.09687   2.097   0.0523 .
-## income       0.68619    0.50064   1.371   0.1894  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.82 on 16 degrees of freedom
-## Multiple R-squared:  0.2216, Adjusted R-squared:  0.1244 
-## F-statistic: 2.278 on 2 and 16 DF,  p-value: 0.1347</code></pre>
-<p>Давайте попробуем удалить ненужный статус:</p>
-<pre class="r"><code>l.female.cut &lt;- update(l.female, . ~ . -income)
-summary(l.female.cut)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = gamble ~ status, data = df.female)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -7.329 -2.810 -1.376  2.309 11.617 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) -1.01592    3.26284  -0.311    0.759
-## status       0.13844    0.08676   1.596    0.129
-## 
-## Residual standard error: 4.943 on 17 degrees of freedom
-## Multiple R-squared:  0.1303, Adjusted R-squared:  0.07909 
-## F-statistic: 2.546 on 1 and 17 DF,  p-value: 0.129</code></pre>
-<p>У девочек оказался значимым только статус: чем он выше, тем больше тратится денег на игру.</p>
+## Residual standard error: 3.579 on 15 degrees of freedom
+## Multiple R-squared:  0.5977, Adjusted R-squared:  0.5173 
+## F-statistic:  7.43 on 3 and 15 DF,  p-value: 0.002813</code></pre>
+<p>Появился значимый признак в виде комбинации вербала и статуса, но все равно это как-то сложно проанализировать: вероятно это случайность, данные слишком неоднородны. Да и tune не говорит определенно, какая модель лучше, от запуска к запуску хороша то одна, то другая, то третья, что, я думаю, тоже является следствием особенностей в данных.</p>
+</div>
 
 
 </div>
