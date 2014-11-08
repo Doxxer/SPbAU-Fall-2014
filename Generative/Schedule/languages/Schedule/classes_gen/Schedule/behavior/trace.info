@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<debug-info>
+  <root>
+    <file name="EducationalDay_BehaviorDescriptor.java">
+      <unit at="10,0,21,0" name="Schedule.behavior.EducationalDay_BehaviorDescriptor" />
+    </file>
+    <file name="BehaviorAspectDescriptor.java">
+      <unit at="9,0,28,0" name="Schedule.behavior.BehaviorAspectDescriptor" />
+    </file>
+    <file name="Time_BehaviorDescriptor.java">
+      <unit at="7,0,15,0" name="Schedule.behavior.Time_BehaviorDescriptor" />
+    </file>
+    <file name="Lecture_BehaviorDescriptor.java">
+      <unit at="10,0,21,0" name="Schedule.behavior.Lecture_BehaviorDescriptor" />
+    </file>
+    <file name="Schedule_BehaviorDescriptor.java">
+      <unit at="10,0,21,0" name="Schedule.behavior.Schedule_BehaviorDescriptor" />
+    </file>
+  </root>
+</debug-info>
+
