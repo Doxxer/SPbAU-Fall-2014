@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<debug-info>
+  <concept fqn="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+  <root>
+    <file name="QueriesGenerated.java">
+      <unit at="13,0,50,0" name="Schedule.generator.template.main.QueriesGenerated" />
+    </file>
+  </root>
+  <root nodeRef="r:7743fdcb-8cf0-49bb-b6aa-911a567d216b(Schedule.generator.template.main@generator)/7613068837530215592">
+    <file name="QueriesGenerated.java">
+      <node id="7613068837530425870" at="16,112,17,69" concept="0" />
+      <node id="7613068837530439406" at="43,120,44,72" concept="0" />
+      <scope id="7613068837530425864" at="16,112,17,69" />
+      <scope id="7613068837530439400" at="43,120,44,72" />
+    </file>
+  </root>
+  <root nodeRef="r:7743fdcb-8cf0-49bb-b6aa-911a567d216b(Schedule.generator.template.main@generator)/7613068837530343555">
+    <file name="QueriesGenerated.java">
+      <node id="7613068837530887271" at="19,112,20,103" concept="0" />
+      <node id="7613068837530887284" at="22,112,23,69" concept="0" />
+      <node id="7613068837530456819" at="46,120,47,76" concept="0" />
+      <scope id="7613068837530887270" at="19,112,20,103" />
+      <scope id="7613068837530887283" at="22,112,23,69" />
+      <scope id="7613068837530456813" at="46,120,47,76" />
+    </file>
+  </root>
+  <root nodeRef="r:7743fdcb-8cf0-49bb-b6aa-911a567d216b(Schedule.generator.template.main@generator)/7613068837530397914">
+    <file name="QueriesGenerated.java">
+      <node id="7613068837530858993" at="25,112,26,69" concept="0" />
+      <node id="7613068837530860745" at="28,112,29,86" concept="0" />
+      <node id="7613068837530860755" at="31,112,32,74" concept="0" />
+      <node id="7613068837530860727" at="37,108,38,76" concept="0" />
+      <node id="7613068837530860736" at="40,108,41,77" concept="0" />
+      <scope id="7613068837530858992" at="25,112,26,69" />
+      <scope id="7613068837530860744" at="28,112,29,86" />
+      <scope id="7613068837530860754" at="31,112,32,74" />
+      <scope id="7613068837530860726" at="37,108,38,76" />
+      <scope id="7613068837530860735" at="40,108,41,77" />
+    </file>
+  </root>
+  <root nodeRef="r:7743fdcb-8cf0-49bb-b6aa-911a567d216b(Schedule.generator.template.main@generator)/7613068837530584053">
+    <file name="QueriesGenerated.java">
+      <node id="7613068837530589200" at="34,112,35,139" concept="0" />
+      <scope id="7613068837530588373" at="34,112,35,139" />
+    </file>
+  </root>
+</debug-info>
+
