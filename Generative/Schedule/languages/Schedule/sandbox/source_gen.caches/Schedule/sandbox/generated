@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="93lq2aagn00g8enai0xeyb1u76i7i30">
-  <common hash="93lq2aagn00g8enai0xeyb1u76i7i30" />
+<dependencies version="2" modelHash="-ban3vui0lw9q1l61yex1jnp6wk0jayt">
+  <common hash="-ban3vui0lw9q1l61yex1jnp6wk0jayt" />
   <source id="2730820940293443001" name="SPbAU 6 course">
-    <file name="SPbAU 6 course" />
+    <file name="map_Schedule.xml" />
   </source>
 </dependencies>
 

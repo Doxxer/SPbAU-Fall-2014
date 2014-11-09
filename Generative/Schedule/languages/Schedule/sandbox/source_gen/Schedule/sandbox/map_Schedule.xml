@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Schedule MPS task</title>
+    <style>.tg { border-collapse: collapse; } .tg td, th { font-family: Arial, sans-serif; font-size: 14px; padding: 10px 5px; border: 1px solid; overflow: hidden; word-break: normal; } .tg .tg-head, .tg-title { font-weight: bold; background-color: #cbcefb; }
+        </style>
+  </head>
+  <body>
+    <table class="tg">
+      <tr>
+        <th class="tg-title" colspan="6">SPbAU 6 course</th>
+      </tr>
+      <tr>
+        <td class="tg-head">Day</td>
+        <td class="tg-head">Lecture</td>
+        <td class="tg-head">Start time</td>
+        <td class="tg-head">Finish time</td>
+        <td class="tg-head">Where</td>
+        <td class="tg-head">Teacher</td>
+      </tr>
+      <div>
+        <tr>
+          <td rowspan="4">Monday</td>
+        </tr>
+        <tr>
+          <div>
+            <td>Programming</td>
+            <td>10:00</td>
+            <td>11:00</td>
+            <td>999</td>
+            <td>Vasily Pupkin</td>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td>Maths</td>
+            <td>12:00</td>
+            <td>13:00</td>
+            <td>3132</td>
+            <td>Vasily Pupkin jr.</td>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td>History</td>
+            <td>8:20</td>
+            <td>9:00</td>
+            <td>123</td>
+            <td>Vasily Pupkin 2</td>
+          </div>
+        </tr>
+      </div>
+      <div>
+        <tr>
+          <td rowspan="3">Tuesday</td>
+        </tr>
+        <tr>
+          <div>
+            <td>Generative programming</td>
+            <td>12:00</td>
+            <td>16:00</td>
+            <td>204</td>
+            <td>Vlasiev Michael</td>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td>А русский язык поддерживается?</td>
+            <td>11:00</td>
+            <td>13:00</td>
+            <td>999</td>
+            <td>Лев Антонович Пушкин III</td>
+          </div>
+        </tr>
+      </div>
+      <div>
+        <tr>
+          <td rowspan="3">Friday</td>
+        </tr>
+        <tr>
+          <div>
+            <td>Programming</td>
+            <td>10:00</td>
+            <td>10:00</td>
+            <td>123</td>
+            <td>Vasily Pupkin</td>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td>Maths</td>
+            <td>00:00</td>
+            <td>12:00</td>
+            <td>234</td>
+            <td>Vasily Pupkin jr.</td>
+          </div>
+        </tr>
+      </div>
+    </table>
+  </body>
+</html>

@@ -25,7 +25,7 @@ public class Time_Constraints extends BaseConstraintsDescriptor {
       @Override
       public boolean validateValue(SNode node, String propertyValue) {
         String propertyName = "hours";
-        return (SPropertyOperations.getInteger(propertyValue)) >= 0 && (SPropertyOperations.getInteger(propertyValue)) < 24;
+        return Integer.valueOf((SPropertyOperations.getString(propertyValue))) >= 0 && Integer.valueOf((SPropertyOperations.getString(propertyValue))) < 24;
       }
     });
     properties.put("minutes", new BasePropertyConstraintsDescriptor("minutes", this) {
@@ -36,7 +36,7 @@ public class Time_Constraints extends BaseConstraintsDescriptor {
       @Override
       public boolean validateValue(SNode node, String propertyValue) {
         String propertyName = "minutes";
-        return (SPropertyOperations.getInteger(propertyValue)) >= 0 && (SPropertyOperations.getInteger(propertyValue)) < 60;
+        return Integer.valueOf((SPropertyOperations.getString(propertyValue))) >= 0 && Integer.valueOf((SPropertyOperations.getString(propertyValue))) < 60;
       }
     });
     return properties;
