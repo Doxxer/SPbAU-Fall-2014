@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="-d5v9r0fdehwgk57qub7lyx0rn7wdjz9">
+<dependencies version="2" modelHash="-63wpx9ce0nm1tuc7ntbfmxhddm8a1dk">
   <dep model="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/f:java_stub#6ed54515-acc8-4d1e-a16c-9fd6cfe951ea#jetbrains.mps.generator.runtime(MPS.Core/jetbrains.mps.generator.runtime@java_stub)" />
   <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="79dc9uxy6e0zu6ix1mouwikl3tjk1ri" />
   <dep model="r:03e2b27a-dd59-4302-abf1-e73a72507f84(Schedule.structure)" hash="-8fl4162pk8j1shob1l302te3j0rqzi1" />
-  <dep model="r:31ad67ca-5d67-4380-a174-190491594ddd(Schedule.typesystem)" hash="-dxsa42242yteg6jzweatsscmu8215y8" />
+  <dep model="r:31ad67ca-5d67-4380-a174-190491594ddd(Schedule.typesystem)" hash="-61hhuqeqk8j0anbedda0mqvdazshykt" />
   <dep model="r:7293b76b-3463-4495-85f2-5d11d7dddac6(Schedule.constraints)" hash="-958ooygs8e9w1g51jqxg0u790joe7y" />
   <dep model="r:943f8344-9cf3-4c53-bedd-643497cd40b4(Schedule.behavior)" hash="-6e60qdpn9j0ceavjy4qx9oxw0b0m4sf" />
   <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="-4205axfeqtha0yz1z0p30mjdhm43fpm" />

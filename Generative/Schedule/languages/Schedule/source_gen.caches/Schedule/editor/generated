@@ -13,7 +13,7 @@
   <dep model="r:00000000-0000-4000-0000-011c895902a9(jetbrains.mps.lang.actions.generator.baseLanguage.template.main@generator)" hash="-8h2bbpf3vartp1fig5locqieww2g0wa" />
   <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="79dc9uxy6e0zu6ix1mouwikl3tjk1ri" />
   <dep model="r:00000000-0000-4000-0000-011c89590303(jetbrains.mps.lang.smodel.generator.baseLanguage.template.main@generator)" hash="ewv14ou3akmpfp3weehtvxne57x6rii" />
-  <dep model="r:03e2b27a-dd59-4302-abf1-e73a72507f84(Schedule.structure)" hash="-9al176qpq1u458voild3ehcbqc4h3gj" />
+  <dep model="r:03e2b27a-dd59-4302-abf1-e73a72507f84(Schedule.structure)" hash="-8fl4162pk8j1shob1l302te3j0rqzi1" />
   <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="-4205axfeqtha0yz1z0p30mjdhm43fpm" />
   <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="40gvhg7bzkigxlvhhvrgx43vkw2mfw1" />
   <common hash="6o2b0rvu80rd5k9955294et3t7kbglm" dependsOnNodes="true">

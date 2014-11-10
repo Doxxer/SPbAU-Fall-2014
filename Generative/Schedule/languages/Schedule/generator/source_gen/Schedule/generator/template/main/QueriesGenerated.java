@@ -9,6 +9,8 @@ import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
 import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.generator.template.SourceSubstituteMacroNodeContext;
 import jetbrains.mps.generator.template.SourceSubstituteMacroNodesContext;
+import jetbrains.mps.internal.collections.runtime.ListSequence;
+import jetbrains.mps.internal.collections.runtime.ISelector;
 
 @Generated
 public class QueriesGenerated {
@@ -44,6 +46,10 @@ public class QueriesGenerated {
     return SLinkOperations.getTargets(_context.getNode(), "days", true);
   }
   public static Iterable<SNode> sourceNodesQuery_7613068837530456812(final SourceSubstituteMacroNodesContext _context) {
-    return SLinkOperations.getTargets(_context.getNode(), "lectures", true);
+    return ListSequence.fromList(SLinkOperations.getTargets(_context.getNode(), "lectures", true)).sort(new ISelector<SNode, Integer>() {
+      public Integer select(SNode it) {
+        return Integer.parseInt(SPropertyOperations.getString(SLinkOperations.getTarget(it, "timeStart", true), "hours")) * 100 + Integer.parseInt(SPropertyOperations.getString(SLinkOperations.getTarget(it, "timeStart", true), "minutes"));
+      }
+    }, true);
   }
 }

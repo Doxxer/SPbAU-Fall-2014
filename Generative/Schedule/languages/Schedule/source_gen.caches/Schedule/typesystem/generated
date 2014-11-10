@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="-dxsa42242yteg6jzweatsscmu8215y8">
-  <dep model="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" hash="-dcb69qfbfhrvnzicc81rw6790if10j4" />
+<dependencies version="2" modelHash="-61hhuqeqk8j0anbedda0mqvdazshykt">
   <dep model="r:00000000-0000-4000-0000-011c895902b7(jetbrains.mps.lang.typesystem.generator.baseLanguage.template.main@generator)" hash="e20pevpxq6ovgqrfqm9zbi2aceg8esl" />
-  <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="79dc9uxy6e0zu6ix1mouwikl3tjk1ri" />
-  <dep model="r:00000000-0000-4000-0000-011c89590303(jetbrains.mps.lang.smodel.generator.baseLanguage.template.main@generator)" hash="ewv14ou3akmpfp3weehtvxne57x6rii" />
-  <dep model="r:03e2b27a-dd59-4302-abf1-e73a72507f84(Schedule.structure)" hash="-8fl4162pk8j1shob1l302te3j0rqzi1" />
   <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="-4205axfeqtha0yz1z0p30mjdhm43fpm" />
-  <dep model="r:c3548bac-30eb-4a2a-937c-0111d5697309(jetbrains.mps.lang.smodel.generator.smodelAdapter)" hash="41u0uagqwbamhr6rq8sshu6cg7mh05e" />
-  <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="40gvhg7bzkigxlvhhvrgx43vkw2mfw1" />
-  <common hash="-dxsa42242yteg6jzweatsscmu8215y8" dependsOnNodes="true">
-    <dep root="7613068837531089202" />
+  <common hash="-61hhuqeqk8j0anbedda0mqvdazshykt" dependsOnNodes="true">
     <dep model="r:00000000-0000-4000-0000-011c895902b7(jetbrains.mps.lang.typesystem.generator.baseLanguage.template.main@generator)" />
-    <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" />
-    <dep model="r:00000000-0000-4000-0000-011c89590303(jetbrains.mps.lang.smodel.generator.baseLanguage.template.main@generator)" />
     <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" />
-    <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" />
-    <file name="TypesystemDescriptor.java" />
   </common>
-  <source id="7613068837531089202" name="TimeCompare">
-    <dep model="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" />
-    <dep model="r:00000000-0000-4000-0000-011c895902b7(jetbrains.mps.lang.typesystem.generator.baseLanguage.template.main@generator)" />
-    <dep model="r:00000000-0000-4000-0000-011c89590303(jetbrains.mps.lang.smodel.generator.baseLanguage.template.main@generator)" />
-    <dep model="r:03e2b27a-dd59-4302-abf1-e73a72507f84(Schedule.structure)" />
-    <dep model="r:c3548bac-30eb-4a2a-937c-0111d5697309(jetbrains.mps.lang.smodel.generator.smodelAdapter)" />
-    <file name="TimeCompare_ComparisonRule.java" />
-  </source>
 </dependencies>
 
