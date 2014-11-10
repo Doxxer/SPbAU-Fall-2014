@@ -48,7 +48,7 @@ public class QueriesGenerated {
   public static Iterable<SNode> sourceNodesQuery_7613068837530456812(final SourceSubstituteMacroNodesContext _context) {
     return ListSequence.fromList(SLinkOperations.getTargets(_context.getNode(), "lectures", true)).sort(new ISelector<SNode, Integer>() {
       public Integer select(SNode it) {
-        return Integer.parseInt(SPropertyOperations.getString(SLinkOperations.getTarget(it, "timeStart", true), "hours")) * 100 + Integer.parseInt(SPropertyOperations.getString(SLinkOperations.getTarget(it, "timeStart", true), "minutes"));
+        return Integer.parseInt(SPropertyOperations.getString(SLinkOperations.getTarget(it, "timeStart", true), "hours")) * 60 + Integer.parseInt(SPropertyOperations.getString(SLinkOperations.getTarget(it, "timeStart", true), "minutes"));
       }
     }, true);
   }

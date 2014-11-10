@@ -459,7 +459,7 @@
                                   </node>
                                 </node>
                                 <node concept="vg0i.1068580320020" id="5166396601843977030" role="vg0i.1081773326031.1081773367579" info="nn">
-                                  <property role="vg0i.1068580320020.1068580320021" value="100" />
+                                  <property role="vg0i.1068580320020.1068580320021" value="60" />
                                 </node>
                               </node>
                             </node>
