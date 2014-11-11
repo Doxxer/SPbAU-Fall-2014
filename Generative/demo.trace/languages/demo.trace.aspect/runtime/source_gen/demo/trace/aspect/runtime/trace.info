@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<debugInfo>
+  <root nodeRef="r:5ea04337-2285-4f77-9323-42eeea1415c9(demo.trace.aspect.runtime)/4231759001348788122">
+    <nodeInfo nodeId="4231759001348788316" fileName="Tracer.java" startLine="7" startPosition="51" endLine="8" endPosition="70" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4231759001348797691" fileName="Tracer.java" startLine="8" startPosition="70" endLine="9" endPosition="17" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="4231759001348788213" fileName="Tracer.java" startLine="7" startPosition="0" endLine="11" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticMethodDeclaration" propertyString="trace#(Ljava/lang/String;null)null" />
+    <scopeInfo nodeId="4231759001348788216" fileName="Tracer.java" startLine="7" startPosition="51" endLine="9" endPosition="17" />
+    <scopeInfo nodeId="4231759001348788213" fileName="Tracer.java" startLine="7" startPosition="0" endLine="11" endPosition="0">
+      <varInfo nodeId="4231759001348788238" varName="name" />
+      <varInfo nodeId="4231759001348788248" varName="value" />
+    </scopeInfo>
+    <unitInfo nodeId="4231759001348788122" fileName="Tracer.java" startLine="6" startPosition="0" endLine="12" endPosition="0" unitName="demo.trace.aspect.runtime.Tracer" />
+  </root>
+</debugInfo>
+

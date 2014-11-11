@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<debugInfo>
+  <root nodeRef="r:74bb5569-3aa7-41f9-bbf9-e9b581b48dcc(pow.sandbox)/4231759001348458408">
+    <nodeInfo nodeId="4231759001348491159" fileName="Name.java" startLine="11" startPosition="42" endLine="12" endPosition="32" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="4231759001348549681" fileName="Name.java" startLine="12" startPosition="32" endLine="13" endPosition="35" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="4231759001348464494" fileName="Name.java" startLine="13" startPosition="35" endLine="14" endPosition="44" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4231759001348611137" fileName="Name.java" startLine="14" startPosition="44" endLine="15" endPosition="70" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="4231759001348618736" fileName="Name.java" startLine="17" startPosition="41" endLine="18" endPosition="22" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="4231759001348618394" fileName="Name.java" startLine="17" startPosition="0" endLine="20" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="accept#(Ljava/lang/Integer;)Z" />
+    <nodeInfo nodeId="4231759001348614490" fileName="Name.java" startLine="15" startPosition="70" endLine="20" endPosition="7" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="4231759001348458481" fileName="Name.java" startLine="11" startPosition="0" endLine="22" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticMethodDeclaration" propertyString="main#([Ljava/lang/String;)V" />
+    <scopeInfo nodeId="4231759001348618395" fileName="Name.java" startLine="17" startPosition="41" endLine="18" endPosition="22" />
+    <scopeInfo nodeId="4231759001348618394" fileName="Name.java" startLine="17" startPosition="0" endLine="20" endPosition="0">
+      <varInfo nodeId="4231759001348618394" varName="it" />
+    </scopeInfo>
+    <scopeInfo nodeId="4231759001348458487" fileName="Name.java" startLine="11" startPosition="42" endLine="20" endPosition="7">
+      <varInfo nodeId="4231759001348611140" varName="a" />
+      <varInfo nodeId="4231759001348491162" varName="d" />
+      <varInfo nodeId="4231759001348549684" varName="result" />
+    </scopeInfo>
+    <scopeInfo nodeId="4231759001348458481" fileName="Name.java" startLine="11" startPosition="0" endLine="22" endPosition="0">
+      <varInfo nodeId="4231759001348458482" varName="args" />
+    </scopeInfo>
+    <unitInfo nodeId="4231759001348618394" fileName="Name.java" startLine="16" startPosition="39" endLine="20" endPosition="5" unitName="pow.sandbox.Name$1" />
+    <unitInfo nodeId="4231759001348458408" fileName="Name.java" startLine="10" startPosition="0" endLine="23" endPosition="0" unitName="pow.sandbox.Name" />
+  </root>
+</debugInfo>
+

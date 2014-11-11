@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependenciesRoot>
+  <dependency className="demo.trace.aspect.sandbox.Test" file="Test.java">
+    <classNode dependClassName="demo.trace.aspect.runtime.Tracer" />
+    <classNode dependClassName="java.lang.String" />
+  </dependency>
+</dependenciesRoot>
+

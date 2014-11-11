@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MPSProject">
+    <projectModules>
+      <modulePath path="$PROJECT_DIR$/languages/demo.trace.aspect/demo.trace.aspect.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/demo.trace.aspect/runtime/demo.trace.aspect.runtime.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/demo.trace.aspect/sandbox/demo.trace.aspect.sandbox.msd" folder="" />
+    </projectModules>
+  </component>
+</project>
+
