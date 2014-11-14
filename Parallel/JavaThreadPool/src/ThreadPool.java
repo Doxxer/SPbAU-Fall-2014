@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -79,7 +80,7 @@ public class ThreadPool {
 
         @Override
         public void run() {
-            System.out.println("^^^ thread started");
+            Logger.getGlobal().info("^^^ thread started");
 
             while (!threadPoolShutdown.get()) {
                 try {
@@ -90,7 +91,7 @@ public class ThreadPool {
                         synchronized (threads) {
                             if (threads.size() > hotThreadsCount && workingQueue.isEmpty()) {
                                 threads.remove(Thread.currentThread());
-                                System.out.println("- thread");
+                                Logger.getGlobal().info("- thread");
                                 return;
                             }
                         }
@@ -101,12 +102,12 @@ public class ThreadPool {
                         synchronized (runningTasks) {
                             runningTasks.remove(currentTaskID);
                         }
-                        System.out.println(MessageFormat.format("--- task #{0}", currentTaskID));
+                        Logger.getGlobal().info(MessageFormat.format("--- task #{0}", currentTaskID));
                         currentTaskID = INVALID_TASK_ID;
                     }
                 }
             }
-            System.out.println("^^^ thread finished");
+            Logger.getGlobal().info("^^^ thread finished");
         }
 
         private void runTask(Task task) {
@@ -118,7 +119,7 @@ public class ThreadPool {
                     return;
                 }
             }
-            System.out.println(MessageFormat.format("+++ task #{0}", currentTaskID));
+            Logger.getGlobal().info(MessageFormat.format("+++ task #{0}", currentTaskID));
             task.run();
         }
 

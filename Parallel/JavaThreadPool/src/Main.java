@@ -12,13 +12,9 @@ public class Main {
             usage();
             System.exit(1);
         }
-
         threadPool = new ThreadPool(params._1, params._2);
-
         Runtime.getRuntime().addShutdownHook(new Thread(threadPool::shutdown));
-
         runInterpreter();
-
     }
 
     private static void runInterpreter() {
@@ -48,7 +44,7 @@ public class Main {
     }
 
     private static Stream<Integer> parseIntegerParams(String[] params) {
-        return Arrays.stream(params).skip(1).filter(Main::isNumber).map(Integer::parseInt);
+        return Arrays.stream(params).skip(1).filter(Main::isNumber).map(Integer::parseInt).limit(1);
     }
 
     private static void removeTask(Integer ID) {
