@@ -6,7 +6,7 @@ import java.util.function.Supplier;
  * <p>
  * Created by Turaev Timur on 09.11.14.
  */
-public class Task<T> implements Runnable {
+class Task<T> implements Runnable {
     private final int ID;
     private final Supplier<T> function;
     private final Future<T> future;

@@ -18,26 +18,21 @@ import java.util.stream.Stream;
 public class ThreadPool {
     private final int hotThreadsCount;
     private final int idleTimeout;
+
     private final List<Thread> threads;
-    private final HashSet<Integer> cancelledTaskIDs;
-    private final HashMap<Integer, Thread> runningTasks;
-    private final LinkedBlockingQueue<Task> newTasks;
-    private final AtomicBoolean threadPoolShutdown = new AtomicBoolean();
-    private final AtomicInteger lastTaskID = new AtomicInteger();
+    private final LinkedBlockingQueue<Task> workingQueue = new LinkedBlockingQueue<>();
+    private final HashSet<Integer> cancelledTasks = new HashSet<>();
+    private final HashMap<Integer, Thread> runningTasks = new HashMap<>();
+
+    private final AtomicBoolean threadPoolShutdown = new AtomicBoolean(false);
+    private final AtomicInteger lastTaskID = new AtomicInteger(0);
 
     public ThreadPool(int hotThreadsCount, int idleTimeout) {
         this.hotThreadsCount = hotThreadsCount;
         this.idleTimeout = idleTimeout;
-        this.threadPoolShutdown.set(false);
-        this.lastTaskID.set(0);
-        this.cancelledTaskIDs = new HashSet<>();
-        this.runningTasks = new HashMap<>();
-        this.newTasks = new LinkedBlockingQueue<>();
-        this.threads = Stream.generate(() -> new Thread(new Worker())).limit(hotThreadsCount).collect(Collectors.toList());
 
-        synchronized (threads) {
-            threads.forEach(Thread::start);
-        }
+        this.threads = Stream.generate(() -> new Thread(new Worker())).limit(hotThreadsCount).collect(Collectors.toList());
+        threads.forEach(Thread::start);
     }
 
     public <T> Tuple<Integer, Future<T>> add(Supplier<T> function) {
@@ -46,12 +41,12 @@ public class ThreadPool {
         try {
             synchronized (threads) {
                 if (threads.size() == runningTasks.size()) {
-                    newTasks.put(task);
+                    workingQueue.put(task);
                     Thread thread = new Thread(new Worker());
                     threads.add(thread);
                     thread.start();
                 } else {
-                    newTasks.put(task);
+                    workingQueue.put(task);
                 }
             }
         } catch (InterruptedException ignored) {
@@ -67,8 +62,8 @@ public class ThreadPool {
     }
 
     public void remove(int ID) {
-        synchronized (cancelledTaskIDs) {
-            cancelledTaskIDs.add(ID);
+        synchronized (cancelledTasks) {
+            cancelledTasks.add(ID);
         }
         synchronized (runningTasks) {
             if (runningTasks.containsKey(ID)) {
@@ -88,12 +83,12 @@ public class ThreadPool {
 
             while (!threadPoolShutdown.get()) {
                 try {
-                    Task task = newTasks.poll(idleTimeout, TimeUnit.SECONDS);
+                    Task task = workingQueue.poll(idleTimeout, TimeUnit.SECONDS);
                     if (task != null) {
                         runTask(task);
                     } else {
                         synchronized (threads) {
-                            if (threads.size() > hotThreadsCount && newTasks.isEmpty()) {
+                            if (threads.size() > hotThreadsCount && workingQueue.isEmpty()) {
                                 threads.remove(Thread.currentThread());
                                 System.out.println("- thread");
                                 return;
@@ -128,8 +123,8 @@ public class ThreadPool {
         }
 
         private boolean isNotCancelled(Task task) {
-            synchronized (cancelledTaskIDs) {
-                return !cancelledTaskIDs.remove(task.getID());
+            synchronized (cancelledTasks) {
+                return !cancelledTasks.remove(task.getID());
             }
         }
     }
