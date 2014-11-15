@@ -1,6 +1,9 @@
+#ifndef __BYTECODEVISITOR_HPP_
+#define __BYTECODEVISITOR_HPP_
+
 #include "ast.h"
 #include "Context.hpp"
-#include "TranslationError.hpp"
+#include "Errors.hpp"
 
 namespace mathvm {
     class BytecodeVisitor : public AstVisitor {
@@ -131,3 +134,5 @@ namespace mathvm {
         }
     };
 }
+
+#endif

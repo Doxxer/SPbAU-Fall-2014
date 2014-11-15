@@ -21,6 +21,10 @@ namespace mathvm {
                 : contextID(id), code(parent->code), parentContext(parent), childContexts(parent->childContexts) {
         }
 
+        InterpreterCodeImpl *getCode() const {
+            return code;
+        }
+
         uint16_t getContextID() const {
             return contextID;
         }

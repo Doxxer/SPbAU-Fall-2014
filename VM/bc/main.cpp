@@ -32,11 +32,9 @@ int main(int argc, char **argv) {
 
     const char *source =
             "int a;"
-            "int b;"
-            "int c;"
             "a = 1;"
-            "b = 2;"
-            "c = a + b;";
+            "a = 2;"
+            "a = 3; print(a);";
 //    const char* source = loadFile(argv[1]);
 
     if (source == NULL) {
@@ -62,6 +60,8 @@ int main(int argc, char **argv) {
         LOG << "-----------------------------" << endl;
         code->disassemble(cout);
         LOG << "-----------------------------" << endl;
+        std::vector<Var*> vars;
+        code->execute(vars);
     } else {
         LOG << "CODE IS NULL" << endl;
     }
@@ -69,5 +69,6 @@ int main(int argc, char **argv) {
     delete translateStatus;
     delete translator;
     delete code;
+
     return 0;
 }

@@ -1,5 +1,5 @@
 #include "Context.hpp"
-#include "TranslationError.hpp"
+#include "Errors.hpp"
 
 namespace mathvm {
     uint16_t Context::introduceFunction(BytecodeFunction *function) {

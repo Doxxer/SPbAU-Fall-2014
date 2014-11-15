@@ -11,12 +11,28 @@ namespace mathvm {
 
     void BytecodeVisitor::visitPrintNode(PrintNode *node) {
         LOG << "visitPrintNode" << endl;
-        // TODO
+        for (uint32_t i = 0; i < node->operands(); ++i) {
+            node->operandAt(i)->visit(this);
+            switch (lastType) {
+                case VT_INT:
+                    bc()->addInsn(BC_IPRINT);
+                    break;
+                case VT_DOUBLE:
+                    bc()->addInsn(BC_DPRINT);
+                    break;
+                case VT_STRING:
+                    bc()->addInsn(BC_SPRINT);
+                    break;
+                default:
+                    throw TranslationError("Incorrect printing variable type", node->position());
+            }
+        }
     }
 
     void BytecodeVisitor::visitLoadNode(LoadNode *node) {
         LOG << "visitLoadNode" << endl;
-        // TODO
+        EntityInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
+        lastType = loadVariable(variableDescriptor, node);
     }
 
     void BytecodeVisitor::visitIfNode(IfNode *node) {
@@ -88,8 +104,13 @@ namespace mathvm {
 
     void BytecodeVisitor::visitFunctionNode(FunctionNode *node) {
         LOG << "visitFunctionNode" << endl;
+        if (function == NULL) {
+            function = context->getFunction(node->name());
+            visitBlockNode(node->body());
+            context->getCode()->setBytecode(context->getFunction(node->name())->bytecode());
+            return;
+        }
         Context *child = context->addChildContext();
-
         BytecodeVisitor visitor(child, context->getFunction(node->name()));
         for (uint32_t i = 0; i < node->parametersNumber(); i++) {
             uint16_t id = child->introduceVariable(node->parameterType(i), node->parameterName(i));
