@@ -1,10 +1,28 @@
 #include <iostream>
-
 #include "mathvm.h"
+
+#include "parser.h"
 #include "logger.hpp"
+
+#include "ast_printer.hpp"
 
 using namespace mathvm;
 using namespace std;
+
+class AstPrinter : public Translator {
+public:
+    virtual Status *translate(const string &program, Code **)
+    {
+        Parser parser;
+        Status *status = parser.parseProgram(program);
+        if (status && status->isError()) {
+            return status;
+        }
+        PrinterVisitor visitor(cout);
+        parser.top()->node()->visit(&visitor);
+        return Status::Ok();
+    }
+};
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -27,6 +45,8 @@ int main(int argc, char **argv) {
     }
 
     Translator *translator = new BytecodeTranslatorImpl();
+//    Translator *translator = new AstPrinter();
+
     Code *code = NULL;
     Status *translateStatus = translator->translate(source, &code);
 

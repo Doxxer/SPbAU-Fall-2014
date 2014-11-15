@@ -15,6 +15,10 @@ namespace mathvm {
             delete bytecode;
         }
 
+        Bytecode *getBytecode() const {
+            return bytecode;
+        }
+
         virtual Status *execute(vector<Var *> &vars);
 
         virtual void disassemble(ostream &out, FunctionFilter *filter) override;

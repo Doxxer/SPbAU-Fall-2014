@@ -1,5 +1,6 @@
 #include "ast.h"
 #include "Context.hpp"
+#include "TranslationError.hpp"
 
 namespace mathvm {
     class BytecodeVisitor : public AstVisitor {
@@ -43,9 +44,90 @@ namespace mathvm {
     private:
         Context *context;
         BytecodeFunction *function;
+        VarType lastType;
 
-        Bytecode* bc() const {
+        Bytecode *bc() const {
             return function->bytecode();
+        }
+
+        VarType loadVariable(EntityInContextDescriptor variableDescriptor, AstNode *node) {
+            VarType type = context->getVariableByID(variableDescriptor)->type();
+            if (variableDescriptor.first != context->getContextID()) {
+                switch (type) {
+                    case VT_INT:
+                        bc()->addInsn(BC_LOADCTXIVAR);
+                        break;
+                    case VT_DOUBLE:
+                        bc()->addInsn(BC_LOADCTXDVAR);
+                        break;
+                    case VT_STRING:
+                        bc()->addInsn(BC_LOADCTXSVAR);
+                        break;
+                    default:
+                        throw TranslationError("Incorrect loading context-variable type", node->position());
+                }
+                bc()->addUInt16(variableDescriptor.first);
+                bc()->addUInt16(variableDescriptor.second);
+            } else {
+                switch (type) {
+                    case VT_INT:
+                        bc()->addInsn(BC_LOADIVAR);
+                        break;
+                    case VT_DOUBLE:
+                        bc()->addInsn(BC_LOADDVAR);
+                        break;
+                    case VT_STRING:
+                        bc()->addInsn(BC_LOADSVAR);
+                        break;
+                    default:
+                        throw TranslationError("Incorrect loading noncontext-variable type", node->position());
+                }
+                bc()->addUInt16(variableDescriptor.second);
+            }
+            return type;
+        }
+
+        void storeVariable(EntityInContextDescriptor variableDescriptor, AstNode *node) {
+            VarType type = context->getVariableByID(variableDescriptor)->type();
+            if (variableDescriptor.first != context->getContextID()) {
+                switch (type) {
+                    case VT_INT:
+                        bc()->addInsn(BC_STORECTXIVAR);
+                        break;
+                    case VT_DOUBLE:
+                        bc()->addInsn(BC_STORECTXDVAR);
+                        break;
+                    case VT_STRING:
+                        bc()->addInsn(BC_STORECTXSVAR);
+                        break;
+                    default:
+                        throw TranslationError("Incorrect storing context-variable type", node->position());
+                }
+                bc()->addUInt16(variableDescriptor.first);
+                bc()->addUInt16(variableDescriptor.second);
+            } else {
+                switch (type) {
+                    case VT_INT:
+                        bc()->addInsn(BC_STOREIVAR);
+                        break;
+                    case VT_DOUBLE:
+                        bc()->addInsn(BC_STOREDVAR);
+                        break;
+                    case VT_STRING:
+                        bc()->addInsn(BC_STORESVAR);
+                        break;
+                    default:
+                        throw TranslationError("Incorrect storing noncontext-variable type", node->position());
+                }
+                bc()->addUInt16(variableDescriptor.second);
+            }
+        }
+
+        void checkType(VarType expected, AstNode *node) {
+            if (expected != lastType) {
+                throw TranslationError(string("Type error: expected '") + typeToName(expected) + "', got: '" + typeToName(lastType),
+                        node->position());
+            }
         }
     };
 }

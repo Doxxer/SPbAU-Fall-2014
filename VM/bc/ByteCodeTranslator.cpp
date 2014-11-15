@@ -12,11 +12,18 @@ namespace mathvm {
             return status;
         }
 
-        *code = new InterpreterCodeImpl();
-        Context topContext(*code);
+        InterpreterCodeImpl *interpreterCode = new InterpreterCodeImpl();
+        *code = interpreterCode;
+        Context topContext(interpreterCode);
+        topContext.introduceFunction(new BytecodeFunction(parser.top()));
 
-        BytecodeVisitor visitor(&topContext);
-        visitor.visitFunctionNode(parser.top()->node());
+        try {
+            BytecodeVisitor visitor(&topContext);
+            visitor.visitFunctionNode(parser.top()->node());
+            interpreterCode->getBytecode()->addInsn(BC_STOP);
+        } catch (TranslationError e) {
+            return Status::Error(e.what(), e.where());
+        }
 
         return Status::Ok();
     }
