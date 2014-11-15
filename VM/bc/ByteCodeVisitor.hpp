@@ -4,6 +4,7 @@
 #include "ast.h"
 #include "Context.hpp"
 #include "Errors.hpp"
+#include "logger.hpp"
 
 namespace mathvm {
     class BytecodeVisitor : public AstVisitor {
@@ -131,6 +132,27 @@ namespace mathvm {
                 throw TranslationError(string("Type error: expected '") + typeToName(expected) + "', got: '" + typeToName(lastType),
                         node->position());
             }
+        }
+
+        VarType equateTypes(VarType leftType, VarType rightType, AstNode *node) {
+            LOG << "equateTypes: " << typeToName(leftType) << ", " << typeToName(rightType) << endl;
+
+            if (leftType == rightType) {
+                return leftType;
+            }
+            if (leftType == VT_INT && rightType == VT_DOUBLE) {
+                bc()->addInsn(BC_I2D);
+                return VT_DOUBLE;
+            }
+
+            if (leftType == VT_DOUBLE && rightType == VT_INT) {
+                bc()->addInsn(BC_SWAP);
+                bc()->addInsn(BC_I2D);
+                bc()->addInsn(BC_SWAP);
+                return VT_DOUBLE;
+            }
+
+            throw TranslationError("Wrong subexpression types", node->position());
         }
     };
 }

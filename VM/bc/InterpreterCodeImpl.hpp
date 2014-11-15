@@ -30,7 +30,7 @@ namespace mathvm {
         typedef vector<vector<Var>> vars_t;
         Bytecode *bytecode;
 
-        void run(ostream& out);
+        void run(ostream &out);
 
         void storeVariable(stack_t &stack, vars_t &vars, uint16_t id) {
             while (vars.size() <= id)

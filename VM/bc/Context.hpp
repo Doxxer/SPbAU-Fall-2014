@@ -32,11 +32,18 @@ namespace mathvm {
         Context *addChildContext();
 
         uint16_t introduceVariable(VarType type, std::string const &name);
+
+        uint16_t introduceStringConst(std::string const &value) {
+            return code->makeStringConstant(value);
+        }
+
         uint16_t introduceFunction(BytecodeFunction *);
 
         BytecodeFunction *getFunction(std::string const &name);
+
         EntityInContextDescriptor getVariableDescriptor(std::string const &name);
-        Var* getVariableByID(EntityInContextDescriptor descriptor);
+
+        Var *getVariableByID(EntityInContextDescriptor descriptor);
 
     private:
         uint16_t contextID;

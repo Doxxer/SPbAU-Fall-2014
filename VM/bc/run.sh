@@ -2,7 +2,7 @@
 
 function testcase {
   echo "test:" $1
-  /Users/doxer/Library/Caches/clion10/cmake/generated/c523a812/c523a812/Debug/bc /Users/doxer/Documents/SvnRepos/mathvm/tests/$1.mvm > output
+  ./build/Debug/mvm /Users/doxer/Documents/SvnRepos/mathvm/tests/$1.mvm > output
   # cat output
   diff output /Users/doxer/Documents/SvnRepos/mathvm/tests/$1.expect
 }

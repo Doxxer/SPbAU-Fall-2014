@@ -11,8 +11,7 @@ using namespace std;
 
 class AstPrinter : public Translator {
 public:
-    virtual Status *translate(const string &program, Code **)
-    {
+    virtual Status *translate(const string &program, Code **) {
         Parser parser;
         Status *status = parser.parseProgram(program);
         if (status && status->isError()) {
@@ -30,12 +29,11 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    const char *source =
-            "int a;"
-            "a = 1;"
-            "a = 2;"
-            "a = 3; print(a);";
-//    const char* source = loadFile(argv[1]);
+//    const char *source =
+//            "int a; a = 1;"
+//            "print ('a+123456789012345=', a+123456789012345,'\n');";
+//
+    const char *source = loadFile(argv[1]);
 
     if (source == NULL) {
         cerr << "Cannot read file " << argv[1] << endl;
@@ -58,9 +56,11 @@ int main(int argc, char **argv) {
 
     if (code) {
         LOG << "-----------------------------" << endl;
+#ifdef DEBUG
         code->disassemble(cout);
+#endif
         LOG << "-----------------------------" << endl;
-        std::vector<Var*> vars;
+        std::vector<Var *> vars;
         code->execute(vars);
     } else {
         LOG << "CODE IS NULL" << endl;

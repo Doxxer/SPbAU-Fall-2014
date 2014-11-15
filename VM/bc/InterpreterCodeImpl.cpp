@@ -23,11 +23,11 @@ namespace mathvm {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 
-    void InterpreterCodeImpl::run(ostream& out) {
+    void InterpreterCodeImpl::run(ostream &out) {
         // TODO rename to ???
         stack_t stack;
-        vector<Bytecode *> bytecodes;
-        vector<uint32_t> indices;
+        std::vector<Bytecode *> bytecodes;
+        std::vector<uint32_t> indices;
         vars_t vars;
         bytecodes.push_back(bytecode);
         indices.push_back(0);
@@ -104,43 +104,43 @@ namespace mathvm {
                     binary_operation(VT_DOUBLE, stack, add<double>);
                     break;
                 case BC_IADD:
-                    binary_operation(VT_INT, stack, add<int>);
+                    binary_operation(VT_INT, stack, add < int64_t > );
                     break;
                 case BC_DSUB:
                     binary_operation(VT_DOUBLE, stack, sub<double>);
                     break;
                 case BC_ISUB:
-                    binary_operation(VT_INT, stack, sub<int>);
+                    binary_operation(VT_INT, stack, sub < int64_t > );
                     break;
                 case BC_DMUL:
                     binary_operation(VT_DOUBLE, stack, mul<double>);
                     break;
                 case BC_IMUL:
-                    binary_operation(VT_INT, stack, mul<int>);
+                    binary_operation(VT_INT, stack, mul < int64_t > );
                     break;
                 case BC_DDIV:
                     binary_operation(VT_DOUBLE, stack, _div<double>);
                     break;
                 case BC_IDIV:
-                    binary_operation(VT_INT, stack, _div<int>);
+                    binary_operation(VT_INT, stack, _div < int64_t > );
                     break;
                 case BC_IMOD:
-                    binary_operation(VT_INT, stack, mod<int>);
+                    binary_operation(VT_INT, stack, mod < int64_t > );
                     break;
                 case BC_DNEG:
                     unary_operation(VT_DOUBLE, stack, neg<double>);
                     break;
                 case BC_INEG:
-                    unary_operation(VT_INT, stack, neg<int>);
+                    unary_operation(VT_INT, stack, neg < int64_t > );
                     break;
                 case BC_IAOR:
-                    binary_operation(VT_INT, stack, _or<int>);
+                    binary_operation(VT_INT, stack, _or < int64_t > );
                     break;
                 case BC_IAAND:
-                    binary_operation(VT_INT, stack, _and<int>);
+                    binary_operation(VT_INT, stack, _and < int64_t > );
                     break;
                 case BC_IAXOR:
-                    binary_operation(VT_INT, stack, _xor<int>);
+                    binary_operation(VT_INT, stack, _xor < int64_t > );
                     break;
                 case BC_IPRINT: {
                     Var v = stack.back();
@@ -203,37 +203,37 @@ namespace mathvm {
                     continue;
                 }
                 case BC_IFICMPNE: {
-                    if (!check_condition(stack, _neq<int>))
+                    if (!check_condition(stack, _neq < int64_t > ))
                         break;
                     ip += bc.getInt16(ip + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPE: {
-                    if (!check_condition(stack, _eq<int>))
+                    if (!check_condition(stack, _eq < int64_t > ))
                         break;
                     ip += bc.getInt16(ip + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPG: {
-                    if (!check_condition(stack, _g<int>))
+                    if (!check_condition(stack, _g < int64_t > ))
                         break;
                     ip += bc.getInt16(ip + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPGE: {
-                    if (!check_condition(stack, _ge<int>))
+                    if (!check_condition(stack, _ge < int64_t > ))
                         break;
                     ip += bc.getInt16(ip + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPL: {
-                    if (!check_condition(stack, _l<int>))
+                    if (!check_condition(stack, _l < int64_t > ))
                         break;
                     ip += bc.getInt16(ip + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPLE: {
-                    if (!check_condition(stack, _le<int>))
+                    if (!check_condition(stack, _le < int64_t > ))
                         break;
                     ip += bc.getInt16(ip + 1) + 1;
                     continue;
@@ -262,7 +262,7 @@ namespace mathvm {
                 case BC_INVALID:
                     throw InterpretationError("BC_Invalid instruction");
                 default:
-                    throw InterpretationError("Unknown instruction");
+                    throw InterpretationError(string("Unknown instruction: ") + bytecodeName(instruction, 0));
             }
             ip += instructionLength;
         }
