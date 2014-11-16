@@ -1,6 +1,7 @@
 #include <iostream>
 #include "parser.h"
 #include "BytecodeVisitor.hpp"
+#include "SimpleInterpreter.hpp"
 
 using namespace std;
 
@@ -12,8 +13,8 @@ namespace mathvm {
             return status;
         }
 
-        InterpreterCodeImpl *interpreterCode = new InterpreterCodeImpl();
-//        InterpreterCodeImpl *interpreterCode = new SimpleInterpreter();
+//        InterpreterCodeImpl *interpreterCode = new InterpreterCodeImpl();
+        InterpreterCodeImpl *interpreterCode = new SimpleInterpreter();
         (*code) = interpreterCode;
         Context topContext(interpreterCode);
         topContext.introduceFunction(new BytecodeFunction(parser.top()));
