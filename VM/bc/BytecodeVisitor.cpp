@@ -285,7 +285,8 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitNativeCallNode(NativeCallNode *node) {
-        LOG << "visitNativeCallNode" << std::endl;
+        // TODO
+        LOG << "visitNativeCallNode TODO" << std::endl;
         throw TranslationError("NativeCallNode not implemented", node->position());
     }
 
@@ -331,7 +332,6 @@ namespace mathvm {
         node->value()->visit(this);
 
         VarType varType = context->getVariableByID(variableDescriptor)->type();
-        checkType(varType, node);
 
         switch (node->op()) {
             case tINCRSET:

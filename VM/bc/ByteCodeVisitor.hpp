@@ -127,13 +127,6 @@ namespace mathvm {
             }
         }
 
-        void checkType(VarType expected, AstNode *node) {
-            if (expected != lastType) {
-                throw TranslationError(string("Type error: expected '") + typeToName(expected) + "', got: '" + typeToName(lastType),
-                        node->position());
-            }
-        }
-
         VarType equateTypes(VarType leftType, VarType rightType, AstNode *node) {
             LOG << "equateTypes: " << typeToName(leftType) << ", " << typeToName(rightType) << endl;
 
