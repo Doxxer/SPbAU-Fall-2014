@@ -1,6 +1,5 @@
 #include "ast.h"
 #include "BytecodeVisitor.hpp"
-#include "logger.hpp"
 
 namespace mathvm {
 
@@ -351,12 +350,28 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitCallNode(CallNode *node) {
-        // TODO
-        LOG << "visitCallNode TODO" << endl;
+        LOG << "visitCallNode" << endl;
+        for (int32_t i = node->parametersNumber() - 1; i >= 0; --i) {
+            node->parameterAt((uint32_t) i)->visit(this);
+        }
+
+        uint16_t functionID = context->getFunction(node->name())->id();
+        bc()->addInsn(BC_CALL);
+        bc()->addUInt16(functionID);
+        if (context->getFunction(node->name())->returnType() != VT_VOID) {
+            lastType = context->getFunction(node->name())->returnType();
+        }
     }
 
     void BytecodeVisitor::visitReturnNode(ReturnNode *node) {
-        // TODO
-        LOG << "visitReturnNode TODO" << endl;
+        LOG << "visitReturnNode" << endl;
+
+        if (node->returnExpr()) {
+            node->returnExpr()->visit(this);
+            if (function->returnType() == VT_INT && lastType == VT_DOUBLE) {
+                bc()->addInsn(BC_D2I);
+            }
+        }
+        bc()->addInsn(BC_RETURN);
     }
 }

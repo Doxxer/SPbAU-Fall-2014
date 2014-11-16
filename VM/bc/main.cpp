@@ -23,6 +23,16 @@ public:
     }
 };
 
+void printError(string module, char const *source, Status const *translateStatus) {
+    if (translateStatus->isError()) {
+        uint32_t position = translateStatus->getPosition();
+        uint32_t line = 0, offset = 0;
+        positionToLineOffset(source, position, line, offset);
+        printf("Error in %s: expression at %d,%d; error '%s'\n",
+                module.c_str(), line, offset, translateStatus->getError().c_str());
+    }
+}
+
 int main(int argc, char **argv) {
     if (argc < 2) {
         cerr << "Usage: make run <source_file_name.mvm>" << endl;
@@ -45,14 +55,7 @@ int main(int argc, char **argv) {
 
     Code *code = NULL;
     Status *translateStatus = translator->translate(source, &code);
-
-    if (translateStatus->isError()) {
-        uint32_t position = translateStatus->getPosition();
-        uint32_t line = 0, offset = 0;
-        positionToLineOffset(source, position, line, offset);
-        printf("Cannot translate expression: expression at %d,%d; error '%s'\n",
-                line, offset, translateStatus->getError().c_str());
-    }
+    printError("translator to bytecode", source, translateStatus);
 
     if (code) {
         LOG << "-----------------------------" << endl;
@@ -61,7 +64,8 @@ int main(int argc, char **argv) {
 #endif
         LOG << "------------RUN:-----------------" << endl;
         std::vector<Var *> vars;
-        code->execute(vars);
+        Status *interpreterStatus = code->execute(vars);
+        printError("simple interpretator", source, interpreterStatus);
     } else {
         LOG << "CODE IS NULL" << endl;
     }

@@ -5,7 +5,7 @@
 
 namespace mathvm {
     void InterpreterCodeImpl::disassemble(ostream &out, FunctionFilter *filter) {
-        bytecode->dump(out);
+        Code::disassemble(out, filter);
     }
 
     Status *InterpreterCodeImpl::execute(vector<Var *> &vars) {
@@ -246,7 +246,7 @@ namespace mathvm {
                     TranslatedFunction *f = functionById(bytecode.getUInt16(index + 1));
                     bytecodes.push_back(static_cast<BytecodeFunction *>(f)->bytecode());
                     indices.push_back(0);
-                    break;
+                    continue;
                 }
                 case BC_RETURN: {
                     indices.pop_back();

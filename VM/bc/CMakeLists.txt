@@ -4,6 +4,7 @@ project(bc)
 include_directories("~/Documents/SvnRepos/mathvm/include")
 include_directories("~/Documents/SvnRepos/mathvm/vm")
 
+set(CMAKE_CXX_COMPILER_ID clang)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DDEBUG")
 
 set(VM_BASE ~/Documents/SvnRepos/mathvm/vm)
