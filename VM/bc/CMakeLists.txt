@@ -18,10 +18,9 @@ set(BASE_FILES
     ${VM_BASE}/utils.cpp)
 
 set(SOURCE_FILES
-    main.cpp
+    main_interpreter.cpp
     Context.cpp
     SimpleInterpreter.cpp
-    BytecodeTranslator.cpp
     BytecodeVisitor.cpp)
 
 add_executable(bc ${SOURCE_FILES} ${BASE_FILES})

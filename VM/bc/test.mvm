@@ -1,4 +1,7 @@
-double x;
-
-x = 3.4;
-print(!x);
+int x;
+function void foo() { print('hi\n'); }
+if (1) {
+    x = foo();
+    string y;
+    x = y;
+}
