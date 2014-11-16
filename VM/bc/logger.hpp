@@ -4,10 +4,12 @@
 #include <sstream>
 #include <iostream>
 
+static std::stringstream devnull;
+
 #ifdef DEBUG
 #define LOG std::cout
 #else
-#define LOG std::stringstream()
+#define LOG devnull
 #endif
 
 #endif

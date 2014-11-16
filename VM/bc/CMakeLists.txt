@@ -20,7 +20,7 @@ set(BASE_FILES
 set(SOURCE_FILES
     main.cpp
     Context.cpp
-    InterpreterCodeImpl.cpp
+    SimpleInterpreter.cpp
     BytecodeTranslator.cpp
     BytecodeVisitor.cpp)
 

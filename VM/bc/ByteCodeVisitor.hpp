@@ -48,7 +48,7 @@ namespace mathvm {
     private:
         Context *context;
         BytecodeFunction *function;
-        VarType lastType;
+        VarType topOfStackType;
 
         Bytecode *bc() const {
             return function->bytecode();

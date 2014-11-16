@@ -6,19 +6,21 @@
 using namespace mathvm;
 using namespace std;
 
-void printErrorIfNeeded(string module, char const *source, Status const *translateStatus) {
+bool printErrorIfNeeded(string module, char const *source, Status const *translateStatus) {
     if (translateStatus->isError()) {
         uint32_t position = translateStatus->getPosition();
         uint32_t line = 0, offset = 0;
         positionToLineOffset(source, position, line, offset);
-        printf("Error in %s: expression at %d,%d; error '%s'\n",
+        printf("Error in %s (expression at %d:%d): error '%s'\n",
                 module.c_str(), line, offset, translateStatus->getError().c_str());
+        return true;
     }
+    return false;
 }
 
 int main(int argc, char **argv) {
     if (argc < 2) {
-        cerr << "Usage: make run <source_file_name.mvm>" << endl;
+        cerr << "Usage: " << argv[0] << " <source_file_name.mvm>" << endl;
         return 1;
     }
 
@@ -31,17 +33,19 @@ int main(int argc, char **argv) {
     Translator *translator = new BytecodeTranslatorImpl();
     Code *code = NULL;
     Status *translateStatus = translator->translate(source, &code);
-    printErrorIfNeeded("translator to bytecode", source, translateStatus);
+    if (printErrorIfNeeded("translator to bytecode", source, translateStatus)) {
+        exit(100);
+    }
 
     if (code) {
         LOG << "-----------------------------" << endl;
-#ifdef DEBUG
-        code->disassemble(cout);
-#endif
+        code->disassemble(LOG);
         LOG << "------------RUN:-----------------" << endl;
         std::vector<Var *> vars;
         Status *interpreterStatus = code->execute(vars);
-        printErrorIfNeeded("simple interpretator", source, interpreterStatus);
+        if (printErrorIfNeeded("simple interpretator", source, interpreterStatus)) {
+            exit(200);
+        }
     } else {
         LOG << "CODE IS NULL" << endl;
     }

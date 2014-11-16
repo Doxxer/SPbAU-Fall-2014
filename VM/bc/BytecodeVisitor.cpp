@@ -45,7 +45,7 @@ namespace mathvm {
         LOG << "visitPrintNode" << endl;
         for (uint32_t i = 0; i < node->operands(); ++i) {
             node->operandAt(i)->visit(this);
-            switch (lastType) {
+            switch (topOfStackType) {
                 case VT_INT:
                     bc()->addInsn(BC_IPRINT);
                     break;
@@ -64,7 +64,7 @@ namespace mathvm {
     void BytecodeVisitor::visitLoadNode(LoadNode *node) {
         LOG << "visitLoadNode" << endl;
         VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
-        lastType = loadVariable(variableDescriptor, node);
+        topOfStackType = loadVariable(variableDescriptor, node);
     }
 
     void BytecodeVisitor::visitIfNode(IfNode *node) {
@@ -96,7 +96,7 @@ namespace mathvm {
 
         bc()->addInsn(BC_ILOAD);
         bc()->addInt64(node->literal());
-        lastType = VT_INT;
+        topOfStackType = VT_INT;
     }
 
     void BytecodeVisitor::visitDoubleLiteralNode(DoubleLiteralNode *node) {
@@ -104,7 +104,7 @@ namespace mathvm {
 
         bc()->addInsn(BC_DLOAD);
         bc()->addDouble(node->literal());
-        lastType = VT_DOUBLE;
+        topOfStackType = VT_DOUBLE;
     }
 
     void BytecodeVisitor::visitStringLiteralNode(StringLiteralNode *node) {
@@ -113,7 +113,7 @@ namespace mathvm {
         uint16_t id = context->introduceStringConst(node->literal());
         bc()->addInsn(BC_SLOAD);
         bc()->addUInt16(id);
-        lastType = VT_STRING;
+        topOfStackType = VT_STRING;
     }
 
     void BytecodeVisitor::visitWhileNode(WhileNode *node) {
@@ -158,9 +158,9 @@ namespace mathvm {
         LOG << "visitBinaryOpNode" << endl;
 
         node->left()->visit(this);
-        VarType leftType = lastType;
+        VarType leftType = topOfStackType;
         node->right()->visit(this);
-        VarType rightType = lastType;
+        VarType rightType = topOfStackType;
 
         switch (node->kind()) {
             case tOR:
@@ -186,7 +186,7 @@ namespace mathvm {
                         break;
                     default:;
                 }
-                lastType = VT_INT;
+                topOfStackType = VT_INT;
                 break;
             }
 
@@ -230,7 +230,7 @@ namespace mathvm {
                 bc()->bind(_else);
                 bc()->addInsn(BC_ILOAD1);
                 bc()->bind(end);
-                lastType = VT_INT;
+                topOfStackType = VT_INT;
                 break;
             }
             case tINCRSET:
@@ -260,7 +260,7 @@ namespace mathvm {
                     default:
                         assert(false);
                 }
-                lastType = type;
+                topOfStackType = type;
                 break;
             }
             default:
@@ -275,8 +275,8 @@ namespace mathvm {
         switch (node->kind()) {
             case tSUB:
             case tNOT: {
-                assert(lastType == VT_DOUBLE || lastType == VT_INT);
-                bc()->addInsn(lastType == VT_DOUBLE ? BC_DNEG : BC_INEG);
+                assert(topOfStackType == VT_DOUBLE || topOfStackType == VT_INT);
+                bc()->addInsn(topOfStackType == VT_DOUBLE ? BC_DNEG : BC_INEG);
                 break;
             }
             default:
@@ -317,7 +317,7 @@ namespace mathvm {
             }
             visitor.bc()->addUInt16(id);
         }
-        lastType = node->returnType();
+        topOfStackType = node->returnType();
         visitor.visitBlockNode(node->body());
     }
 
@@ -359,7 +359,7 @@ namespace mathvm {
         bc()->addInsn(BC_CALL);
         bc()->addUInt16(functionID);
         if (context->getFunction(node->name())->returnType() != VT_VOID) {
-            lastType = context->getFunction(node->name())->returnType();
+            topOfStackType = context->getFunction(node->name())->returnType();
         }
     }
 
@@ -368,8 +368,24 @@ namespace mathvm {
 
         if (node->returnExpr()) {
             node->returnExpr()->visit(this);
-            if (function->returnType() == VT_INT && lastType == VT_DOUBLE) {
-                bc()->addInsn(BC_D2I);
+
+            // TODO add some casts
+            switch (function->returnType()) {
+                case VT_INT:
+                    switch (topOfStackType) {
+                        case VT_INT:
+                            break;
+                        case VT_DOUBLE:
+                            bc()->addInsn(BC_D2I);
+                            break;
+                        default:
+                            throw TranslationError("Incorrect returning type", node->position());
+                    }
+                    break;
+                case VT_DOUBLE:
+                    break;
+                default:
+                    throw TranslationError("Incorrect returning type", node->position());
             }
         }
         bc()->addInsn(BC_RETURN);

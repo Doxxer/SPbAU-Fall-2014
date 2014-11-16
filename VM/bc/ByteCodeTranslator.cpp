@@ -13,6 +13,7 @@ namespace mathvm {
         }
 
         InterpreterCodeImpl *interpreterCode = new InterpreterCodeImpl();
+//        InterpreterCodeImpl *interpreterCode = new SimpleInterpreter();
         (*code) = interpreterCode;
         Context topContext(interpreterCode);
         topContext.introduceFunction(new BytecodeFunction(parser.top()));

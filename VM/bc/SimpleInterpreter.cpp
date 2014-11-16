@@ -1,14 +1,11 @@
 #include <cstdint>
-#include "InterpreterCodeImpl.hpp"
+#include "SimpleInterpreter.hpp"
 #include "Errors.hpp"
 #include "logger.hpp"
 
 namespace mathvm {
-    void InterpreterCodeImpl::disassemble(ostream &out, FunctionFilter *filter) {
-        Code::disassemble(out, filter);
-    }
 
-    Status *InterpreterCodeImpl::execute(vector<Var *> &vars) {
+    Status *SimpleInterpreter::execute(vector<Var *> &vars) {
         try {
             stringstream ss;
             run(ss);
@@ -24,7 +21,7 @@ namespace mathvm {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 
-    void InterpreterCodeImpl::run(ostream &out) {
+    void SimpleInterpreter::run(ostream &out) {
         stack_t programStack;
         std::vector<Bytecode *> bytecodes;
         std::vector<uint32_t> indices;

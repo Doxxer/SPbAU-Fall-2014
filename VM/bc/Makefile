@@ -7,7 +7,7 @@ else
 JIT_OBJ =
 endif
 
-USER_CFLAGS += -O3 -Wall -Wno-unused -std=c++11
+USER_CFLAGS += -std=c++11 -O3 -Wall -Wno-unused
 
 USER_OBJ = \
    $(JIT_OBJ) \
@@ -15,7 +15,7 @@ USER_OBJ = \
    $(OBJ)/BytecodeTranslator$(OBJ_SUFF) \
    $(OBJ)/BytecodeVisitor$(OBJ_SUFF) \
    $(OBJ)/Context$(OBJ_SUFF) \
-   $(OBJ)/InterpreterCodeImpl$(OBJ_SUFF)
+   $(OBJ)/SimpleInterpreter$(OBJ_SUFF)
 
 include $(VM_ROOT)/common.mk
 
