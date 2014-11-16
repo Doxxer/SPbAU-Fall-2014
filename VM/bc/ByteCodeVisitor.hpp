@@ -54,7 +54,7 @@ namespace mathvm {
             return function->bytecode();
         }
 
-        VarType loadVariable(EntityInContextDescriptor variableDescriptor, AstNode *node) {
+        VarType loadVariable(VariableInContextDescriptor variableDescriptor, AstNode *node) {
             VarType type = context->getVariableByID(variableDescriptor)->type();
             if (variableDescriptor.first != context->getContextID()) {
                 switch (type) {
@@ -91,7 +91,7 @@ namespace mathvm {
             return type;
         }
 
-        void storeVariable(EntityInContextDescriptor variableDescriptor, AstNode *node) {
+        void storeVariable(VariableInContextDescriptor variableDescriptor, AstNode *node) {
             VarType type = context->getVariableByID(variableDescriptor)->type();
             if (variableDescriptor.first != context->getContextID()) {
                 switch (type) {

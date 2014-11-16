@@ -30,9 +30,9 @@ int main(int argc, char **argv) {
     }
 
 //    const char *source =
-//            "int a; a = 1;"
-//            "print ('a+123456789012345=', a+123456789012345,'\n');";
-//
+//            "int x; x = 7;"
+//            "if (!(x < 2)) { print('1: Less\n'); }";
+
     const char *source = loadFile(argv[1]);
 
     if (source == NULL) {
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 #ifdef DEBUG
         code->disassemble(cout);
 #endif
-        LOG << "-----------------------------" << endl;
+        LOG << "------------RUN:-----------------" << endl;
         std::vector<Var *> vars;
         code->execute(vars);
     } else {

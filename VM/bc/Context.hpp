@@ -4,7 +4,7 @@
 #include "InterpreterCodeImpl.hpp"
 
 namespace mathvm {
-    typedef std::pair<uint16_t, uint16_t> EntityInContextDescriptor;
+    typedef std::pair<uint16_t, uint16_t> VariableInContextDescriptor;
 
     class Context {
         typedef std::vector<Context *> ContextList;
@@ -41,9 +41,9 @@ namespace mathvm {
 
         BytecodeFunction *getFunction(std::string const &name);
 
-        EntityInContextDescriptor getVariableDescriptor(std::string const &name);
+        VariableInContextDescriptor getVariableDescriptor(std::string const &name);
 
-        Var *getVariableByID(EntityInContextDescriptor descriptor);
+        Var *getVariableByID(VariableInContextDescriptor descriptor);
 
     private:
         uint16_t contextID;

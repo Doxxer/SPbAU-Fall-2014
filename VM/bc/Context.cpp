@@ -35,7 +35,7 @@ namespace mathvm {
         return id;
     }
 
-    EntityInContextDescriptor Context::getVariableDescriptor(string const &name) {
+    VariableInContextDescriptor Context::getVariableDescriptor(string const &name) {
         VariablesMap::const_iterator it = variablesMap.find(name);
         if (it == variablesMap.end()) {
             if (parentContext == NULL) {
@@ -46,7 +46,7 @@ namespace mathvm {
         return make_pair(contextID, it->second);
     }
 
-    Var *Context::getVariableByID(EntityInContextDescriptor descriptor) {
+    Var *Context::getVariableByID(VariableInContextDescriptor descriptor) {
         assert(descriptor.first < childContexts->size());
         Context *ctx = childContexts->at(descriptor.first);
         assert(descriptor.second < ctx->variablesMap.size());

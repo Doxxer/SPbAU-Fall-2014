@@ -5,8 +5,41 @@
 namespace mathvm {
 
     void BytecodeVisitor::visitForNode(ForNode *node) {
-        LOG << "visitForNode TODO" << endl;
-        // TODO
+        LOG << "visitForNode" << endl;
+
+        VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
+
+        BinaryOpNode *innerExpression = (BinaryOpNode *) node->inExpr();
+        assert(innerExpression->kind() == tRANGE);
+
+        innerExpression->left()->visit(this);
+
+        bc()->addInsn(BC_ILOADM1);
+        bc()->addInsn(BC_IADD);
+        storeVariable(variableDescriptor, innerExpression);
+
+        Label begin(bc());
+        Label end(bc());
+        {
+            bc()->bind(begin);
+            loadVariable(variableDescriptor, innerExpression);
+            bc()->addInsn(BC_ILOAD1);
+            bc()->addInsn(BC_IADD);
+            storeVariable(variableDescriptor, innerExpression);
+
+            //condition
+            innerExpression->right()->visit(this);
+            loadVariable(variableDescriptor, innerExpression);
+            bc()->addInsn(BC_SWAP);
+
+            // goto end if greater
+            bc()->addBranch(BC_IFICMPG, end);
+
+            node->body()->visit(this);
+
+            bc()->addBranch(BC_JA, begin);
+        }
+        bc()->bind(end);
     }
 
     void BytecodeVisitor::visitPrintNode(PrintNode *node) {
@@ -31,13 +64,32 @@ namespace mathvm {
 
     void BytecodeVisitor::visitLoadNode(LoadNode *node) {
         LOG << "visitLoadNode" << endl;
-        EntityInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
+        VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
         lastType = loadVariable(variableDescriptor, node);
     }
 
     void BytecodeVisitor::visitIfNode(IfNode *node) {
-        LOG << "visitIfNode TODO" << endl;
-        // TODO
+        LOG << "visitIfNode" << endl;
+
+        Label _else(bc());
+        Label end(bc());
+
+        node->ifExpr()->visit(this);
+
+        bc()->addInsn(BC_ILOAD0);
+        bc()->addBranch(BC_IFICMPE, _else);
+
+        node->thenBlock()->visit(this);
+
+        bc()->addBranch(BC_JA, end);
+
+        bc()->bind(_else);
+        if (node->elseBlock()) {
+            node->elseBlock()->visit(this);
+        }
+
+        bc()->bind(end);
+
     }
 
     void BytecodeVisitor::visitIntLiteralNode(IntLiteralNode *node) {
@@ -66,8 +118,20 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitWhileNode(WhileNode *node) {
-        LOG << "visitWhileNode TODO" << endl;
-        // TODO
+        LOG << "visitWhileNode" << endl;
+
+        Label start = bc()->currentLabel();
+        Label end(bc());
+
+        node->whileExpr()->visit(this);
+
+        bc()->addInsn(BC_ILOAD0);
+        bc()->addBranch(BC_IFICMPE, end);
+
+        node->loopBlock()->visit(this);
+
+        bc()->addBranch(BC_JA, start);
+        bc()->bind(end);
     }
 
     void BytecodeVisitor::visitBlockNode(BlockNode *node) {
@@ -206,8 +270,19 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitUnaryOpNode(UnaryOpNode *node) {
-        // TODO
-        LOG << "visitUnaryOpNode TODO" << endl;
+        LOG << "visitUnaryOpNode" << endl;
+
+        node->operand()->visit(this);
+        switch (node->kind()) {
+            case tSUB:
+            case tNOT: {
+                assert(lastType == VT_DOUBLE || lastType == VT_INT);
+                bc()->addInsn(lastType == VT_DOUBLE ? BC_DNEG : BC_INEG);
+                break;
+            }
+            default:
+                throw TranslationError(string("Unknown unary operation token: ") + tokenStr(node->kind()), node->position());
+        }
     }
 
     void BytecodeVisitor::visitNativeCallNode(NativeCallNode *node) {
@@ -246,15 +321,10 @@ namespace mathvm {
         visitor.visitBlockNode(node->body());
     }
 
-    void BytecodeVisitor::visitReturnNode(ReturnNode *node) {
-        // TODO
-        LOG << "visitReturnNode TODO" << endl;
-    }
-
     void BytecodeVisitor::visitStoreNode(StoreNode *node) {
         LOG << "visitStoreNode" << endl;
 
-        EntityInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
+        VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
 
         if (node->op() == tINCRSET || node->op() == tDECRSET) {
             loadVariable(variableDescriptor, node);
@@ -283,5 +353,10 @@ namespace mathvm {
     void BytecodeVisitor::visitCallNode(CallNode *node) {
         // TODO
         LOG << "visitCallNode TODO" << endl;
+    }
+
+    void BytecodeVisitor::visitReturnNode(ReturnNode *node) {
+        // TODO
+        LOG << "visitReturnNode TODO" << endl;
     }
 }

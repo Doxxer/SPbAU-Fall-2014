@@ -120,6 +120,8 @@ namespace mathvm {
 
         template<class T>
         static T neg(T const &a) {
+            if (a == 0)
+                return 1;
             return -a;
         }
 
