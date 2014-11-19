@@ -52,40 +52,35 @@ namespace mathvm {
             programStack.pop_back();
         }
 
-        template<class T>
-        void binary_operation(VarType type, vector<Var> &stack, T (*binaryFunction)(T const &, T const &)) {
-            Var left = stack.back();
-            stack.pop_back();
-            Var right = stack.back();
-            stack.pop_back();
+        template<class T, class R = T>
+        void binary_operation(VarType type, R (*binaryFunction)(T const &, T const &)) {
+            Var left = popVariable();
+            Var right = popVariable();
 
             Var result(type, "");
             T leftValue = type == VT_DOUBLE ? left.getDoubleValue() : left.getIntValue();
             T rightValue = type == VT_DOUBLE ? right.getDoubleValue() : right.getIntValue();
-            T resultValue = binaryFunction(leftValue, rightValue);
+            R resultValue = (R) binaryFunction(leftValue, rightValue);
             type == VT_DOUBLE ? result.setDoubleValue(resultValue) : result.setIntValue(resultValue);
-            stack.push_back(result);
+            programStack.push_back(result);
         }
 
         template<class T>
-        bool check_condition(vector<Var> &stack, bool (*comparer)(T const &, T const &)) {
-            Var left = stack.back();
-            stack.pop_back();
-            Var right = stack.back();
-            stack.pop_back();
+        bool check_condition(bool (*comparer)(T const &, T const &)) {
+            Var left = popVariable();
+            Var right = popVariable();
             return comparer(right.getIntValue(), left.getIntValue());
         }
 
         template<class T>
-        void unary_operation(VarType type, vector<Var> &stack, T (*unaryFunction)(T const &)) {
-            Var var = stack.back();
-            stack.pop_back();
+        void unary_operation(VarType type, T (*unaryFunction)(T const &)) {
+            Var var = popVariable();
 
             Var result(type, "");
             T value = type == VT_DOUBLE ? var.getDoubleValue() : var.getIntValue();
             T resultValue = unaryFunction(value);
             type == VT_DOUBLE ? result.setDoubleValue(resultValue) : result.setIntValue(resultValue);
-            stack.push_back(result);
+            programStack.push_back(result);
         }
 
         template<class T>
@@ -138,6 +133,15 @@ namespace mathvm {
         template<class T>
         static bool _eq(T const &a, T const &b) {
             return a == b;
+        }
+
+        template<class T>
+        static int64_t _cmp(T const &a, T const &b) {
+            if (a < b) {
+                return -1;
+            } else if (a > b) {
+                return 1;
+            } else return 0;
         }
 
         template<class T>

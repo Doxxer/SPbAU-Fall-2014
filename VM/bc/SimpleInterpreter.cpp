@@ -68,46 +68,46 @@ namespace mathvm {
                     pushVariable((int64_t) -1);
                     break;
                 case BC_DADD:
-                    binary_operation(VT_DOUBLE, programStack, add<double>);
+                    binary_operation(VT_DOUBLE, add<double>);
                     break;
                 case BC_IADD:
-                    binary_operation(VT_INT, programStack, add<int64_t>);
+                    binary_operation(VT_INT, add<int64_t>);
                     break;
                 case BC_DSUB:
-                    binary_operation(VT_DOUBLE, programStack, sub<double>);
+                    binary_operation(VT_DOUBLE, sub<double>);
                     break;
                 case BC_ISUB:
-                    binary_operation(VT_INT, programStack, sub<int64_t>);
+                    binary_operation(VT_INT, sub<int64_t>);
                     break;
                 case BC_DMUL:
-                    binary_operation(VT_DOUBLE, programStack, mul<double>);
+                    binary_operation(VT_DOUBLE, mul<double>);
                     break;
                 case BC_IMUL:
-                    binary_operation(VT_INT, programStack, mul<int64_t>);
+                    binary_operation(VT_INT, mul<int64_t>);
                     break;
                 case BC_DDIV:
-                    binary_operation(VT_DOUBLE, programStack, _div<double>);
+                    binary_operation(VT_DOUBLE, _div<double>);
                     break;
                 case BC_IDIV:
-                    binary_operation(VT_INT, programStack, _div<int64_t>);
+                    binary_operation(VT_INT, _div<int64_t>);
                     break;
                 case BC_IMOD:
-                    binary_operation(VT_INT, programStack, mod<int64_t>);
+                    binary_operation(VT_INT, mod<int64_t>);
                     break;
                 case BC_DNEG:
-                    unary_operation(VT_DOUBLE, programStack, neg<double>);
+                    unary_operation(VT_DOUBLE, neg<double>);
                     break;
                 case BC_INEG:
-                    unary_operation(VT_INT, programStack, neg<int64_t>);
+                    unary_operation(VT_INT, neg<int64_t>);
                     break;
                 case BC_IAOR:
-                    binary_operation(VT_INT, programStack, _or<int64_t>);
+                    binary_operation(VT_INT, _or<int64_t>);
                     break;
                 case BC_IAAND:
-                    binary_operation(VT_INT, programStack, _and<int64_t>);
+                    binary_operation(VT_INT, _and<int64_t>);
                     break;
                 case BC_IAXOR:
-                    binary_operation(VT_INT, programStack, _xor<int64_t>);
+                    binary_operation(VT_INT, _xor<int64_t>);
                     break;
                 case BC_IPRINT:
                     out << popVariable().getIntValue();
@@ -151,45 +151,47 @@ namespace mathvm {
                     storeVariable(bytecode.getUInt16(currentIndex + 1));
                     break;
                 case BC_DCMP:
+                    binary_operation(VT_DOUBLE, _cmp<double>);
                     break;
                 case BC_ICMP:
+                    binary_operation(VT_INT, _cmp<int64_t>);
                     break;
                 case BC_JA: {
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPNE: {
-                    if (!check_condition(programStack, _neq<int64_t>))
+                    if (!check_condition(_neq<int64_t>))
                         break;
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPE: {
-                    if (!check_condition(programStack, _eq<int64_t>))
+                    if (!check_condition(_eq<int64_t>))
                         break;
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPG: {
-                    if (!check_condition(programStack, _g<int64_t>))
+                    if (!check_condition(_g<int64_t>))
                         break;
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPGE: {
-                    if (!check_condition(programStack, _ge<int64_t>))
+                    if (!check_condition(_ge<int64_t>))
                         break;
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPL: {
-                    if (!check_condition(programStack, _l<int64_t>))
+                    if (!check_condition(_l<int64_t>))
                         break;
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;
                 }
                 case BC_IFICMPLE: {
-                    if (!check_condition(programStack, _le<int64_t>))
+                    if (!check_condition(_le<int64_t>))
                         break;
                     currentIndex += bytecode.getInt16(currentIndex + 1) + 1;
                     continue;

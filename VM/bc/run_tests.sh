@@ -46,14 +46,15 @@ for test in function-cast; do
     run_test ${FAIL}/${test} 200
 done
 
+echo "-------------- additional tests -------------- "
+for test in casts; do
+    run_test ${ADDITIONAL}/${test}
+done
+
 #echo "-------------- optional tests -------------- "
 #for test in function_native; do
 #    run_test ${OPTIONAL}/${test}
 #done
 
-#echo "-------------- additional tests -------------- "
-#for test in casts; do
-#    run_test ${ADDITIONAL}/${test}
-#done
 
 rm output
