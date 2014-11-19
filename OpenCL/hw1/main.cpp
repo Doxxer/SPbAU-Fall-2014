@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedMacroInspection"
 #define __CL_ENABLE_EXCEPTIONS
 
 #include "cl.hpp"
@@ -96,7 +98,7 @@ int main() {
         queue.enqueueReadBuffer(dev_output, CL_TRUE, 0, sizeof(element_type) * firstMatrix.size(), &resultMatrix[0]);
 
         writeMatrix(outputStream, resultMatrix, firstMatrixSize);
-        std::cerr << std::setprecision(2) << "Total time: " << elapsed_time / 1000000.0 << " ms" << std::endl;
+        std::cerr << std::setprecision(4) << "Total time: " << elapsed_time / 1000000.0 << " ms" << std::endl;
     }
     catch (cl::Error const &e) {
         std::cout << std::endl << e.what() << " : " << e.err() << std::endl;
@@ -104,3 +106,4 @@ int main() {
 
     return 0;
 }
+#pragma clang diagnostic pop
