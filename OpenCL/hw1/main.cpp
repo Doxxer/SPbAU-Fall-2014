@@ -30,7 +30,6 @@ void writeMatrix(std::ofstream &output, std::vector<element_type> const &matrix,
 int main() {
     std::vector<cl::Platform> platforms;
     std::vector<cl::Device> devices;
-    std::vector<cl::Kernel> kernels;
 
     size_t firstMatrixSize, secondMatrixSize;
     std::vector<element_type> firstMatrix, secondMatrix, resultMatrix;
@@ -44,8 +43,6 @@ int main() {
         cl::Platform::get(&platforms);
         platforms[0].getDevices(CL_DEVICE_TYPE_GPU, &devices);
 
-//        std::cout << platforms[0].getInfo<CL_PLATFORM_NAME>() << std::endl;
-//        std::cout << devices[0].getInfo<CL_DEVICE_NAME>() << std::endl;
         // create context
         cl::Context context(devices);
 
@@ -88,7 +85,7 @@ int main() {
         // load named kernel from opencl source
         cl::Kernel kernel(program, "convolution");
         cl::KernelFunctor convolution(kernel, queue, cl::NullRange, cl::NDRange(global_size, global_size), cl::NDRange(block_size, block_size));
-        cl::Event event = convolution(dev_first, dev_second, dev_output, firstMatrixSize, secondMatrixSize);
+        cl::Event event = convolution.operator()(dev_first, dev_second, dev_output, firstMatrixSize, secondMatrixSize);
         event.wait();
 
         auto start_time = event.getProfilingInfo<CL_PROFILING_COMMAND_START>();
