@@ -16,15 +16,17 @@ function run_test {
     ${MATH_VM_BIN} ${1}.mvm > output
     program=$?
     if [[ -f ${1}.expect ]]; then
-    diff output ${1}.expect
-    diffresult=$?
+        diff output ${1}.expect
+        diffresult=$?
     else
-    diffresult=0
+        diffresult=0
     fi
     if [ ${program} -eq $2 ] && [ ${diffresult} -eq 0 ]; then
-    echo -n "OK"
+        printf "\e[1;32mOK\e[0m"
+    else
+        printf "\e[1;31m!!! FAILED !!!\e[0m"
     fi
-    echo ""
+        echo ""
 }
 
 echo "-------------- simple tests (all should be OK) -------------- "
@@ -38,17 +40,13 @@ for test in `find ${MY_TESTS} -name '*.mvm'`; do
 done
 
 echo "-------------- failing test (all should be OK) -------------- "
-for test in for_range for_var function-return-void if-fun op_bin op_not op_streq op_sub range; do
+for test in for_range for_var function-return-void if-fun op_bin op_not op_streq op_sub range function-cast; do
     run_test ${FAIL}/${test} 100
 done
 
-for test in function-cast; do
-    run_test ${FAIL}/${test} 200
-done
-
 echo "-------------- additional tests -------------- "
-for test in casts; do
-    run_test ${ADDITIONAL}/${test}
+for test in casts vars closure 3function; do
+    run_test ${ADDITIONAL}/${test} 0
 done
 
 #echo "-------------- optional tests -------------- "

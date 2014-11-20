@@ -1,5 +1,18 @@
-print (2.0/10, '\n');
-print (10/2.0, '\n');
-print (2.0/10.0, '\n');
-print (10.0/2.0, '\n');
-print (10/2, '\n');
+int r;
+int r1;
+
+function void fib(int x) {
+    if (x == 0) {
+        r = 0;
+        r1 = 1;
+    } else {
+        fib(x - 1);
+        int r2;
+        r2 = r + r1;
+        r = r1;
+        r1 = r2;
+    }
+}
+
+fib(10);
+print(r, '\n');

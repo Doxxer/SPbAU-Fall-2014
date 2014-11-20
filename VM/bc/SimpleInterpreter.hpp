@@ -15,6 +15,7 @@ namespace mathvm {
         std::vector<Bytecode *> bytecodes;
         std::vector<uint32_t> indices;
         vector<vector<Var>> vars;
+        std::vector<uint16_t> currentContext;
 
         void run(ostream &out);
         
@@ -42,26 +43,44 @@ namespace mathvm {
             programStack.push_back(var);
         }
 
+        Var loadVariable(uint16_t id) {
+            return loadVariable(currentContext.back(), id);
+        }
+
+        Var loadVariable(uint16_t contextID, uint16_t variableID) {
+            assert(vars.size() > contextID);
+            assert(vars[contextID].size() > variableID);
+            return vars[contextID][variableID];
+        }
+
         void storeVariable(uint16_t id) {
-            while (vars.size() <= id)
+            while (vars.size() <= currentContext.back()){
                 vars.push_back(vector<Var>());
-            vector<Var> &local_vars = vars[id];
-            if (local_vars.empty()) {
-                local_vars.push_back(programStack.back());
-            } else {local_vars.back() = programStack.back();}
+            }
+
+            vector<Var> &local_vars = vars[currentContext.back()];
+            while (local_vars.size() <= id) {
+                local_vars.push_back(Var(VT_INT, ""));
+            }
+            local_vars[id] = programStack.back();
             programStack.pop_back();
         }
 
         template<class T, class R = T>
         void binary_operation(VarType type, R (*binaryFunction)(T const &, T const &)) {
+            binary_operation<T, R>(type, binaryFunction, type);
+        }
+
+        template<class T, class R = T>
+        void binary_operation(VarType type, R (*binaryFunction)(T const &, T const &), VarType resultType) {
             Var left = popVariable();
             Var right = popVariable();
 
-            Var result(type, "");
+            Var result(resultType, "");
             T leftValue = type == VT_DOUBLE ? left.getDoubleValue() : left.getIntValue();
             T rightValue = type == VT_DOUBLE ? right.getDoubleValue() : right.getIntValue();
-            R resultValue = (R) binaryFunction(leftValue, rightValue);
-            type == VT_DOUBLE ? result.setDoubleValue(resultValue) : result.setIntValue(resultValue);
+            R resultValue = binaryFunction(leftValue, rightValue);
+            resultType == VT_DOUBLE ? result.setDoubleValue(resultValue) : result.setIntValue(resultValue);
             programStack.push_back(result);
         }
 
@@ -137,10 +156,11 @@ namespace mathvm {
 
         template<class T>
         static int64_t _cmp(T const &a, T const &b) {
+            // bc_swap should be
             if (a < b) {
-                return -1;
-            } else if (a > b) {
                 return 1;
+            } else if (a > b) {
+                return -1;
             } else return 0;
         }
 

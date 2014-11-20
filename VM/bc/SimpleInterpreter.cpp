@@ -29,6 +29,7 @@ namespace mathvm {
         vars.clear();
         bytecodes.push_back(bytecode);
         indices.push_back(0);
+        currentContext.push_back(0);
 
         while (!bytecodes.empty()) {
             uint32_t &currentIndex = indices.back();
@@ -144,14 +145,21 @@ namespace mathvm {
                 case BC_LOADDVAR:
                 case BC_LOADIVAR:
                 case BC_LOADSVAR:
-                    programStack.push_back(vars[bytecode.getUInt16(currentIndex + 1)].back());
+                    programStack.push_back(loadVariable(bytecode.getUInt16(currentIndex + 1)));
                     break;
                 case BC_STOREDVAR:
                 case BC_STOREIVAR:
                     storeVariable(bytecode.getUInt16(currentIndex + 1));
                     break;
+                case BC_LOADCTXDVAR:
+                case BC_LOADCTXIVAR:
+                case BC_LOADCTXSVAR:
+                    programStack.push_back(loadVariable(bytecode.getUInt16(currentIndex + 1), bytecode.getUInt16(currentIndex + 2)));
+//                    currentIndex += 3;
+//                    continue;
+                    break;
                 case BC_DCMP:
-                    binary_operation(VT_DOUBLE, _cmp<double>);
+                    binary_operation<double, int64_t>(VT_DOUBLE, _cmp<double>, VT_INT);
                     break;
                 case BC_ICMP:
                     binary_operation(VT_INT, _cmp<int64_t>);
@@ -205,6 +213,7 @@ namespace mathvm {
                     TranslatedFunction *f = functionById(bytecode.getUInt16(currentIndex + 1));
                     bytecodes.push_back(static_cast<BytecodeFunction *>(f)->bytecode());
                     indices.push_back(0);
+                    currentContext.push_back(f->id());
                     continue;
                 }
                 case BC_RETURN: {
@@ -215,6 +224,7 @@ namespace mathvm {
                         bytecodeName(BC_CALL, &len);
                         indices.back() += len;
                     }
+                    currentContext.pop_back();
                     continue;
                 }
                 case BC_D2I:
@@ -223,19 +233,8 @@ namespace mathvm {
                 case BC_I2D:
                     pushVariable((double) popVariable().getIntValue());
                     break;
-                case BC_S2I: {
-                    char const *value = NULL;
-                    try {
-                        value = popVariable().getStringValue();
-                        size_t unconverted = 0;
-                        pushVariable(stoll(value, &unconverted));
-                        if (unconverted < strlen(value))
-                            throw logic_error("");
-                    } catch (logic_error e) {
-                        throw InterpretationError(string("Can't convert STRING '") + value + "' to INT");
-                    }
-                    break;
-                }
+                case BC_S2I:
+                    throw InterpretationError("BC_S2I instruction deprecated");
                 case BC_BREAK:
                     break;
                 case BC_INVALID:
