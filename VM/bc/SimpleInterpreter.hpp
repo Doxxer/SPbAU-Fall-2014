@@ -3,6 +3,7 @@
 
 #include "mathvm.h"
 #include "InterpreterCodeImpl.hpp"
+#include "logger.hpp"
 
 namespace mathvm {
     class SimpleInterpreter : public InterpreterCodeImpl {
@@ -11,13 +12,26 @@ namespace mathvm {
         virtual Status *execute(vector<Var *> &vars) override;
 
     private:
+        typedef vector<Var> scope;
+        typedef int64_t signedIntType;
+        typedef uint64_t unsignedIntType;
+        typedef uint32_t indexType;
+
         vector<Var> programStack;
         std::vector<Bytecode *> bytecodes;
-        std::vector<uint32_t> indices;
-        vector<vector<Var>> vars;
-        std::vector<uint16_t> currentContext;
+        std::vector<indexType> indices;
+        vector<vector<scope>> vars; // contextID, recursiveID, variableID
+        std::vector<unsignedIntType> contextID;
+        std::vector<unsignedIntType> recursiveCalls; //by contextID
 
         void run(ostream &out);
+
+        void createRecursiveCall(unsignedIntType contextID) {
+            while (recursiveCalls.size() <= contextID) {
+                recursiveCalls.push_back(0);
+            }
+            recursiveCalls[contextID]++;
+        }
         
         Var popVariable() {
             Var back = programStack.back();
@@ -31,7 +45,7 @@ namespace mathvm {
             programStack.push_back(var);
         }
 
-        void pushVariable(int64_t value) {
+        void pushVariable(signedIntType value) {
             Var var(VT_INT, "");
             var.setIntValue(value);
             programStack.push_back(var);
@@ -44,21 +58,35 @@ namespace mathvm {
         }
 
         Var loadVariable(uint16_t id) {
-            return loadVariable(currentContext.back(), id);
+            return loadVariable(contextID.back(), id);
         }
 
-        Var loadVariable(uint16_t contextID, uint16_t variableID) {
+        Var loadVariable(unsignedIntType contextID, unsignedIntType variableID) {
             assert(vars.size() > contextID);
-            assert(vars[contextID].size() > variableID);
-            return vars[contextID][variableID];
+            assert(recursiveCalls.size() > contextID);
+            assert(vars[contextID].size() > recursiveCalls[contextID]);
+            assert(vars[contextID][recursiveCalls[contextID]].size() > variableID);
+            return vars[contextID][recursiveCalls[contextID]][variableID];
         }
 
-        void storeVariable(uint16_t id) {
-            while (vars.size() <= currentContext.back()){
-                vars.push_back(vector<Var>());
+        void storeVariable(unsignedIntType id) {
+            storeVariable(contextID.back(), id);
+        }
+
+        void storeVariable(unsignedIntType contextID, unsignedIntType id) {
+            while (vars.size() <= contextID){
+                vars.push_back(vector<scope>());
+            }
+            while(recursiveCalls.size() <= contextID) {
+                recursiveCalls.push_back(0);
             }
 
-            vector<Var> &local_vars = vars[currentContext.back()];
+            vector<scope> &currentRecursiveScope = vars[contextID];
+            while (currentRecursiveScope.size() <= recursiveCalls[contextID]) {
+                currentRecursiveScope.push_back(scope());
+            }
+
+            scope &local_vars = currentRecursiveScope[recursiveCalls[contextID]];
             while (local_vars.size() <= id) {
                 local_vars.push_back(Var(VT_INT, ""));
             }
@@ -76,9 +104,10 @@ namespace mathvm {
             Var left = popVariable();
             Var right = popVariable();
 
+            T leftValue = (type == VT_DOUBLE) ? (T) left.getDoubleValue() : (T) left.getIntValue();
+            T rightValue = (type == VT_DOUBLE) ? (T) right.getDoubleValue() : (T) right.getIntValue();
+
             Var result(resultType, "");
-            T leftValue = type == VT_DOUBLE ? left.getDoubleValue() : left.getIntValue();
-            T rightValue = type == VT_DOUBLE ? right.getDoubleValue() : right.getIntValue();
             R resultValue = binaryFunction(leftValue, rightValue);
             resultType == VT_DOUBLE ? result.setDoubleValue(resultValue) : result.setIntValue(resultValue);
             programStack.push_back(result);
@@ -96,7 +125,7 @@ namespace mathvm {
             Var var = popVariable();
 
             Var result(type, "");
-            T value = type == VT_DOUBLE ? var.getDoubleValue() : var.getIntValue();
+            T value = type == (VT_DOUBLE) ? (T) var.getDoubleValue() : (T) var.getIntValue();
             T resultValue = unaryFunction(value);
             type == VT_DOUBLE ? result.setDoubleValue(resultValue) : result.setIntValue(resultValue);
             programStack.push_back(result);
@@ -155,7 +184,7 @@ namespace mathvm {
         }
 
         template<class T>
-        static int64_t _cmp(T const &a, T const &b) {
+        static signedIntType _cmp(T const &a, T const &b) {
             // bc_swap should be
             if (a < b) {
                 return 1;

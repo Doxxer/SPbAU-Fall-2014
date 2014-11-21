@@ -44,8 +44,9 @@ for test in for_range for_var function-return-void if-fun op_bin op_not op_streq
     run_test ${FAIL}/${test} 100
 done
 
-echo "-------------- additional tests -------------- "
-for test in casts vars closure 3function; do
+echo "-------------- additional tests (all should be OK) -------------- "
+# ackermann_closure ackermann fib complex complex2
+for test in 3function casts closure fib_closure function-call function-cast 'function' vars; do
     run_test ${ADDITIONAL}/${test} 0
 done
 
