@@ -46,7 +46,7 @@ done
 
 echo "-------------- additional tests (all should be OK) -------------- "
 # ackermann_closure ackermann fib complex2
-for test in 3function casts closure complex fib_closure function-call function-cast 'function' vars; do
+for test in casts complex fib_closure function-call 'function' vars; do
     run_test ${ADDITIONAL}/${test} 0
 done
 
