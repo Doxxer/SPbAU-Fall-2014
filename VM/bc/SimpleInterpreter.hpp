@@ -22,17 +22,17 @@ namespace mathvm {
         std::vector<indexType> indices;
         vector<vector<scope>> vars; // contextID, recursiveID, variableID
         std::vector<unsignedIntType> contextID;
-        std::vector<unsignedIntType> recursiveCalls; //by contextID
+        std::vector<unsignedIntType> callsCounter; //by contextID = functionID
 
         void run(ostream &out);
 
-        void createRecursiveCall(unsignedIntType contextID) {
-            while (recursiveCalls.size() <= contextID) {
-                recursiveCalls.push_back(0);
+        void detectCallWithFunctionID(unsignedIntType functionID) {
+            while (callsCounter.size() <= functionID) {
+                callsCounter.push_back(0);
             }
-            recursiveCalls[contextID]++;
+            callsCounter[functionID]++;
         }
-        
+
         Var popVariable() {
             Var back = programStack.back();
             programStack.pop_back();
@@ -62,11 +62,13 @@ namespace mathvm {
         }
 
         Var loadVariable(unsignedIntType contextID, unsignedIntType variableID) {
+            LOG << contextID << endl
+                    << variableID << endl;
             assert(vars.size() > contextID);
-            assert(recursiveCalls.size() > contextID);
-            assert(vars[contextID].size() > recursiveCalls[contextID]);
-            assert(vars[contextID][recursiveCalls[contextID]].size() > variableID);
-            return vars[contextID][recursiveCalls[contextID]][variableID];
+            assert(callsCounter.size() > contextID);
+            assert(vars[contextID].size() > callsCounter[contextID]);
+            assert(vars[contextID][callsCounter[contextID]].size() > variableID);
+            return vars[contextID][callsCounter[contextID]][variableID];
         }
 
         void storeVariable(unsignedIntType id) {
@@ -77,16 +79,16 @@ namespace mathvm {
             while (vars.size() <= contextID){
                 vars.push_back(vector<scope>());
             }
-            while(recursiveCalls.size() <= contextID) {
-                recursiveCalls.push_back(0);
+            while(callsCounter.size() <= contextID) {
+                callsCounter.push_back(0);
             }
 
             vector<scope> &currentRecursiveScope = vars[contextID];
-            while (currentRecursiveScope.size() <= recursiveCalls[contextID]) {
+            while (currentRecursiveScope.size() <= callsCounter[contextID]) {
                 currentRecursiveScope.push_back(scope());
             }
 
-            scope &local_vars = currentRecursiveScope[recursiveCalls[contextID]];
+            scope &local_vars = currentRecursiveScope[callsCounter[contextID]];
             while (local_vars.size() <= id) {
                 local_vars.push_back(Var(VT_INT, ""));
             }

@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include "SimpleInterpreter.hpp"
 #include "Errors.hpp"
-#include "logger.hpp"
 
 namespace mathvm {
     Status *SimpleInterpreter::execute(vector<Var *> &vars) {
@@ -29,6 +28,7 @@ namespace mathvm {
         bytecodes.push_back(bytecode);
         indices.push_back(0);
         contextID.push_back(0);
+        callsCounter.push_back(0);
 
         while (!bytecodes.empty()) {
             indexType &currentIndex = indices.back();
@@ -153,12 +153,12 @@ namespace mathvm {
                 case BC_LOADCTXDVAR:
                 case BC_LOADCTXIVAR:
                 case BC_LOADCTXSVAR:
-                    programStack.push_back(loadVariable(bytecode.getUInt16(currentIndex + 1), bytecode.getUInt16(currentIndex + 2)));
+                    programStack.push_back(loadVariable(bytecode.getUInt16(currentIndex + 1), bytecode.getUInt16(currentIndex + 3)));
                     break;
                 case BC_STORECTXDVAR:
                 case BC_STORECTXIVAR:
                 case BC_STORECTXSVAR:
-                    storeVariable(bytecode.getUInt16(currentIndex + 1), bytecode.getUInt16(currentIndex + 2));
+                    storeVariable(bytecode.getUInt16(currentIndex + 1), bytecode.getUInt16(currentIndex + 3));
                     break;
                 case BC_DCMP:
                     binary_operation<double, signedIntType>(VT_DOUBLE, _cmp<double>, VT_INT);
@@ -215,11 +215,8 @@ namespace mathvm {
                     TranslatedFunction *f = functionById(bytecode.getUInt16(currentIndex + 1));
                     bytecodes.push_back(static_cast<BytecodeFunction *>(f)->bytecode());
                     indices.push_back(0);
-
-                    if (contextID.empty() || contextID.back() != f->id()) {
-                        contextID.push_back(f->id());
-                    }
-                    createRecursiveCall(contextID.back());
+                    contextID.push_back(f->id());
+                    detectCallWithFunctionID(contextID.back());
                     continue;
                 }
                 case BC_RETURN: {
@@ -230,11 +227,10 @@ namespace mathvm {
                         bytecodeName(BC_CALL, &len);
                         indices.back() += len;
                     }
-                    if (recursiveCalls[contextID.back()] > 1) {
-                        recursiveCalls[contextID.back()]--;
-                    } else {
-                        contextID.pop_back();
+                    if (callsCounter[contextID.back()] > 0) {
+                        callsCounter[contextID.back()]--;
                     }
+                    contextID.pop_back();
                     continue;
                 }
                 case BC_D2I:
