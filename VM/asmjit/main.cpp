@@ -1,6 +1,5 @@
 #include <iostream>
 #include <dlfcn.h>
-
 #include "asmjit/asmjit.h"
 
 using namespace asmjit;
@@ -13,38 +12,48 @@ void setXmmVariable(X86Compiler &c, XmmVar &v, double d) {
     c.unuse(temp);
 }
 
+double a = 221.4144;
+
 int main(int argc, char *argv[]) {
     void *nativeAddress = dlsym(RTLD_DEFAULT, "sqrt");
     if (!nativeAddress) {
         cout << "error: native address not found";
         return 1;
     }
+
     JitRuntime runtime;
     FileLogger logger(stdout);
     X86Compiler c(&runtime);
 //    c.setLogger(&logger);
 
     // main function - 0 input params and return DOUBLE (cuz sqrt return double)
-    c.addFunc(kFuncConvHost, FuncBuilder1<double, double>());
+    FuncBuilderX mainFunctionPrototype;
+    mainFunctionPrototype.setRet(kX86VarTypeFp64);
+    c.addFunc(kFuncConvHost, mainFunctionPrototype);
+
     X86XmmVar input(c, kX86VarTypeXmmSd, "input");
     X86XmmVar retVariable(c, kX86VarTypeXmmSd, "retVariable");
-    c.setArg(0, input);
 
-    X86GpVar fun(c);
-    c.mov(fun, imm_ptr(nativeAddress));
-    X86CallNode *call = c.call(fun, kFuncConvHost, FuncBuilder1<double, double>());
+    X86GpVar native(c);
+    c.mov(native, imm_ptr(nativeAddress));
+
+    FuncBuilderX nativePrototype;
+    nativePrototype.setArg(0, kX86VarTypeFp64);
+    nativePrototype.setRet(kX86VarTypeFp64);
+
+    setXmmVariable(c, input, 221.4144);
+
+    X86CallNode *call = c.call(native, kFuncConvHost, nativePrototype);
     call->setArg(0, input);
     call->setRet(0, retVariable);
-
-//    setXmmVariable(c, retVariable, 1.234);
-
     c.ret(retVariable);
     c.endFunc();
 
-    typedef double (*FuncType)(double);
+    typedef double (*FuncType)();
     FuncType f = asmjit_cast<FuncType>(c.make());
-    cout << f(221.4144) << endl;
+    cout << f() << endl;
 
     runtime.release((void *) f);
+
     return 0;
 }
