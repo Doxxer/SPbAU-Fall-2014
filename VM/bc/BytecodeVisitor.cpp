@@ -1,3 +1,4 @@
+#include <dlfcn.h>
 #include "ast.h"
 #include "BytecodeVisitor.hpp"
 
@@ -306,12 +307,6 @@ namespace mathvm {
         }
     }
 
-    void BytecodeVisitor::visitNativeCallNode(NativeCallNode *node) {
-        // TODO
-        LOG_Visitor("visitNativeCallNode TODO");
-        throw TranslationError("NativeCallNode not implemented", node->position());
-    }
-
     void BytecodeVisitor::visitFunctionNode(FunctionNode *node) {
         LOG_Visitor("visitFunctionNode");
         if (function == NULL) {
@@ -370,6 +365,18 @@ namespace mathvm {
                 throw TranslationError("Incorrect storing variable operation", node->position());
         }
         storeVariable(variableDescriptor, node);
+    }
+
+    void BytecodeVisitor::visitNativeCallNode(NativeCallNode *node) {
+        LOG_Visitor("visitNativeCallNode");
+
+        void *nativeAddress = dlsym(RTLD_DEFAULT, node->nativeName().c_str());
+        if (!nativeAddress) {
+            throw TranslationError("Native function '" + node->nativeName() + "' not found", node->position());
+        }
+        uint16_t id = context->introduceNativeFunction(node->nativeName(), node->nativeSignature(), nativeAddress);
+        bc()->addInsn(BC_CALLNATIVE);
+        bc()->addUInt16(id);
     }
 
     void BytecodeVisitor::visitCallNode(CallNode *node) {
