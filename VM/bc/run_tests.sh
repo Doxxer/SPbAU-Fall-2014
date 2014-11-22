@@ -44,11 +44,16 @@ for test in for_range for_var function-return-void if-fun op_bin op_not op_streq
     run_test ${FAIL}/${test} 100
 done
 
-echo "-------------- additional tests (all should be OK) -------------- "
-# ackermann_closure ackermann fib complex2
+echo "-------------- additional tests(all should be OK) -------------- "
 for test in casts complex fib_closure function-call 'function' vars; do
     run_test ${ADDITIONAL}/${test} 0
 done
+
+echo "-------------- long tests (please wait for each test about 5-10sec) (all should be OK) -------------- "
+for test in ackermann ackermann_closure complex2 fib; do
+    run_test ${ADDITIONAL}/${test} 0
+done
+
 
 #echo "-------------- optional tests -------------- "
 #for test in function_native; do
