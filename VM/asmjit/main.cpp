@@ -42,7 +42,9 @@ int main(int argc, char *argv[]) {
     c.endFunc();
 
     typedef double (*FuncType)(double);
-    cout << asmjit_cast<FuncType>(c.make())(221.4144) << endl;
+    FuncType f = asmjit_cast<FuncType>(c.make());
+    cout << f(221.4144) << endl;
 
+    runtime.release((void *) f);
     return 0;
 }
