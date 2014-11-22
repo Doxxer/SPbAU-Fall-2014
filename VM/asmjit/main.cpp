@@ -28,19 +28,19 @@ int main(int argc, char *argv[]) {
 
     // main function - 0 input params and return DOUBLE (cuz sqrt return double)
     FuncBuilderX mainFunctionPrototype;
-    mainFunctionPrototype.setRet(kX86VarTypeFp64);
+    FuncBuilderX nativePrototype;
+    mainFunctionPrototype.setRet(kX86VarTypeXmmSd);
+    nativePrototype.setRet(kX86VarTypeXmmSd);
     c.addFunc(kFuncConvHost, mainFunctionPrototype);
 
-    X86XmmVar input(c, kX86VarTypeXmmSd, "input");
+
     X86XmmVar retVariable(c, kX86VarTypeXmmSd, "retVariable");
 
     X86GpVar native(c);
     c.mov(native, imm_ptr(nativeAddress));
 
-    FuncBuilderX nativePrototype;
-    nativePrototype.setArg(0, kX86VarTypeFp64);
-    nativePrototype.setRet(kX86VarTypeFp64);
-
+    nativePrototype.setArg(0, kX86VarTypeXmmSd);
+    X86XmmVar input(c, kX86VarTypeXmmSd, "input");
     setXmmVariable(c, input, 221.4144);
 
     X86CallNode *call = c.call(native, kFuncConvHost, nativePrototype);

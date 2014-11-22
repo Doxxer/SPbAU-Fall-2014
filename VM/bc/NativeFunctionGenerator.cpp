@@ -1,52 +1,103 @@
 #include "SimpleInterpreter.hpp"
 #include "asmjit.h"
 #include "Errors.hpp"
-#include "AsmVariable.hpp"
 
 using namespace asmjit;
 
 namespace mathvm {
+    static uint32_t asmjitTypeFromMathVMType(VarType type) {
+        switch (type) {
+            case VT_DOUBLE:
+                return kX86VarTypeXmmSd;
+            case VT_INT:
+                return kVarTypeInt64;
+            case VT_STRING:
+                return kVarTypeIntPtr;
+            default:
+                throw InterpretationError(string("Wrong NativeFunction type while converting to AsmJitType") + typeToName(type));
+        }
+    }
+
+    void setXmmVariable(X86Compiler &c, XmmVar &v, double d) {
+        X86GpVar temp = c.newGpVar();
+        c.mov(temp, *(reinterpret_cast<uint64_t *>(&d)));
+        c.movq(v, temp.m());
+        c.unuse(temp);
+    }
+
     void SimpleInterpreter::callNative(uint16_t id) {
         const Signature *signature;
         const std::string *name;
-        const void *nativeCodeAddress = nativeById(id, &signature, &name);
-        if (!nativeCodeAddress) {
-            throw std::string("Native function not found");
+        void *nativeFunctionAddress = (void *) nativeById(id, &signature, &name);
+        if (!nativeFunctionAddress) {
+            throw InterpretationError("Native function not found");
         }
 
         JitRuntime runtime;
         X86Compiler compiler(&runtime);
-        switch (signature->at(0).first) {
-            case VT_VOID:
-                compiler.addFunc(kFuncConvHost, FuncBuilder0<Void>());
-                break;
-            case VT_DOUBLE:
-                compiler.addFunc(kFuncConvHost, FuncBuilder0<double>());
-                break;
-            case VT_INT:
-                compiler.addFunc(kFuncConvHost, FuncBuilder0<signedIntType>());
-                break;
-            case VT_STRING:
-                compiler.addFunc(kFuncConvHost, FuncBuilder0<char const *>());
-                break;
-            default:
-                throw InterpretationError(string("Wrong NativeFunction return type ") + typeToName(signature->at(0).first));
+
+        FuncBuilderX mainFunctionPrototype;
+        FuncBuilderX nativePrototype;
+        if (signature->at(0).first != VT_VOID) {
+            uint32_t returnType = asmjitTypeFromMathVMType(signature->at(0).first);
+            mainFunctionPrototype.setRet(returnType);
+            nativePrototype.setRet(returnType);
+        }
+        compiler.addFunc(kFuncConvHost, mainFunctionPrototype);
+
+        // create native function
+        X86GpVar nativeFunction(compiler);
+        compiler.mov(nativeFunction, imm_ptr(nativeFunctionAddress));
+
+        // set input parameters
+        vector<asmjit::Var> variables;
+        for (uint16_t paramNumber = 1, scopeVarIndex = 0; paramNumber < signature->size(); ++paramNumber, ++scopeVarIndex) {
+            VarType varType = signature->at(paramNumber).first;
+
+            nativePrototype.setArg(scopeVarIndex, asmjitTypeFromMathVMType(varType));
+
+            switch (varType) {
+                case VT_DOUBLE: {
+                    X86XmmVar a(compiler, asmjitTypeFromMathVMType(varType));
+                    setXmmVariable(compiler, a, loadVariable(scopeVarIndex).getDoubleValue());
+                    variables.push_back(a);
+                    break;
+                }
+                case VT_INT:
+                case VT_STRING: {
+                    X86XmmVar a(compiler, asmjitTypeFromMathVMType(varType));
+                    setXmmVariable(compiler, a, loadVariable(scopeVarIndex).getDoubleValue());
+                    variables.push_back(a);
+                    break;
+                }
+                default:
+                    throw InterpretationError(string("Wrong NativeFunction parameter type ") + typeToName(signature->at(0).first));
+            }
+
+            X86XmmVar input(compiler, asmjitTypeFromMathVMType(varType));
+            setXmmVariable(compiler, input, loadVariable(scopeVarIndex).getDoubleValue());
+            variables.push_back(input);
         }
 
-        // ...
+        X86CallNode *callNativeFunction = compiler.call(nativeFunction, kFuncConvHost, nativePrototype);
+
+        // bind arguments
+        for (uint16_t i = 0; i < variables.size(); ++i) {
+            callNativeFunction->setArg(i, variables[i]);
+        }
+
+        // set return variable
         switch (signature->at(0).first) {
             case VT_DOUBLE: {
-                X86XmmVar retVariable(compiler, kX86VarTypeXmmSd, "returnVariable");
-                // TODO
-                // callNativeFunction->setRet(0, retVariable);
+                X86XmmVar retVariable(compiler, kX86VarTypeXmmSd);
+                callNativeFunction->setRet(0, retVariable);
                 compiler.ret(retVariable);
                 break;
             }
             case VT_STRING:
             case VT_INT: {
-                X86GpVar retVariable(compiler, kVarTypeInt64, "returnVariable");
-                // TODO
-                // callNativeFunction->setRet(0, retVariable);
+                X86GpVar retVariable(compiler, kVarTypeInt64);
+                callNativeFunction->setRet(0, retVariable);
                 compiler.ret(retVariable);
                 break;
             }
@@ -55,7 +106,6 @@ namespace mathvm {
             default:
                 throw InterpretationError(string("Wrong NativeFunction return type ") + typeToName(signature->at(0).first));
         }
-//        compiler.ret(returnVariable);
         compiler.endFunc();
 
         // calling native function
@@ -76,13 +126,8 @@ namespace mathvm {
             default:
                 throw InterpretationError(string("Wrong NativeFunction return type ") + typeToName(signature->at(0).first));
         }
+
         runtime.release(wrappedNativeFunction);
     }
 
-    void setXmmVariable(X86Compiler &c, XmmVar &v, double d) {
-        X86GpVar temp = c.newGpVar();
-        c.mov(temp, *(reinterpret_cast<uint64_t *>(&d)));
-        c.movq(v, temp.m());
-        c.unuse(temp);
-    }
 }

@@ -236,7 +236,6 @@ namespace mathvm {
         static bool _le(T const &a, T const &b) {
             return a <= b;
         }
-
     };
 };
 
