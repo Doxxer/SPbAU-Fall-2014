@@ -27,6 +27,8 @@ namespace mathvm {
 
         void run(ostream &out);
 
+        void callNative(uint16_t id);
+
         size_t bytecodeLength(Instruction instruction) {
             static const struct {
                 Instruction insn;

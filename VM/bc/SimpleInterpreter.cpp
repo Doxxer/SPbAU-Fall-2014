@@ -41,6 +41,7 @@ namespace mathvm {
             cout << "index: " << currentIndex << ", instruction: " << bcName << endl;
 #endif
             switch (instruction) {
+
                 case BC_DLOAD:
                     pushVariable(bytecode.getDouble(currentIndex + 1));
                     break;
@@ -131,18 +132,22 @@ namespace mathvm {
                 }
                 case BC_STOREDVAR0:
                 case BC_STOREIVAR0:
+                case BC_STORESVAR0:
                     storeVariable(0);
                     break;
                 case BC_STOREDVAR1:
                 case BC_STOREIVAR1:
+                case BC_STORESVAR1:
                     storeVariable(1);
                     break;
                 case BC_STOREDVAR2:
                 case BC_STOREIVAR2:
+                case BC_STORESVAR2:
                     storeVariable(2);
                     break;
                 case BC_STOREDVAR3:
                 case BC_STOREIVAR3:
+                case BC_STORESVAR3:
                     storeVariable(3);
                     break;
                 case BC_LOADDVAR:
@@ -152,6 +157,7 @@ namespace mathvm {
                     break;
                 case BC_STOREDVAR:
                 case BC_STOREIVAR:
+                case BC_STORESVAR:
                     storeVariable(bytecode.getUInt16(currentIndex + 1));
                     break;
                 case BC_LOADCTXDVAR:
@@ -215,6 +221,10 @@ namespace mathvm {
                     bytecodes.clear();
                     continue;
                 }
+                case BC_CALLNATIVE: {
+                    callNative(bytecode.getUInt16(currentIndex + 1));
+                    break;
+                }
                 case BC_CALL: {
                     TranslatedFunction *f = functionById(bytecode.getUInt16(currentIndex + 1));
                     bytecodes.push_back(static_cast<BytecodeFunction *>(f)->bytecode());
@@ -241,6 +251,26 @@ namespace mathvm {
                 case BC_I2D:
                     pushVariable((double) popVariable().getIntValue());
                     break;
+                case BC_LOADDVAR0:
+                case BC_LOADIVAR0:
+                case BC_LOADSVAR0:
+                    programStack.push_back(loadVariable(0));
+                    break;
+                case BC_LOADDVAR1:
+                case BC_LOADIVAR1:
+                case BC_LOADSVAR1:
+                    programStack.push_back(loadVariable(1));
+                    break;
+                case BC_LOADIVAR2:
+                case BC_LOADSVAR2:
+                case BC_LOADDVAR2:
+                    programStack.push_back(loadVariable(2));
+                    break;
+                case BC_LOADDVAR3:
+                case BC_LOADIVAR3:
+                case BC_LOADSVAR3:
+                    programStack.push_back(loadVariable(3));
+                    break;
                 case BC_S2I:
                     throw InterpretationError("BC_S2I instruction deprecated");
                 case BC_BREAK:
@@ -255,4 +285,12 @@ namespace mathvm {
     }
 
 #pragma clang diagnostic pop
+
+    void SimpleInterpreter::callNative(uint16_t id) {
+        const Signature *signature;
+        const std::string *name;
+        const void *nativeCodeAddress = nativeById(id, &signature, &name);
+        if (!nativeCodeAddress)
+            throw std::string("Native function not found");
+    }
 }
