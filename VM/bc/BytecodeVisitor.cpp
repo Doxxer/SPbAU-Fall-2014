@@ -4,7 +4,7 @@
 namespace mathvm {
 
     void BytecodeVisitor::visitForNode(ForNode *node) {
-        LOG << "visitForNode" << endl;
+        LOG_Visitor << "visitForNode" << endl;
 
         VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
 
@@ -50,7 +50,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitPrintNode(PrintNode *node) {
-        LOG << "visitPrintNode" << endl;
+        LOG_Visitor << "visitPrintNode" << endl;
         for (uint32_t i = 0; i < node->operands(); ++i) {
             node->operandAt(i)->visit(this);
             switch (topOfStackType) {
@@ -70,13 +70,13 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitLoadNode(LoadNode *node) {
-        LOG << "visitLoadNode" << endl;
+        LOG_Visitor << "visitLoadNode" << endl;
         VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
         topOfStackType = loadVariable(variableDescriptor, node);
     }
 
     void BytecodeVisitor::visitIfNode(IfNode *node) {
-        LOG << "visitIfNode" << endl;
+        LOG_Visitor << "visitIfNode" << endl;
 
         Label _else(bc());
         Label end(bc());
@@ -100,7 +100,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitIntLiteralNode(IntLiteralNode *node) {
-        LOG << "visitIntLiteralNode" << endl;
+        LOG_Visitor << "visitIntLiteralNode" << endl;
 
         bc()->addInsn(BC_ILOAD);
         bc()->addInt64(node->literal());
@@ -108,7 +108,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitDoubleLiteralNode(DoubleLiteralNode *node) {
-        LOG << "visitDoubleLiteralNode" << endl;
+        LOG_Visitor << "visitDoubleLiteralNode" << endl;
 
         bc()->addInsn(BC_DLOAD);
         bc()->addDouble(node->literal());
@@ -116,7 +116,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitStringLiteralNode(StringLiteralNode *node) {
-        LOG << "visitStringLiteralNode" << endl;
+        LOG_Visitor << "visitStringLiteralNode" << endl;
 
         uint16_t id = context->introduceStringConst(node->literal());
         bc()->addInsn(BC_SLOAD);
@@ -125,7 +125,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitWhileNode(WhileNode *node) {
-        LOG << "visitWhileNode" << endl;
+        LOG_Visitor << "visitWhileNode" << endl;
 
         Label start = bc()->currentLabel();
         Label end(bc());
@@ -142,7 +142,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitBlockNode(BlockNode *node) {
-        LOG << "visitBlockNode" << endl;
+        LOG_Visitor << "visitBlockNode" << endl;
 
         Scope::VarIterator variableIterator(node->scope());
         while (variableIterator.hasNext()) {
@@ -163,7 +163,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitBinaryOpNode(BinaryOpNode *node) {
-        LOG << "visitBinaryOpNode" << endl;
+        LOG_Visitor << "visitBinaryOpNode" << endl;
 
         node->left()->visit(this);
         VarType leftType = topOfStackType;
@@ -283,7 +283,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitUnaryOpNode(UnaryOpNode *node) {
-        LOG << "visitUnaryOpNode" << endl;
+        LOG_Visitor << "visitUnaryOpNode" << endl;
 
         node->operand()->visit(this);
         switch (node->kind()) {
@@ -308,12 +308,12 @@ namespace mathvm {
 
     void BytecodeVisitor::visitNativeCallNode(NativeCallNode *node) {
         // TODO
-        LOG << "visitNativeCallNode TODO" << std::endl;
+        LOG_Visitor << "visitNativeCallNode TODO" << std::endl;
         throw TranslationError("NativeCallNode not implemented", node->position());
     }
 
     void BytecodeVisitor::visitFunctionNode(FunctionNode *node) {
-        LOG << "visitFunctionNode" << endl;
+        LOG_Visitor << "visitFunctionNode" << endl;
         if (function == NULL) {
             function = context->getFunction(node->name());
             visitBlockNode(node->body());
@@ -344,7 +344,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitStoreNode(StoreNode *node) {
-        LOG << "visitStoreNode" << endl;
+        LOG_Visitor << "visitStoreNode" << endl;
 
         VariableInContextDescriptor variableDescriptor = context->getVariableDescriptor(node->var()->name());
 
@@ -373,7 +373,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitCallNode(CallNode *node) {
-        LOG << "visitCallNode" << endl;
+        LOG_Visitor << "visitCallNode" << endl;
 
         BytecodeFunction *calledFunction = context->getFunction(node->name());
         if (node->parametersNumber() != calledFunction->parametersNumber()) {
@@ -393,7 +393,7 @@ namespace mathvm {
     }
 
     void BytecodeVisitor::visitReturnNode(ReturnNode *node) {
-        LOG << "visitReturnNode" << endl;
+        LOG_Visitor << "visitReturnNode" << endl;
 
         if (node->returnExpr()) {
             node->returnExpr()->visit(this);

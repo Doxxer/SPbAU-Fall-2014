@@ -62,8 +62,6 @@ namespace mathvm {
         }
 
         Var loadVariable(unsignedIntType contextID, unsignedIntType variableID) {
-            LOG << contextID << endl
-                    << variableID << endl;
             assert(vars.size() > contextID);
             assert(callsCounter.size() > contextID);
             assert(vars[contextID].size() > callsCounter[contextID]);

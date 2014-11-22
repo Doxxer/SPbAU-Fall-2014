@@ -58,7 +58,7 @@ namespace mathvm {
             if (castToType == topOfStackType) {
                 return;
             }
-            LOG << typeToName(topOfStackType) << " -> ";
+            LOG_Visitor << typeToName(topOfStackType) << " -> ";
             switch (topOfStackType) {
                 case VT_STRING:
                     throw TranslationError(string("Incorrect casting. Trying cast STRING to ") + typeToName(castToType) + ". Where: " + where, node->position());
@@ -85,7 +85,7 @@ namespace mathvm {
                     throw TranslationError("Incorrect storing variable operation", node->position());
             }
             topOfStackType = castToType;
-            LOG << typeToName(topOfStackType) << endl;
+            LOG_Visitor << typeToName(topOfStackType) << endl;
         }
 
         VarType loadVariable(VariableInContextDescriptor variableDescriptor, AstNode *node) {
@@ -162,7 +162,7 @@ namespace mathvm {
         }
 
         VarType equateTypes(VarType leftType, VarType rightType, AstNode *node) {
-            LOG << "equateTypes: " << typeToName(leftType) << ", " << typeToName(rightType) << endl;
+            LOG_Visitor << "equateTypes: " << typeToName(leftType) << ", " << typeToName(rightType) << endl;
 
             if (leftType == rightType) {
                 return leftType;

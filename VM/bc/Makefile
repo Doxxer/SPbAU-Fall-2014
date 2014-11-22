@@ -7,7 +7,7 @@ else
 JIT_OBJ =
 endif
 
-USER_CFLAGS += -std=c++11 -O3 -Wall -Wno-unused
+USER_CFLAGS += -std=c++11 -Wall -Wno-unused
 
 USER_OBJ = \
    $(JIT_OBJ) \
