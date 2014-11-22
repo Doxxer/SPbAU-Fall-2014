@@ -1,5 +1,5 @@
 #include "SimpleInterpreter.hpp"
-#include "asmjit.h"
+#include "asmjit/asmjit.h"
 #include "Errors.hpp"
 
 using namespace asmjit;
@@ -63,10 +63,15 @@ namespace mathvm {
                     variables.push_back(a);
                     break;
                 }
-                case VT_INT:
                 case VT_STRING: {
-                    X86XmmVar a(compiler, asmjitTypeFromMathVMType(varType));
-                    setXmmVariable(compiler, a, loadVariable(scopeVarIndex).getDoubleValue());
+                    X86GpVar a(compiler, asmjitTypeFromMathVMType(varType));
+                    compiler.mov(a, (int64_t) loadVariable(scopeVarIndex).getStringValue());
+                    variables.push_back(a);
+                    break;
+                }
+                case VT_INT: {
+                    X86GpVar a(compiler, asmjitTypeFromMathVMType(varType));
+                    compiler.mov(a, loadVariable(scopeVarIndex).getIntValue());
                     variables.push_back(a);
                     break;
                 }

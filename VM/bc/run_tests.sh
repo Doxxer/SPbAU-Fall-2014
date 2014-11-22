@@ -13,7 +13,7 @@ MY_TESTS=./mytests
 
 function run_test {
     echo -n "test:" ${1##*/} "-- "
-    ${MATH_VM_BIN} ${1}.mvm > output
+    bench=$( { time ${MATH_VM_BIN} ${1}.mvm > output; } 2>&1 )
     program=$?
     if [[ -f ${1}.expect ]]; then
         diff output ${1}.expect
@@ -22,7 +22,7 @@ function run_test {
         diffresult=0
     fi
     if [ ${program} -eq $2 ] && [ ${diffresult} -eq 0 ]; then
-        printf "\e[1;32mOK\e[0m"
+        printf "\e[1;32m""OK - ""$(echo ${bench} | awk '{print $2}')""\e[0m"
     else
         printf "\e[1;31m!!! FAILED !!!\e[0m"
     fi

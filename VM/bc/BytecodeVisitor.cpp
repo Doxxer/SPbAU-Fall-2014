@@ -191,6 +191,7 @@ namespace mathvm {
                         bc()->addInsn(BC_IAXOR);
                         break;
                     case tMOD:
+                        bc()->addInsn(BC_SWAP);
                         bc()->addInsn(BC_IMOD);
                         break;
                     default:;

@@ -36,7 +36,7 @@ namespace mathvm {
             Bytecode &bytecode = *bytecodes.back();
             Instruction instruction = bytecode.getInsn(currentIndex);
             size_t instructionLength = bytecodeLength(instruction);
-#ifdef DEBUG
+#ifdef LOG_INTERPRETER
             const char* bcName = bytecodeName(instruction, 0);
             cout << "index: " << currentIndex << ", instruction: " << bcName << endl;
 #endif
