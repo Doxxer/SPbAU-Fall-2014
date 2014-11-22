@@ -285,12 +285,4 @@ namespace mathvm {
     }
 
 #pragma clang diagnostic pop
-
-    void SimpleInterpreter::callNative(uint16_t id) {
-        const Signature *signature;
-        const std::string *name;
-        const void *nativeCodeAddress = nativeById(id, &signature, &name);
-        if (!nativeCodeAddress)
-            throw std::string("Native function not found");
-    }
 }
