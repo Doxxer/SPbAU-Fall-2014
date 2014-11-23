@@ -1,5 +1,6 @@
 ROOT   = .
 VM_ROOT = ../../../../SvnRepos/mathvm/
+WITH_SDL=1
 
 include $(VM_ROOT)/common.mk
 

@@ -78,11 +78,11 @@ namespace mathvm {
 
             size_t paramsCount = signature->size() - 1;
             VarType returnType = signature->at(0).first;
-//            if (paramsCount <= 4) {
-//                callNativeFunctionViaTemplateMagic(nativeFunctionAddress, paramsCount, returnType);
-//            } else {
+            if (paramsCount <= 4) {
+                callNativeFunctionViaTemplateMagic(nativeFunctionAddress, paramsCount, returnType);
+            } else {
                 callNativeFunctionViaAsmJit(nativeFunctionAddress, signature, returnType);
-//            }
+            }
         }
 
         void detectCallWithFunctionID(unsignedIntType functionID) {

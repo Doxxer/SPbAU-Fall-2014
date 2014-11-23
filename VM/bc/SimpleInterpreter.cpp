@@ -7,10 +7,14 @@
 namespace mathvm {
     Status *SimpleInterpreter::execute(vector<Var *> &vars) {
         try {
+#ifdef DEBUG
             stringstream ss;
             run(ss);
             LOG("---------RESULT-----------");
             cout << ss.str();
+#else
+            run(cout);
+#endif
         } catch (InterpretationError e) {
             return Status::Error(e.what());
         }
@@ -115,12 +119,15 @@ namespace mathvm {
                     break;
                 case BC_IPRINT:
                     out << popVariable().getIntValue();
+                    out.flush();
                     break;
                 case BC_DPRINT:
                     out << popVariable().getDoubleValue();
+                    out.flush();
                     break;
                 case BC_SPRINT:
                     out << popVariable().getStringValue();
+                    out.flush();
                     break;
                 case BC_SWAP: {
                     auto v1 = popVariable();
