@@ -26,8 +26,6 @@ namespace mathvm {
     void SimpleInterpreter::callNativeFunctionViaAsmJit(void *f, const Signature *signature, VarType returnType) {
         JitRuntime runtime;
         X86Compiler compiler(&runtime);
-        FileLogger logger(stdout);
-        compiler.setLogger(&logger);
 
         FuncBuilderX mainFunctionPrototype;
         FuncBuilderX nativePrototype;
