@@ -244,6 +244,9 @@ namespace mathvm {
                     contextID.pop_back();
                     continue;
                 }
+                case BC_S2I:
+                    pushVariable((signedIntType) popVariable().getStringValue());
+                    break;
                 case BC_D2I:
                     pushVariable((signedIntType) popVariable().getDoubleValue());
                     break;
@@ -270,8 +273,6 @@ namespace mathvm {
                 case BC_LOADSVAR3:
                     programStack.push_back(loadVariable(3));
                     break;
-                case BC_S2I:
-                    throw InterpretationError("BC_S2I instruction deprecated");
                 case BC_BREAK:
                     break;
                 case BC_INVALID:

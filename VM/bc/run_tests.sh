@@ -41,7 +41,7 @@ for test in `find ${MY_TESTS} -name '*.mvm'`; do
 done
 
 echo "-------------- failing test (all should be OK) -------------- "
-for test in for_range for_var function-return-void if-fun op_bin op_not op_streq op_sub range function-cast; do
+for test in for_range for_var function-return-void if-fun op_bin op_not op_streq op_sub range; do
     run_test ${FAIL}/${test} 100
 done
 
