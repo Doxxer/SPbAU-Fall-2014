@@ -41,7 +41,6 @@ namespace mathvm {
             cout << "index: " << currentIndex << ", instruction: " << bcName << endl;
 #endif
             switch (instruction) {
-
                 case BC_DLOAD:
                     pushVariable(bytecode.getDouble(currentIndex + 1));
                     break;

@@ -13,15 +13,14 @@ void setXmmVariable(X86Compiler &c, XmmVar &v, double d) {
     c.unuse(temp);
 }
 
-double a = 221.4144;
+typedef int64_t INT;
 
 int main(int argc, char *argv[]) {
-    int64_t d = -221;
-    cout << sqrt(d) << endl;
+    INT d = -22321;
 
-    void *nativeAddress = dlsym(RTLD_DEFAULT, "max");
+    void *nativeAddress = dlsym(RTLD_DEFAULT, "abs");
     if (!nativeAddress) {
-        cout << "error: native address not found";
+        cout << "error: fn address not found";
         return 1;
     }
 
@@ -31,39 +30,36 @@ int main(int argc, char *argv[]) {
     c.setLogger(&logger);
 
     auto q = kVarTypeInt64;
-//    auto q = kX86VarTypeXmmSd;
 
     // main function - 0 input params and return DOUBLE (cuz sqrt return double)
     FuncBuilderX mainFunctionPrototype;
     FuncBuilderX nativePrototype;
     mainFunctionPrototype.setRet(q);
+    nativePrototype.addArg(q);
     nativePrototype.setRet(q);
     c.addFunc(kFuncConvHost, mainFunctionPrototype);
 
 
-    X86XmmVar retVariable(c, q, "retVariable");
+    X86GpVar r0(c, q, "retVariable");
+    X86GpVar a0(c, q, "input");
+    X86GpVar fn(c);
+    c.mov(fn, imm_ptr(nativeAddress));
+    c.mov(a0, d);
 
-    X86GpVar native(c);
-    c.mov(native, imm_ptr(nativeAddress));
-    nativePrototype.setArg(0, q);
-    nativePrototype.setArg(1, q);
+    auto pr = FuncBuilder1<INT, INT>();
 
-//    X86XmmVar input(c, q, "input");
-//    setXmmVariable(c, input, 10);
+    cout << pr.getArgCount() << endl;
+    cout << pr.getArgList()[0] << q << endl;
+    cout << pr.getRet() << q << endl;
 
-    X86GpVar input = c.newGpVar(q);
-    c.mov(input, static_cast<int64_t>(d));
-    X86GpVar input1 = c.newGpVar(q);
-    c.mov(input, static_cast<int64_t>(d + 1));
+    X86CallNode *call = c.call(fn, kFuncConvHost, nativePrototype);
+    call->setArg(0, a0);
+    call->setRet(0, r0);
 
-    X86CallNode *call = c.call(native, kFuncConvHost, nativePrototype);
-    call->setArg(0, input);
-    call->setArg(1, input1);
-    call->setRet(0, retVariable);
-    c.ret(retVariable);
+    c.ret(r0);
     c.endFunc();
 
-    typedef int64_t (*FuncType)();
+    typedef INT (*FuncType)();
     FuncType f = (FuncType) asmjit_cast<FuncType>(c.make());
     cout << f() << endl;
 

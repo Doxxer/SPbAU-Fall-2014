@@ -50,7 +50,8 @@ set(SOURCE_FILES
     main_interpreter.cpp
     Context.cpp
     SimpleInterpreter.cpp
-    NativeFunctionGenerator.cpp
+    NativeFunctionGeneratorTemplates.cpp
+    NativeFunctionGeneratorAsmJit.cpp
     BytecodeVisitor.cpp)
 
 add_executable(bc ${SOURCE_FILES} ${BASE_FILES} ${ASMJIT})
