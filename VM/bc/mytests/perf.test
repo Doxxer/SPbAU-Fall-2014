@@ -51,6 +51,6 @@ while (videoCheckEvent() == 0) {
     drawFrame();
     int now; now = timestamp();
     double frameCost; frameCost = (now - prev) / 1000.0;
-    print('1 frame costs ', frameCost, 'ms\n');
+    print('frame costs ', frameCost, 'ms\n');
     prev = now;
 }
