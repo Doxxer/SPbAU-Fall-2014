@@ -239,12 +239,6 @@ namespace mathvm {
         template<class T>
         static signedIntType _cmp(T const &a, T const &b) {
             return detail::_cmp<T>(a, b);
-            // bc_swap should be
-            if (a < b) {
-                return 1;
-            } else if (a > b) {
-                return -1;
-            } else return 0;
         }
 
         template<class T>
