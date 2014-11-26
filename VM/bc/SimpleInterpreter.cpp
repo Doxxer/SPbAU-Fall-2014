@@ -157,7 +157,7 @@ namespace mathvm {
                 case BC_STORECTXIVAR:
                 case BC_STORECTXSVAR: storeVariable(bytecode.getUInt16(currentIndex + 1), bytecode.getUInt16(currentIndex + 3));
                     break;
-                case BC_DCMP: binary_operation<double, signedIntType>(VT_DOUBLE, _cmp<double>, VT_INT);
+                case BC_DCMP: binary_operation<double, signedIntType>(VT_DOUBLE, _cmp<double>);
                     break;
                 case BC_ICMP: binary_operation(VT_INT, _cmp < signedIntType > );
                     break;

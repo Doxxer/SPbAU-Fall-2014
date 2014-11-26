@@ -167,11 +167,6 @@ namespace mathvm {
 
         template<class T, class R = T>
         void binary_operation(VarType type, R (*binaryFunction)(T const &, T const &)) {
-            binary_operation<T, R>(type, binaryFunction, type);
-        }
-
-        template<class T, class R = T>
-        void binary_operation(VarType type, R (*binaryFunction)(T const &, T const &), VarType resultType) {
             auto left = popVariable();
             auto right = popVariable();
 
