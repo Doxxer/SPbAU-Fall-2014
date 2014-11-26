@@ -1,65 +1,59 @@
-int WIDTH;
-WIDTH = 640;
-int HEIGHT;
-HEIGHT = 480;
-int BPP;
-BPP = 32;
+int x1;
+int y;
+int z;
 
-function void setMem(string base, int offset, int value, int width) native 'unsafe_setMem';
-function int getMem(string base, int offset, int width) native 'unsafe_getMem';
-function int videoInitFramebuffer(int width, int height, int bpp, int fullscreen) native 'unsafe_videoInitFramebuffer';
-function void videoDenitFramebuffer() native 'unsafe_videoDeinitFramebuffer';
-function int videoCheckEvent() native 'unsafe_videoCheckEvent';
-function string videoGrabFramebuffer() native 'unsafe_videoGrabFramebuffer';
-function void videoReleaseFramebuffer() native 'unsafe_videoReleaseFramebuffer';
-
-function void setPixel(string mem, int x, int y, int r, int g, int b) {
-    int color;
-    color = (r % 256) * 65536 + (g % 256) *256 + (b % 256);
-    setMem(mem, (x + y*WIDTH) * BPP / 8 , color, 4);
+function int foo(int x) {
+    int r;
+    function int bar(int a) {
+        if (a <= 0) {
+            return z;
+        }
+        x = baz();
+        foo(a);
+        r += 1;
+        return x + bar(a - 1);
+    }
+    function int baz() {
+        int s;
+        function int bak(int z1) {
+            if (z1 <= 0) {
+                x = z1;
+            } else {
+                y = z1 + 1;
+                x = -z1;
+            }
+            x -= 1;
+            int t;
+            t = baz();
+            t -= 1;
+            if (s < 0) {
+                s = s * -1;
+            }
+            x += 1;
+            return t + z1 + bar(z1 - y);
+        }
+        if (x <= 0 || y <= 0 || z <= 0) {
+            return x + y + z;
+        }
+        z -= 10;
+        s = baz();
+        z += 10;
+        y += s;
+        z = bak(z - y + 1);
+        z -= 2;
+        return s + bar(x);
+    }
+    if (x == 0) {
+        return 0;
+    }
+    r = foo(x - 1);
+    bar(r);
+    return r + baz();
 }
 
-function int timestamp() native 'native_timestamp';
+x1 = 2;
+y = 2;
+z = 2;
 
-int h;
-h = 0;
-function void drawFrame() {
-   string fb;
-   fb = videoGrabFramebuffer();
-   if (!fb) {
-      print('fb', fb, '\n');
-      return;
-   }
-   int y; int x;
-    for (y in 0..(HEIGHT-1)) {
-        for (x in 0..(WIDTH-1)) {
-           setPixel(fb, x, y, (x*x)/256+3*y+h, (y*y)/256+x+h, h);
-       }
-   }
-   videoReleaseFramebuffer();
-   h += 1;
-}
-
-
-if (videoInitFramebuffer(WIDTH, HEIGHT, BPP, 0) == 0) {
-   print('Cannot init video\n');
-   return;
-}
-
-int prev;
-prev = timestamp();
-int frames;
-frames = 0;
-while (videoCheckEvent() == 0) {
-    drawFrame();
-    int frameCost;
-    int now;
-    now = timestamp();
-    frameCost = (now - prev) / 1000.0;
-    print('1 frame costs ', frameCost, 'ms\n');
-    frames += 1;
-    prev = now;
-}
-
-
-videoDenitFramebuffer();
+print(foo(28), '\n');
+print(x1, '\n', y, '\n', z, '\n');
