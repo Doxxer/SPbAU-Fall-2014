@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<debugInfo>
+  <root nodeRef="r:f04340ce-5d57-4b04-850c-148ae1c5348f(TraceAspect.lang.sandbox)/3292382144807406209">
+    <nodeInfo nodeId="3292382144807421254" fileName="MainClass.java" startLine="8" startPosition="0" endLine="9" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.FieldDeclaration" propertyString="n" />
+    <nodeInfo nodeId="195158585674690373" fileName="MainClass.java" startLine="16" startPosition="27" endLine="17" endPosition="39" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="3292382144807454970" fileName="MainClass.java" startLine="22" startPosition="41" endLine="23" endPosition="10" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="3292382144807422189" fileName="MainClass.java" startLine="23" startPosition="10" endLine="24" endPosition="45" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="3292382144807422828" fileName="MainClass.java" startLine="24" startPosition="45" endLine="25" endPosition="39" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="3292382144807425891" fileName="MainClass.java" startLine="25" startPosition="39" endLine="26" endPosition="55" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="3292382144807456518" fileName="MainClass.java" startLine="26" startPosition="55" endLine="27" endPosition="41" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="3292382144807459995" fileName="MainClass.java" startLine="27" startPosition="41" endLine="28" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.Statement" />
+    <nodeInfo nodeId="3292382144807460080" fileName="MainClass.java" startLine="28" startPosition="0" endLine="29" endPosition="16" conceptFqName="jetbrains.mps.baseLanguage.structure.ReturnStatement" />
+    <nodeInfo nodeId="5414446279872008167" fileName="MainClass.java" startLine="39" startPosition="42" endLine="40" endPosition="77" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="3292382144807406853" fileName="MainClass.java" startLine="40" startPosition="77" endLine="41" endPosition="66" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="195158585674697717" fileName="MainClass.java" startLine="41" startPosition="66" endLine="42" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.Statement" />
+    <nodeInfo nodeId="195158585674698335" fileName="MainClass.java" startLine="42" startPosition="0" endLine="43" endPosition="80" conceptFqName="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" />
+    <nodeInfo nodeId="195158585674700970" fileName="MainClass.java" startLine="43" startPosition="80" endLine="44" endPosition="56" conceptFqName="jetbrains.mps.baseLanguage.structure.ExpressionStatement" />
+    <nodeInfo nodeId="195158585674695503" fileName="MainClass.java" startLine="11" startPosition="0" endLine="13" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="MainClass#()V" />
+    <nodeInfo nodeId="5414446279872039527" fileName="MainClass.java" startLine="34" startPosition="0" endLine="36" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="voidMethod#()V" />
+    <nodeInfo nodeId="195158585674688912" fileName="MainClass.java" startLine="16" startPosition="0" endLine="19" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.ConstructorDeclaration" propertyString="MainClass#(I)V" />
+    <nodeInfo nodeId="3292382144807406659" fileName="MainClass.java" startLine="39" startPosition="0" endLine="46" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.StaticMethodDeclaration" propertyString="main#([Ljava/lang/String;)V" />
+    <nodeInfo nodeId="3292382144807421783" fileName="MainClass.java" startLine="22" startPosition="0" endLine="31" endPosition="0" conceptFqName="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" propertyString="assignments#(Ljava/lang/String;)I" />
+    <scopeInfo nodeId="195158585674695507" fileName="MainClass.java" startLine="11" startPosition="22" endLine="11" endPosition="22" />
+    <scopeInfo nodeId="5414446279872039530" fileName="MainClass.java" startLine="34" startPosition="33" endLine="34" endPosition="33" />
+    <scopeInfo nodeId="195158585674688916" fileName="MainClass.java" startLine="16" startPosition="27" endLine="17" endPosition="39" />
+    <scopeInfo nodeId="195158585674695503" fileName="MainClass.java" startLine="11" startPosition="0" endLine="13" endPosition="0" />
+    <scopeInfo nodeId="5414446279872039527" fileName="MainClass.java" startLine="34" startPosition="0" endLine="36" endPosition="0" />
+    <scopeInfo nodeId="195158585674688912" fileName="MainClass.java" startLine="16" startPosition="0" endLine="19" endPosition="0">
+      <varInfo nodeId="195158585674690037" varName="v" />
+    </scopeInfo>
+    <scopeInfo nodeId="3292382144807406665" fileName="MainClass.java" startLine="39" startPosition="42" endLine="44" endPosition="56">
+      <varInfo nodeId="5414446279872008168" varName="a" />
+      <varInfo nodeId="195158585674698336" varName="b" />
+    </scopeInfo>
+    <scopeInfo nodeId="3292382144807421786" fileName="MainClass.java" startLine="22" startPosition="41" endLine="29" endPosition="16">
+      <varInfo nodeId="3292382144807454973" varName="k" />
+    </scopeInfo>
+    <scopeInfo nodeId="3292382144807406659" fileName="MainClass.java" startLine="39" startPosition="0" endLine="46" endPosition="0">
+      <varInfo nodeId="3292382144807406660" varName="args" />
+    </scopeInfo>
+    <scopeInfo nodeId="3292382144807421783" fileName="MainClass.java" startLine="22" startPosition="0" endLine="31" endPosition="0">
+      <varInfo nodeId="3292382144807421924" varName="s" />
+    </scopeInfo>
+    <unitInfo nodeId="3292382144807406209" fileName="MainClass.java" startLine="7" startPosition="0" endLine="49" endPosition="0" unitName="TraceAspect.lang.sandbox.MainClass" />
+  </root>
+</debugInfo>
+

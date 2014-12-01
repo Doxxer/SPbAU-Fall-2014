@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history>
+  <StructureModification>
+    <dependencies>
+      <model index="2w0t" modelUID="r:911d37d6-fa11-440a-bdaa-9a47ef0aa706(TraceAspect.lang.structure)" version="-1" />
+    </dependencies>
+    <rename id="2w0t.7934453798651961089" type="CHILD" from="what" to="entities" />
+  </StructureModification>
+</history>
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependenciesRoot>
+  <dependency className="TraceAspect.lang.sandbox.MainClass" file="MainClass.java">
+    <classNode dependClassName="TraceAspect.lang.runtime.Tracer" />
+    <classNode dependClassName="java.lang.String" />
+  </dependency>
+</dependenciesRoot>
+

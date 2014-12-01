@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MPSProject">
+    <projectModules>
+      <modulePath path="$PROJECT_DIR$/languages/TraceAspect.lang/TraceAspect.lang.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/TraceAspect.lang/runtime/TraceAspect.lang.runtime.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/TraceAspect.lang/sandbox/TraceAspect.lang.sandbox.msd" folder="" />
+    </projectModules>
+  </component>
+</project>
+
