@@ -18,7 +18,7 @@ public class Main {
     }
 
     private static void runInterpreter() {
-        commands();
+        showHelp();
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -38,35 +38,28 @@ public class Main {
                     threadPool.shutdown();
                     return;
                 case "help":
-                    commands();
+                    showHelp();
             }
         }
     }
 
     private static Stream<Integer> parseIntegerParams(String[] params) {
-        return Arrays.stream(params).skip(1).filter(Main::isNumber).map(Integer::parseInt).limit(1);
+        return Arrays.stream(params).skip(1).filter(Main::isValidNumber).map(Integer::parseInt).limit(1);
     }
 
     private static void removeTask(Integer ID) {
-        threadPool.remove(ID);
-        System.out.println(MessageFormat.format("removed task #{0}", ID));
+        threadPool.removeTask(ID);
+        System.out.println(MessageFormat.format("removed task with ID = #{0}", ID));
     }
 
-    private static void addTask(Integer length) {
-        Tuple<Integer, Future<Integer>> task = threadPool.add(() -> {
-            try {
-                Thread.sleep(1000 * length);
-            } catch (InterruptedException ignored) {
-            }
-            return 0;
-        });
-        System.out.println(MessageFormat.format("added task #{0}", task._1));
+    private static void addTask(Integer duration) {
+        Integer ID = threadPool.addTask(new UserTask(duration));
+        System.out.println(MessageFormat.format("added task with ID = #{0}", ID));
     }
 
-    private static boolean isNumber(String s) {
+    private static boolean isValidNumber(String s) {
         try {
-            Integer.parseInt(s);
-            return true;
+            return Integer.parseInt(s) >= 0;
         } catch (NumberFormatException ignored) {
             return false;
         }
@@ -76,10 +69,10 @@ public class Main {
         System.out.println("Usage: make run <hot threads count> <idle timeout>");
     }
 
-    private static void commands() {
-        System.out.println("use follow commands:");
-        System.out.println("add [<time in seconds>, ...] - add to thread poll list of tasks");
-        System.out.println("remove [IDs, ...] - remove from thread poll list of tasks (by their IDs)");
+    private static void showHelp() {
+        System.out.println("usage:");
+        System.out.println("add <time in seconds> - add task to thread poll ");
+        System.out.println("remove <ID> - remove task from thread poll (by its ID)");
         System.out.println("exit - shutdown thread pool");
         System.out.println("help - view this");
     }
@@ -90,8 +83,23 @@ public class Main {
         }
         try {
             return new Tuple<>(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-        } catch (NumberFormatException ex) {
+        } catch (RuntimeException ex) {
             return null;
+        }
+    }
+
+    private static class Tuple<T, U> {
+        final T _1;
+        final U _2;
+
+        public Tuple(T arg1, U arg2) {
+            this._1 = arg1;
+            this._2 = arg2;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("(%s, %s)", _1, _2);
         }
     }
 }
