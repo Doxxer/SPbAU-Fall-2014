@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <debugInfo>
-  <unitInfo fileName="BehaviorAspectDescriptor.java" startLine="9" startPosition="0" endLine="24" endPosition="0" unitName="TraceAspect.lang.behavior.BehaviorAspectDescriptor" />
+  <unitInfo fileName="BehaviorAspectDescriptor.java" startLine="9" startPosition="0" endLine="26" endPosition="0" unitName="TraceAspect.lang.behavior.BehaviorAspectDescriptor" />
+  <unitInfo fileName="LogFormat_BehaviorDescriptor.java" startLine="7" startPosition="0" endLine="16" endPosition="0" unitName="TraceAspect.lang.behavior.LogFormat_BehaviorDescriptor" />
   <unitInfo fileName="Tracer_BehaviorDescriptor.java" startLine="10" startPosition="0" endLine="23" endPosition="0" unitName="TraceAspect.lang.behavior.Tracer_BehaviorDescriptor" />
 </debugInfo>
 

@@ -9,12 +9,14 @@ public class MainClass {
 
 
   public MainClass() {
+    Tracer.traceVoidReturn("MainClass");
   }
 
 
 
   public MainClass(int v) {
     n = Tracer.traceAssignment("n", v);
+    Tracer.traceVoidReturn("MainClass");
   }
 
 
@@ -24,14 +26,18 @@ public class MainClass {
     s = Tracer.traceAssignment("s", "test2");
     n = Tracer.traceAssignment("n", 8);
     this.n = Tracer.traceAssignment("MainClass.n", 19);
-    k = Tracer.traceAssignment("k", 144);
+    k = Tracer.traceAssignment("k", n + Tracer.traceCall(s, "s", "length").length());
 
-    return 3232;
+    voidMethod();
+
+    return Tracer.traceNonVoidReturn("assignments", 3232);
   }
 
 
 
   /*package*/ void voidMethod() {
+    Tracer.traceCall(System.out, "out", "println").println("We're inside void method");
+    Tracer.traceVoidReturn("voidMethod");
   }
 
 
@@ -42,6 +48,7 @@ public class MainClass {
 
     MainClass b = Tracer.traceConstructor(new MainClass(142), "b", "MainClass");
     Tracer.traceCall(b, "b", "voidMethod").voidMethod();
+    Tracer.traceVoidReturn("main");
   }
 
 

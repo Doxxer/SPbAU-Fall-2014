@@ -3,6 +3,7 @@
   <dependency className="TraceAspect.lang.sandbox.MainClass" file="MainClass.java">
     <classNode dependClassName="TraceAspect.lang.runtime.Tracer" />
     <classNode dependClassName="java.lang.String" />
+    <classNode dependClassName="java.lang.System" />
   </dependency>
 </dependenciesRoot>
 

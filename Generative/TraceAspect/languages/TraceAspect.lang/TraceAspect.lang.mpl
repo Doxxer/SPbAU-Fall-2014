@@ -15,6 +15,7 @@
       </models>
       <external-templates />
       <dependencies>
+        <dependency reexport="false">6354ebe7-c22a-4a0f-ac54-50b52ab9b065(JDK)</dependency>
         <dependency reexport="false">9f2722d7-4eca-42d8-a48b-949985066ee1(TraceAspect.lang.runtime)</dependency>
         <dependency reexport="true">f3061a53-9226-4cc5-a443-f952ceaf5816(jetbrains.mps.baseLanguage)</dependency>
       </dependencies>

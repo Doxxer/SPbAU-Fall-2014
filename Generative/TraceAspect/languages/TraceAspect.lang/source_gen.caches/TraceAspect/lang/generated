@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="dzo91oppf5h7fig5kp51dv2p4fkqm9h">
+<dependencies version="2" modelHash="-2nroefcharm4kc9ozi13imr8cxrwiul">
   <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="303xz1b2lyseld0axia86q3lpvucmq6" />
   <dep model="r:ae1b74a2-bada-4e58-a1f5-9c2b4080433e(TraceAspect.lang.typesystem)" hash="du3voq0mfbwrb4egdolsrywq417f3t9" />
   <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="b4ewbuz42qcbg1awca5bacgi0vopxqt" />
-  <dep model="r:e1187ced-5a6e-4dd7-95c1-c2b8e6e6a05f(TraceAspect.lang.editor)" hash="777ndtdfzjpecj1zkhouo5tfe2n23kf" />
+  <dep model="r:e1187ced-5a6e-4dd7-95c1-c2b8e6e6a05f(TraceAspect.lang.editor)" hash="-79guaif2i5e4js4gzthtmv9x3cba4qc" />
   <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="a8elw7fctzg6sg8fe36u9gzu42axhdb" />
   <common dependsOnNodes="true">
     <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" />

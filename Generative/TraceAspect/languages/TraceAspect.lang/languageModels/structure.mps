@@ -10,6 +10,12 @@
     <property name="name" nameId="tpck.1169194664001" value="Tracer" />
     <property name="rootable" nameId="tpce.1096454100552" value="true" />
     <link role="extends" roleId="tpce.1071489389519" targetNodeId="tpck.1133920641626" resolveInfo="BaseConcept" />
+    <node role="linkDeclaration" roleId="tpce.1071489727083" type="tpce.LinkDeclaration" typeId="tpce.1071489288298" id="2085073781388799498" nodeInfo="ig">
+      <property name="metaClass" nameId="tpce.1071599937831" value="aggregation" />
+      <property name="role" nameId="tpce.1071599776563" value="format" />
+      <property name="sourceCardinality" nameId="tpce.1071599893252" value="1" />
+      <link role="target" roleId="tpce.1071599976176" targetNodeId="2085073781388795494" resolveInfo="LogFormat" />
+    </node>
     <node role="implements" roleId="tpce.1169129564478" type="tpce.InterfaceConceptReference" typeId="tpce.1169127622168" id="3292382144807364043" nodeInfo="ig">
       <link role="intfc" roleId="tpce.1169127628841" targetNodeId="tpck.1169194658468" resolveInfo="INamedConcept" />
     </node>
@@ -30,13 +36,17 @@
       <property name="internalValue" nameId="tpce.1083923523171" value="calls" />
       <property name="externalValue" nameId="tpce.1083923523172" value="Method calls" />
     </node>
-    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8296063131401711950" nodeInfo="ig">
-      <property name="internalValue" nameId="tpce.1083923523171" value="varReference" />
-      <property name="externalValue" nameId="tpce.1083923523172" value="Variable reference" />
-    </node>
     <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8296063131401723762" nodeInfo="ig">
       <property name="internalValue" nameId="tpce.1083923523171" value="return" />
       <property name="externalValue" nameId="tpce.1083923523172" value="Return from method" />
+    </node>
+  </root>
+  <root type="tpce.ConceptDeclaration" typeId="tpce.1071489090640" id="2085073781388795494" nodeInfo="ig">
+    <property name="name" nameId="tpck.1169194664001" value="LogFormat" />
+    <link role="extends" roleId="tpce.1071489389519" targetNodeId="tpck.1133920641626" resolveInfo="BaseConcept" />
+    <node role="propertyDeclaration" roleId="tpce.1071489727084" type="tpce.PropertyDeclaration" typeId="tpce.1071489288299" id="2085073781388796062" nodeInfo="ig">
+      <property name="name" nameId="tpck.1169194664001" value="showTime" />
+      <link role="dataType" roleId="tpce.1082985295845" targetNodeId="tpck.1082983657063" resolveInfo="boolean" />
     </node>
   </root>
 </model>

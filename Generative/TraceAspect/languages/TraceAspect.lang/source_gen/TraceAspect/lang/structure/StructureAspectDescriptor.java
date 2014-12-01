@@ -14,11 +14,13 @@ public class StructureAspectDescriptor implements jetbrains.mps.smodel.runtime.S
   public ConceptDescriptor getDescriptor(String conceptFqName) {
     switch (Arrays.binarySearch(stringSwitchCases_1htk8d_a0a0b, conceptFqName)) {
       case 0:
-        return new ConceptDescriptorBuilder("TraceAspect.lang.structure.Tracer").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept", "jetbrains.mps.lang.core.structure.INamedConcept").properties("tracingEntity").create();
+        return new ConceptDescriptorBuilder("TraceAspect.lang.structure.LogFormat").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept").properties("showTime").create();
+      case 1:
+        return new ConceptDescriptorBuilder("TraceAspect.lang.structure.Tracer").super_("jetbrains.mps.lang.core.structure.BaseConcept").parents("jetbrains.mps.lang.core.structure.BaseConcept", "jetbrains.mps.lang.core.structure.INamedConcept").properties("tracingEntity").children(new String[]{"format"}, new boolean[]{false}).create();
       default:
         return StructureAspectInterpreted.getInstance().getDescriptor(conceptFqName);
     }
   }
 
-  private static String[] stringSwitchCases_1htk8d_a0a0b = new String[]{"TraceAspect.lang.structure.Tracer"};
+  private static String[] stringSwitchCases_1htk8d_a0a0b = new String[]{"TraceAspect.lang.structure.LogFormat", "TraceAspect.lang.structure.Tracer"};
 }

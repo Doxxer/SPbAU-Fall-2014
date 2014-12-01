@@ -8,7 +8,8 @@ import jetbrains.mps.internal.collections.runtime.backports.LinkedList;
 
 public enum TracingEntity {
   Assignments("Assignments", "assignment"),
-  Method_calls("Method calls", "calls");
+  Method_calls("Method calls", "calls"),
+  Return_from_method("Return from method", "return");
 
   private String myName;
 
@@ -24,6 +25,7 @@ public enum TracingEntity {
     List<TracingEntity> list = ListSequence.fromList(new LinkedList<TracingEntity>());
     ListSequence.fromList(list).addElement(TracingEntity.Assignments);
     ListSequence.fromList(list).addElement(TracingEntity.Method_calls);
+    ListSequence.fromList(list).addElement(TracingEntity.Return_from_method);
     return list;
   }
 
@@ -40,6 +42,9 @@ public enum TracingEntity {
     }
     if (value.equals(TracingEntity.Method_calls.getValueAsString())) {
       return TracingEntity.Method_calls;
+    }
+    if (value.equals(TracingEntity.Return_from_method.getValueAsString())) {
+      return TracingEntity.Return_from_method;
     }
     return TracingEntity.getDefault();
   }

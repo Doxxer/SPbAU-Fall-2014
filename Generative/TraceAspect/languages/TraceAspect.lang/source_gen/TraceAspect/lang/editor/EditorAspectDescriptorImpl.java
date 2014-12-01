@@ -16,6 +16,8 @@ public class EditorAspectDescriptorImpl implements EditorAspectDescriptor {
   public Collection<ConceptEditor> getEditors(ConceptDescriptor descriptor) {
     switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0b, descriptor.getConceptFqName())) {
       case 0:
+        return Collections.<ConceptEditor>singletonList(new LogFormat_Editor());
+      case 1:
         return Collections.<ConceptEditor>singletonList(new Tracer_Editor());
       default:
     }
@@ -28,5 +30,5 @@ public class EditorAspectDescriptorImpl implements EditorAspectDescriptor {
 
 
 
-  private static String[] stringSwitchCases_xbvbvu_a0a0b = new String[]{"TraceAspect.lang.structure.Tracer"};
+  private static String[] stringSwitchCases_xbvbvu_a0a0b = new String[]{"TraceAspect.lang.structure.LogFormat", "TraceAspect.lang.structure.Tracer"};
 }

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dependencies version="2" modelHash="eqpdfcdl20v8wkizc1dzpm0kntka2l">
+<dependencies version="2" modelHash="3grryue04p043xm41w7gcwwmirku930">
   <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" hash="303xz1b2lyseld0axia86q3lpvucmq6" />
   <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" hash="b4ewbuz42qcbg1awca5bacgi0vopxqt" />
   <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" hash="a8elw7fctzg6sg8fe36u9gzu42axhdb" />
-  <common hash="-21rlkawgz0vox5x4v5uiy8lmznepr6z" dependsOnNodes="true">
+  <common hash="7yegt24v1gtsmqh1laai57x1rlwsfa2" dependsOnNodes="true">
     <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" />
   </common>
-  <source id="3292382144807406209" name="MainClass" hash="-6fa08qjrhhhp5nqfuj4fsgbawbnjzbh">
+  <source id="3292382144807406209" name="MainClass" hash="-80ycif1ui1xz0g2a7zmq9cqi74ihxi8">
     <dep model="r:00000000-0000-4000-0000-011c895902cd(jetbrains.mps.baseLanguage.generator.java.main@generator)" />
     <dep model="r:b4d7d620-6723-4aa2-856b-118497e84e9e(jetbrains.mps.baseLanguage.generator.java.strings@generator)" />
     <dep model="r:f04c1476-2f91-4f59-be13-c8e009abebee(jetbrains.mps.baseLanguageInternal.generator.template.main@generator)" />
     <file name="MainClass.java" />
   </source>
-  <source id="3168543803171142460" name="MethodCallsTracer" hash="-88oi7fv50g9noagzrtoxrw6jh548fp2" />
-  <source id="195158585674639770" name="AssignmentsTracer" hash="-4qefit6yxen3kbawq1tpvthz84u100c" />
+  <source id="416578148489242831" name="TraceReturn" hash="-4lqxalgqzf7qdt5nhm5kidbiqv0uurm" />
+  <source id="2085073781389272530" name="TraceAssignments" hash="5h101ppuctvxx4qmxbd698ig3pegvvw" />
+  <source id="2085073781389273065" name="TraceCalls" hash="-464ufen6ui9ifayzwg2bcoz9mro2gbf" />
 </dependencies>
 
