@@ -30,6 +30,14 @@
       <property name="internalValue" nameId="tpce.1083923523171" value="calls" />
       <property name="externalValue" nameId="tpce.1083923523172" value="Method calls" />
     </node>
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8296063131401711950" nodeInfo="ig">
+      <property name="internalValue" nameId="tpce.1083923523171" value="varReference" />
+      <property name="externalValue" nameId="tpce.1083923523172" value="Variable reference" />
+    </node>
+    <node role="member" roleId="tpce.1083172003582" type="tpce.EnumerationMemberDeclaration" typeId="tpce.1083171877298" id="8296063131401723762" nodeInfo="ig">
+      <property name="internalValue" nameId="tpce.1083923523171" value="return" />
+      <property name="externalValue" nameId="tpce.1083923523172" value="Return from method" />
+    </node>
   </root>
 </model>
 
