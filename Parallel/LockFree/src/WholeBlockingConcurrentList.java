@@ -1,11 +1,16 @@
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Blocking list
  *
  * @author Turaev Timur
  */
-public class WholeBlockingConcurrentList<T> extends AbstractBlockingConcurrentList<T> {
+public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
+
+    private final Lock lock = new ReentrantLock();
 
     public WholeBlockingConcurrentList() {
         super();

@@ -1,5 +1,8 @@
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Base class for list
  *
@@ -26,10 +29,20 @@ public abstract class AbstractList<T> implements List<T> {
             this.object = object;
             this.key = key;
             this.next = next;
+            this.lock = new ReentrantLock();
+        }
+
+        protected void lock() {
+            lock.lock();
+        }
+
+        protected void unlock() {
+            lock.unlock();
         }
 
         protected final T object;
         protected final int key;
         protected ListEntry next;
+        private Lock lock;
     }
 }

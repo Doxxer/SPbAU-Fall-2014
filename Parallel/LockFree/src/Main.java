@@ -12,13 +12,13 @@ import java.util.stream.Stream;
  */
 public class Main {
     private static final Random randomGenerator = new Random();
-    private static final int MAX_VALUE_IN_LIST = 1000;
+    private static final int MAX_VALUE_IN_LIST = 100;
 
     public static void main(String[] args) throws InterruptedException {
-        AbstractBlockingConcurrentList<Integer> blockingList = new WholeBlockingConcurrentList<>();
-        int writersCount = 4;
-        int readersCount = 4;
-        int maxOperations = 100_000;
+        List<Integer> blockingList = new PairBlockingConcurrentList<>();
+        int writersCount = 16;
+        int readersCount = 16;
+        int maxOperations = 1_000_000;
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         Stream.generate(() -> executorService.submit(() -> writerFunction(blockingList, maxOperations))).limit(writersCount).count();
@@ -27,7 +27,7 @@ public class Main {
         executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
     }
 
-    private static void readerFunction(AbstractBlockingConcurrentList<Integer> blockingList, int maxOperations) {
+    private static void readerFunction(List<Integer> blockingList, int maxOperations) {
         int percent = maxOperations / 10;
         for (int steps = 0; steps < maxOperations; steps++) {
             blockingList.remove(randomGenerator.nextInt(MAX_VALUE_IN_LIST));
@@ -37,7 +37,7 @@ public class Main {
         }
     }
 
-    private static void writerFunction(AbstractBlockingConcurrentList<Integer> blockingList, int maxOperations) {
+    private static void writerFunction(List<Integer> blockingList, int maxOperations) {
         int percent = maxOperations / 10;
         for (int steps = 0; steps < maxOperations; steps++) {
             blockingList.insert(randomGenerator.nextInt(MAX_VALUE_IN_LIST));
