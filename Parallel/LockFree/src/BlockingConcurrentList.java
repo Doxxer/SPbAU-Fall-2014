@@ -1,19 +1,18 @@
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * Blocking list
  *
  * @author Turaev Timur
  */
-public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
+public class BlockingConcurrentList<T> implements List<T> {
 
-    private final Lock lock = new ReentrantLock();
+    private final Object lock = new Object();
+    private final ListEntry head;
 
-    public WholeBlockingConcurrentList() {
-        super();
+    public BlockingConcurrentList() {
+        head = new ListEntry(Integer.MIN_VALUE);
+        head.next = new ListEntry(Integer.MAX_VALUE);
     }
 
     @Override
@@ -22,8 +21,7 @@ public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
         int key = element.hashCode();
 
         // lock all list
-        lock.lock();
-        try {
+        synchronized (lock) {
             pred = head;
             curr = head.next;
             while (curr.key < key) {
@@ -40,8 +38,6 @@ public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
             entry.next = curr;
             pred.next = entry;
             return true;
-        } finally {
-            lock.unlock();
         }
     }
 
@@ -51,8 +47,7 @@ public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
         int key = element.hashCode();
 
         // lock all list
-        lock.lock();
-        try {
+        synchronized (lock) {
             pred = head;
             curr = head.next;
             while (curr.key < key) {
@@ -65,8 +60,6 @@ public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
             // remove entry curr
             pred.next = curr.next;
             return true;
-        } finally {
-            lock.unlock();
         }
     }
 
@@ -76,15 +69,32 @@ public class WholeBlockingConcurrentList<T> extends AbstractList<T> {
         int key = element.hashCode();
 
         // lock all list
-        lock.lock();
-        try {
+        synchronized (lock) {
             curr = head.next;
             while (curr.key < key) {
                 curr = curr.next;
             }
             return curr.key == key;
-        } finally {
-            lock.unlock();
         }
+    }
+
+    private class ListEntry {
+        private ListEntry(int key) {
+            this(null, key, null);
+        }
+
+        private ListEntry(@NotNull T object) {
+            this(object, object.hashCode(), null);
+        }
+
+        private ListEntry(T object, int key, ListEntry next) {
+            this.object = object;
+            this.key = key;
+            this.next = next;
+        }
+
+        private final T object;
+        private final int key;
+        private ListEntry next;
     }
 }
