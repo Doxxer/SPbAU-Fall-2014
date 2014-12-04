@@ -1,4 +1,5 @@
 import java.text.MessageFormat;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,10 +16,17 @@ public class Main {
     private static final int MAX_VALUE_IN_LIST = 100;
 
     public static void main(String[] args) throws InterruptedException {
-        List<Integer> list = new LockFreeList<>();
-        int writersCount = 16;
-        int readersCount = 16;
-        int maxOperations = 1_000_000;
+        if (args.length != 4) {
+            System.out.println("Usage: program <readers count> <writers count> <operations count> <list type>");
+            System.out.println("where list type = 0 if it's (whole) blocking list ");
+            System.out.println("where list type = 1 if it's lock-free list ");
+            return;
+        }
+
+        int readersCount = Integer.parseInt(args[0]);
+        int writersCount = Integer.parseInt(args[1]);
+        int maxOperations = Integer.parseInt(args[2]);
+        List<Integer> list = Objects.equals(args[3], "0") ? new BlockingConcurrentList<>() : new LockFreeList<>();
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         Stream.generate(() -> executorService.submit(() -> writerFunction(list, maxOperations))).limit(writersCount).count();
