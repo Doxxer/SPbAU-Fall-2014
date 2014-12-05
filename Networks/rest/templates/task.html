@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Task {{ id }}{% endblock %}
+{% block header %}Погода на неделю по координатам {{ latitude }} / {{ longitude }} {% endblock %}
+{% block content %}
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-color: #aabcfe;
+        }
+
+        .tg td {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 10px 5px;
+            overflow: hidden;
+            word-break: normal;
+            color: #039;
+            background-color: #e8edff;
+            border: 1px solid #aabcfe;
+            border-right-width: 0;
+            border-left-width: 0;
+        }
+
+        .tg th {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            padding: 10px 5px;
+            overflow: hidden;
+            word-break: normal;
+            color: #039;
+            background-color: #b9c9fe;
+            border: 1px solid #aabcfe;
+            border-right-width: 0;
+            border-left-width: 0;
+        }
+
+        .td-c {
+            text-align: center;
+        }
+    </style>
+    <table class="tg">
+        <tr>
+            <th>Дата</th>
+            <th>Мин. температура</th>
+            <th>Макс. температура</th>
+            <th>Продолжительность дня</th>
+            <th>Погодные явления</th>
+        </tr>
+        {% for day in data %}
+            <tr>
+                <td class="td-c">{{ day.date }}</td>
+                <td class="td-c">{{ day.t_min }} °C</td>
+                <td class="td-c">{{ day.t_max }} °C</td>
+                <td class="td-c">{{ day.day_length }}</td>
+                <td class="td-c">{{ day.summary }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
