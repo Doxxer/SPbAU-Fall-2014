@@ -8,6 +8,8 @@ FIND_LIBRARY(OPENCL_LIBRARIES OpenCL)
 set(LIBS ${OPENCL_LIBRARIES}) 
 
 set(SOURCE_FILES
+    util.hpp
+    opencl_hardware.hpp
     main.cpp)
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 
