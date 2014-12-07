@@ -11,7 +11,7 @@ public:
 
     }
 
-    virtual void draw(double timeFromStart) = 0;
+    virtual void render(double timeFromStart) = 0;
 
     virtual ~Scene() {
     }

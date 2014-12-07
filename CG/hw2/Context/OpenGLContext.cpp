@@ -28,22 +28,20 @@ void OpenGLContext::init() {
 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSwapInterval(0);
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetCharCallback(window, (GLFWcharfun) TwEventCharGLFW);
-
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
     glfwSetMouseButtonCallback(window, mouse_buttons_callback);
     glfwSetCursorPosCallback(window, mouse_position_callback);
     glfwSetScrollCallback(window, mouse_scroll_callback);
 
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     framebuffer_size_callback(window, windowWidth, windowHeight);
 }
 
 void OpenGLContext::run() {
     while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         drawScene();
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -63,10 +61,8 @@ void OpenGLContext::drawScene() {
         char newTitle[128];
         sprintf(newTitle, "%s (%.1f FPS)", windowTitle.c_str(), FPS);
         glfwSetWindowTitle(window, newTitle);
-
-        std::cout << FPS << std::endl;
     }
-    scene->draw(time);
+    scene->render(time);
     TwDraw();
 }
 
@@ -74,14 +70,14 @@ void OpenGLContext::setScene(Scene *concreteScene) {
     try {
         scene.reset(concreteScene);
     }
-    catch (std::exception const &except) {
-        std::cout << except.what() << std::endl;
+    catch (std::exception const &e) {
+        std::cout << e.what() << std::endl;
         exit(EXIT_FAILURE);
     }
 }
 
 OpenGLContext::~OpenGLContext() {
+    scene.reset();
     glfwDestroyWindow(window);
     glfwTerminate();
-    scene.reset();
 }

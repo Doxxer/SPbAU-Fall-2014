@@ -5,39 +5,34 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <memory>
-#include <vector>
+#include <array>
+#include "IRenderObject.hpp"
 #include "Scene.hpp"
 #include "OpenGLContext.hpp"
 
-using namespace glm;
-using namespace std;
-
 class HW2scene : public Scene {
 public:
-    HW2scene(shared_ptr<OpenGLContext> openGLContext);
+    HW2scene(std::shared_ptr<OpenGLContext> openGLContext);
 
     ~HW2scene();
 
-    virtual void draw(double timeFromStart) override;
+    virtual void render(double timeFromStart) override;
 
 private:
+    enum renderObjectType {
+        cow = 0,
+
+        count
+    };
+
     TwBar *antTweakBar;
+
     bool isWireFrame;
-    GLuint cowVertexShader, cowFragmentShader, cowShaderProgram;
-    GLuint vbo_vertices, vbo_indices, vbo_normals;
-    GLuint vao;
-    quat rotation_by_ATB;
+    glm::quat rotation_by_control;
     GLfloat rotation_velocity;
+    renderObjectType currentRenderObjectType;
 
-    vector<glm::vec4> vertices;
-    vector<glm::vec3> normals;
-    vector<GLuint> indices;
-
-    void init_buffers();
-
-    void init_VAO();
-
-    void cowPass(GLfloat const *proj, GLfloat const *view, GLfloat const *model);
+    std::array<std::unique_ptr<IRenderObject>, renderObjectType::count> renderObjects;
 };
 
 #endif /* end of include guard: SIMPLET_HPP */

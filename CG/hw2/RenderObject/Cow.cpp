@@ -1,0 +1,60 @@
+#include "Cow.hpp"
+#include "shader.hpp"
+#include "ObjLoader.hpp"
+
+void Cow::render() {
+    glUseProgram(shaderProgram);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "mvp"), 1, GL_FALSE, mvp);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model);
+
+    glBindVertexArray(shaderProgram);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+    glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, NULL);
+}
+
+Cow::Cow() {
+    vertexShader = create_shader(GL_VERTEX_SHADER, "Resources/cow.vs");
+    fragmentShader = create_shader(GL_FRAGMENT_SHADER, "Resources/cow.fs");
+    shaderProgram = create_program(vertexShader, fragmentShader);
+
+    LoadOBJModel("Resources/cow.obj", vertices, normals, indices);
+
+//    init_buffers();
+    glGenBuffers(1, &vbo_vertices);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr) (sizeof(vertices[0]) * vertices.size()), vertices.data(), GL_STATIC_DRAW);
+
+    glGenBuffers(1, &vbo_indices);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr) (sizeof(indices[0]) * indices.size()), indices.data(), GL_STATIC_DRAW);
+
+    glGenBuffers(1, &vbo_normals);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_normals);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr) (sizeof(normals[0]) * normals.size()), normals.data(), GL_STATIC_DRAW);
+
+//    init_VAO();
+    glGetError();
+    glGenVertexArrays(1, &vertexArrayObject);
+    glBindVertexArray(vertexArrayObject);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
+    GLuint vertex_coords_attribute = (GLuint) glGetAttribLocation(shaderProgram, "vertex_coords");
+    glVertexAttribPointer(vertex_coords_attribute, 4, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), NULL);
+    glEnableVertexAttribArray(vertex_coords_attribute);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_normals);
+    GLuint normal_coords_attribute = (GLuint) glGetAttribLocation(shaderProgram, "normal_coords");
+    glVertexAttribPointer(normal_coords_attribute, 3, GL_FLOAT, GL_FALSE, sizeof(normals[0]), NULL);
+    glEnableVertexAttribArray(normal_coords_attribute);
+}
+
+Cow::~Cow() {
+    glDeleteProgram(shaderProgram);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    glDeleteVertexArrays(1, &vertexArrayObject);
+    glDeleteBuffers(1, &vbo_vertices);
+    glDeleteBuffers(1, &vbo_indices);
+    glDeleteBuffers(1, &vbo_normals);
+}

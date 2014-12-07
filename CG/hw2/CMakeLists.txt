@@ -10,6 +10,8 @@ include_directories(Utils RenderObject Context)
 
 set(SOURCE_FILES
     RenderObject/IRenderObject.hpp
+    RenderObject/Cow.hpp
+    RenderObject/Cow.cpp
     Context/Scene.hpp
     Scene/HW2scene.hpp
     Scene/HW2scene.cpp
@@ -21,6 +23,7 @@ set(SOURCE_FILES
     Context/OpenGLContext.cpp
     main.cpp
     )
+
 set(RESOURCES Resources/cow.vs Resources/cow.fs Resources/cow.obj)
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES} ${SHADERS})

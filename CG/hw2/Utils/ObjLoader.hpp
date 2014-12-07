@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 #include <glm/glm.hpp>
 #include "tiny_obj_loader.h"
 
