@@ -3,14 +3,19 @@
 #include "HW2scene.hpp"
 
 HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
-        : Scene(openGLContext), isWireFrame(false), rotation_velocity(90), currentRenderObjectType(renderObjectType::cow) {
+        : Scene(openGLContext),
+          isWireFrame(false),
+          autoRotation(true),
+          rotation_velocity(90),
+          currentRenderObjectType(renderObjectType::cow) {
     TwInit(TW_OPENGL_CORE, NULL);
 
     antTweakBar = TwNewBar("Parameters");
     TwDefine("Parameters size='500 200' color='70 100 120' valueswidth=220 iconpos=topleft");
     TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, "true='ON' false='OFF' key=W");
+        TwAddVarRW(antTweakBar, "Auto rotation", TW_TYPE_BOOLCPP, &autoRotation, "true='ON' false='OFF' key=A");
     TwAddVarRW(antTweakBar, "ObjRotation", TW_TYPE_QUAT4F, &rotation_by_control, "label='Object orientation' opened=true");
-    TwAddVarRW(antTweakBar, "RotationVelocity", TW_TYPE_FLOAT, &rotation_velocity, "min=0 max=360 step=10");
+        TwAddVarRW(antTweakBar, "RotationVelocity", TW_TYPE_FLOAT, &rotation_velocity, "min=0 max=1000 step=10");
 
     TwEnumVal const values[] = {
             {renderObjectType::cow, "Cow from hw1"}
@@ -25,8 +30,10 @@ HW2scene::~HW2scene() {
     TwTerminate();
 }
 
-void HW2scene::render(double timeFromStart) {
-    double rotation_angle = timeFromStart * rotation_velocity;
+void HW2scene::render(double time) {
+    if (autoRotation) {
+        rotation_angle += time * rotation_velocity;
+    }
 
     glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight(), 0.1f, 100.0f);
     glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));

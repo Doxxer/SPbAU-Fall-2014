@@ -7,7 +7,6 @@ void Cow::render() {
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "mvp"), 1, GL_FALSE, mvp);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model);
 
-    glBindVertexArray(shaderProgram);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
     glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, NULL);
 }

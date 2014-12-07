@@ -16,18 +16,19 @@ public:
 
     ~HW2scene();
 
-    virtual void render(double timeFromStart) override;
+    virtual void render(double time) override;
 
 private:
     enum renderObjectType {
         cow = 0,
-
         count
     };
 
-    TwBar *antTweakBar;
+    double rotation_angle = 0;
 
+    TwBar *antTweakBar;
     bool isWireFrame;
+    bool autoRotation;
     glm::quat rotation_by_control;
     GLfloat rotation_velocity;
     renderObjectType currentRenderObjectType;

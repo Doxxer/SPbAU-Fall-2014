@@ -58,7 +58,6 @@ private:
     }
 
     static void mouse_scroll_callback(GLFWwindow *window, double x, double y) {
-        std::cout << "Lol" << std::endl;
         TwEventMouseWheelGLFW((int) y);
     }
 

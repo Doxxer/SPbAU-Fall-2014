@@ -62,7 +62,7 @@ void OpenGLContext::drawScene() {
         sprintf(newTitle, "%s (%.1f FPS)", windowTitle.c_str(), FPS);
         glfwSetWindowTitle(window, newTitle);
     }
-    scene->render(time);
+    scene->render(dt);
     TwDraw();
 }
 
