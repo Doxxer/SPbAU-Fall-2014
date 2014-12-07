@@ -6,16 +6,22 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -pedantic -Ofas
 
 find_package(OpenGL REQUIRED)
 
+include_directories(Utils RenderObject Context)
+
 set(SOURCE_FILES
-    ObjLoader.hpp
-    Scene.hpp
+    RenderObject/IRenderObject.hpp
+    Context/Scene.hpp
+    Scene/HW2scene.hpp
+    Scene/HW2scene.cpp
+    Utils/ObjLoader.hpp
+    Utils/shader.cpp
+    Utils/shader.hpp
+    Utils/tiny_obj_loader.cc
+    Utils/tiny_obj_loader.h
+    Context/OpenGLContext.cpp
     main.cpp
-    shader.cpp
-    HW2scene.cpp
-    OpenGLContext.cpp
-    tiny_obj_loader.cc
-    tiny_obj_loader.h)
-set(RESOURCES cow.vs cow.fs model.obj)
+    )
+set(RESOURCES Resources/cow.vs Resources/cow.fs Resources/cow.obj)
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES} ${SHADERS})
 

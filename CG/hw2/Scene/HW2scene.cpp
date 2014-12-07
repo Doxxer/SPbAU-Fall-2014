@@ -8,7 +8,7 @@ HW2scene::HW2scene(shared_ptr<OpenGLContext> openGLContext)
     TwInit(TW_OPENGL_CORE, NULL);
 
     antTweakBar = TwNewBar("Parameters");
-    TwDefine("Parameters size='500 220' color='70 100 120' valueswidth=220 iconpos=topleft");
+    TwDefine("Parameters size='500 200' color='70 100 120' valueswidth=220 iconpos=topleft");
 
     TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, " true='ON' false='OFF' key=W ");
 
@@ -20,7 +20,7 @@ HW2scene::HW2scene(shared_ptr<OpenGLContext> openGLContext)
     cowFragmentShader = create_shader(GL_FRAGMENT_SHADER, "cow.fs");
     cowShaderProgram = create_program(cowVertexShader, cowFragmentShader);
 
-    LoadOBJModel("model.obj", vertices, normals, indices);
+    LoadOBJModel("Resources/cow.obj", vertices, normals, indices);
 
     init_buffers();
     init_VAO();

@@ -3,7 +3,6 @@
 void OpenGLContext::init() {
     glfwSetErrorCallback(glfw_error_callback);
 
-    // Initialise GLFW
     if (!glfwInit()) {
         exit(EXIT_FAILURE);
     }
@@ -14,7 +13,6 @@ void OpenGLContext::init() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    // Open a window and create its OpenGL context
     window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), NULL, NULL);
     if (!window) {
         glfwTerminate();

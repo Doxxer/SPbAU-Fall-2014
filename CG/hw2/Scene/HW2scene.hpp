@@ -5,9 +5,9 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <memory>
+#include <vector>
 #include "Scene.hpp"
 #include "OpenGLContext.hpp"
-#include "vector"
 
 using namespace glm;
 using namespace std;

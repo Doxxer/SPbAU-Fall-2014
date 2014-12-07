@@ -12,11 +12,10 @@ using glm::vec3;
 using std::string;
 
 void LoadOBJModel(string const &filename, vector<vec4> &vertices, vector<vec3> &normals, vector<GLuint> &indices) {
-    std::string inputFile = "model.obj";
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 
-    std::string err = tinyobj::LoadObj(shapes, materials, inputFile.c_str());
+    std::string err = tinyobj::LoadObj(shapes, materials, filename.c_str());
 
     if (!err.empty()) {
         std::cerr << err << std::endl;
