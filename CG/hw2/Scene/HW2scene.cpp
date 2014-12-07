@@ -1,5 +1,8 @@
 #include <AntTweakBar.h>
-#include <Cow.hpp>
+#include "Sphere.hpp"
+#include "Cylinder.hpp"
+#include "Cow.hpp"
+#include "Quad.hpp"
 #include "HW2scene.hpp"
 
 HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
@@ -18,11 +21,17 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
         TwAddVarRW(antTweakBar, "RotationVelocity", TW_TYPE_FLOAT, &rotation_velocity, "min=0 max=1000 step=10");
 
     TwEnumVal const values[] = {
-            {renderObjectType::cow, "Cow from hw1"}
+            {renderObjectType::cow, "cow from hw1"},
+            {renderObjectType::quad, "simple big quad"},
+            {renderObjectType::sphere, "common sphere"},
+            {renderObjectType::cylinder, "cylinder"}
     };
-    TwAddVarRW(antTweakBar, "Render object:", TwDefineEnum(NULL, values, renderObjectType::count), &currentRenderObjectType, NULL);
+    TwAddVarRW(antTweakBar, "Render object:", TwDefineEnum(NULL, values, renderObjectType::count), &currentRenderObjectType, "key=Q");
 
     renderObjects[renderObjectType::cow].reset(new Cow());
+    renderObjects[renderObjectType::quad].reset(new Quad());
+    renderObjects[renderObjectType::sphere].reset(new Sphere());
+    renderObjects[renderObjectType::cylinder].reset(new Cylinder());
 }
 
 HW2scene::~HW2scene() {
@@ -33,11 +42,13 @@ HW2scene::~HW2scene() {
 void HW2scene::render(double time) {
     if (autoRotation) {
         rotation_angle += time * rotation_velocity;
+    } else {
+        rotation_angle = 0;
     }
 
     glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight(), 0.1f, 100.0f);
-    glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-    glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), 0));
+    glm::mat4 view = glm::lookAt(glm::vec3(0, 3, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
     glm::mat4 mvp = proj * view * model;
 

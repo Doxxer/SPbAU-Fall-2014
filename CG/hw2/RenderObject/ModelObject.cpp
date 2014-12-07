@@ -1,24 +1,27 @@
-#include "Cow.hpp"
+#include "ModelObject.hpp"
 #include "shader.hpp"
 #include "ObjLoader.hpp"
 
-void Cow::render() {
+
+void ModelObject::render() {
     glUseProgram(shaderProgram);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "mvp"), 1, GL_FALSE, mvp);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model);
 
+    glBindVertexArray(vertexArrayObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
     glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, NULL);
 }
 
-Cow::Cow() {
-    vertexShader = create_shader(GL_VERTEX_SHADER, "Resources/cow.vs");
-    fragmentShader = create_shader(GL_FRAGMENT_SHADER, "Resources/cow.fs");
+ModelObject::ModelObject(string pathToModel, string const &pathToVertexShader, string const &pathToFragmentShader)
+        : modelFilePath(pathToModel), vsFilePath(pathToVertexShader), fsFilePath(pathToFragmentShader) {
+    vertexShader = create_shader(GL_VERTEX_SHADER, vsFilePath);
+    fragmentShader = create_shader(GL_FRAGMENT_SHADER, fsFilePath);
     shaderProgram = create_program(vertexShader, fragmentShader);
 
-    LoadOBJModel("Resources/cow.obj", vertices, normals, indices);
+    LoadOBJModel(modelFilePath, vertices, normals, indices);
 
-//    init_buffers();
+    // init buffers
     glGenBuffers(1, &vbo_vertices);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
     glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr) (sizeof(vertices[0]) * vertices.size()), vertices.data(), GL_STATIC_DRAW);
@@ -31,7 +34,7 @@ Cow::Cow() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_normals);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr) (sizeof(normals[0]) * normals.size()), normals.data(), GL_STATIC_DRAW);
 
-//    init_VAO();
+    // init_VAO
     glGetError();
     glGenVertexArrays(1, &vertexArrayObject);
     glBindVertexArray(vertexArrayObject);
@@ -47,7 +50,7 @@ Cow::Cow() {
     glEnableVertexAttribArray(normal_coords_attribute);
 }
 
-Cow::~Cow() {
+ModelObject::~ModelObject() {
     glDeleteProgram(shaderProgram);
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);

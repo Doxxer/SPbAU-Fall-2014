@@ -21,6 +21,9 @@ public:
 private:
     enum renderObjectType {
         cow = 0,
+        quad,
+        sphere,
+        cylinder,
         count
     };
 
