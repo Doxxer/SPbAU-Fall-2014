@@ -30,15 +30,16 @@ private:
     std::string modelFilePath, vsFilePath, fsFilePath;
 
     GLuint vertexShader, fragmentShader, shaderProgram;
-    GLuint vbo_vertices, vbo_indices, vbo_normals;
+    GLuint vbo_vertices, vbo_indices, vbo_normals, vbo_texcoords;
     GLuint vertexArrayObject;
 
     std::vector<glm::vec4> vertices;
     std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> texcoords;
     std::vector<GLuint> indices;
 
     GLfloat *model, *view, *proj, *mvp;
-
+    GLuint texture;
 };
 
 #endif /* end of include guard: MODELOBJECT_HPP */

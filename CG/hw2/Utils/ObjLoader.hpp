@@ -10,9 +10,10 @@
 using std::vector;
 using glm::vec4;
 using glm::vec3;
+using glm::vec2;
 using std::string;
 
-void LoadOBJModel(string const &filename, vector<vec4> &vertices, vector<vec3> &normals, vector<GLuint> &indices) {
+void LoadOBJModel(string const &filename, vector<vec4> &vertices, vector<vec3> &normals, vector<vec2> &texcoords, vector<GLuint> &indices) {
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 
@@ -39,6 +40,14 @@ void LoadOBJModel(string const &filename, vector<vec4> &vertices, vector<vec3> &
                 shapes[0].mesh.normals[3 * v + 0],
                 shapes[0].mesh.normals[3 * v + 1],
                 shapes[0].mesh.normals[3 * v + 2]));
+    }
+
+    // texcoords
+    assert((shapes[0].mesh.texcoords.size() % 2) == 0);
+    for (size_t v = 0; v < shapes[0].mesh.texcoords.size() / 2; v++) {
+        texcoords.push_back(vec2(
+                shapes[0].mesh.texcoords[2 * v + 0],
+                shapes[0].mesh.texcoords[2 * v + 1]));
     }
 
     // indices

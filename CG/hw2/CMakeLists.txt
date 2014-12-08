@@ -19,11 +19,14 @@ set(SOURCE_FILES
     Context/Scene.hpp
     Scene/HW2scene.hpp
     Scene/HW2scene.cpp
+    Utils/TextureLoader.hpp
     Utils/ObjLoader.hpp
     Utils/shader.cpp
     Utils/shader.hpp
     Utils/tiny_obj_loader.cc
     Utils/tiny_obj_loader.h
+    Utils/lodepng.cpp
+    Utils/lodepng.h
     Context/OpenGLContext.cpp
     main.cpp
     )

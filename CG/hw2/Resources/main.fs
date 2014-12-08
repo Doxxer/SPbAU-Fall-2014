@@ -2,12 +2,14 @@
 
 in vs_output
 {
-   vec3 color;
+   vec2 uv;
 } f_in;
 
-out vec3 o_color;
+out vec3 color;
+
+uniform sampler2D textureSampler;
 
 void main()
 {
-    o_color = f_in.color;
+    color = texture(textureSampler, f_in.uv).rgb;
 }
