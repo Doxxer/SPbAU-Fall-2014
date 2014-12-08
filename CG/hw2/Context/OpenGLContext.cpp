@@ -28,7 +28,7 @@ void OpenGLContext::init() {
 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetCharCallback(window, (GLFWcharfun) TwEventCharGLFW);

@@ -8,17 +8,23 @@
 HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
         : Scene(openGLContext),
           isWireFrame(false),
-          autoRotation(true),
+          autoRotation(false),
           rotation_velocity(90),
+          uvMultiplier(1.0f),
           currentRenderObjectType(renderObjectType::cow) {
     TwInit(TW_OPENGL_CORE, NULL);
 
     antTweakBar = TwNewBar("Parameters");
     TwDefine("Parameters size='500 200' color='70 100 120' valueswidth=220 iconpos=topleft");
     TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, "true='ON' false='OFF' key=W");
-        TwAddVarRW(antTweakBar, "Auto rotation", TW_TYPE_BOOLCPP, &autoRotation, "true='ON' false='OFF' key=A");
+    TwAddSeparator(antTweakBar, NULL, "group='Auto rotation'");
+    TwAddVarRW(antTweakBar, "Enable", TW_TYPE_BOOLCPP, &autoRotation, " group='Auto rotation' true='ON' false='OFF' key=A");
+    TwAddVarRW(antTweakBar, "Velocity", TW_TYPE_FLOAT, &rotation_velocity, " group='Auto rotation' min=0 max=1000 step=10");
+
     TwAddVarRW(antTweakBar, "ObjRotation", TW_TYPE_QUAT4F, &rotation_by_control, "label='Object orientation' opened=true");
-        TwAddVarRW(antTweakBar, "RotationVelocity", TW_TYPE_FLOAT, &rotation_velocity, "min=0 max=1000 step=10");
+
+    TwAddSeparator(antTweakBar, NULL, "group='Texture manipulation'");
+    TwAddVarRW(antTweakBar, "Tex-coords multiplier", TW_TYPE_FLOAT, &uvMultiplier, " group='Texture manipulation' min=0 max=30 step=0.1");
 
     TwEnumVal const values[] = {
             {renderObjectType::cow, "cow from hw1"},
@@ -64,6 +70,7 @@ void HW2scene::render(double time) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0]);
+    renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier);
     renderObjects[currentRenderObjectType]->render();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

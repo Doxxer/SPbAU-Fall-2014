@@ -30,10 +30,12 @@ private:
     double rotation_angle = 0;
 
     TwBar *antTweakBar;
+
     bool isWireFrame;
     bool autoRotation;
-    glm::quat rotation_by_control;
     GLfloat rotation_velocity;
+    glm::quat rotation_by_control;
+    float uvMultiplier;
     renderObjectType currentRenderObjectType;
 
     std::array<std::unique_ptr<IRenderObject>, renderObjectType::count> renderObjects;

@@ -11,11 +11,11 @@ out vs_output
 
 uniform mat4 mvp;
 uniform mat4 model;
+uniform float uv_mult;
 
 void main()
 {
     gl_Position = mvp * vertex_coords;
     vec4 worldNormal = model * vec4(normal_coords, 1.0f);
-    // comment
-    v_out.uv = tex_coords;
+    v_out.uv = tex_coords * uv_mult;
 }

@@ -15,7 +15,7 @@ class ModelObject : public IRenderObject {
 public:
     ModelObject(string pathToModel, string const &pathToVertexShader, string const& pathToFragmentShader);
 
-    virtual void render();
+    virtual void render() override;
 
     virtual ~ModelObject();
 
@@ -24,6 +24,10 @@ public:
         this->view = view;
         this->proj = proj;
         this->mvp = mvp;
+    }
+
+    virtual void setTextureParams(GLfloat uvMultiplier) override {
+        this->uvMultiplier = uvMultiplier;
     }
 
 private:
@@ -40,6 +44,7 @@ private:
 
     GLfloat *model, *view, *proj, *mvp;
     GLuint texture;
+    GLfloat uvMultiplier;
 };
 
 #endif /* end of include guard: MODELOBJECT_HPP */
