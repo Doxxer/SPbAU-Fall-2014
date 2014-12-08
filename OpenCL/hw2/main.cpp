@@ -53,9 +53,14 @@ void solve(Device &device, Context &context, Program &program) {
         completeEvents.push_back(functor.operator()(data, buffers_size, 1));
     }
 
-    cl::Kernel kernel(program, "downsweep");
-    cl::KernelFunctor functor(kernel, queue, cl::NullRange, cl::NDRange(256), cl::NDRange(256));
-    completeEvents.push_back(functor.operator()(data, buffers_size, buffers_size / 2));
+    {
+        cl::KernelFunctor functor(cl::Kernel(program, "downsweep"), queue, cl::NullRange, cl::NDRange(256), cl::NDRange(256));
+        completeEvents.push_back(functor.operator()(data, buffers_size, buffers_size / 2));
+    }
+    for (size_t offset = buffers_size / 1024; offset > 0; offset /= 2) {
+        cl::KernelFunctor functor(cl::Kernel(program, "downsweep"), queue, cl::NullRange, cl::NDRange(buffers_size / offset), cl::NDRange(256));
+        completeEvents.push_back(functor.operator()(data, buffers_size, offset));
+    }
 
     queue.enqueueReadBuffer(data, CL_TRUE, 0, sizeof(element_type) * arraySize, result_array.data(), &completeEvents);
 

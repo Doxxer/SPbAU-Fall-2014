@@ -15,6 +15,10 @@ if (offset * (2 * thread_id + 2) - 1 < buffer_size) {   \
 
 __kernel void upsweep(__global float *data, unsigned int buffer_size, unsigned int offset) {
     int thread_id = get_global_id(0);
+    if (buffer_size / offset > 512) {
+        UPSWEEP()
+        return;
+    }
     while (buffer_size / (offset * 2) > 0) {
         barrier(CLK_GLOBAL_MEM_FENCE);
         UPSWEEP()
@@ -28,7 +32,10 @@ __kernel void downsweep(__global float *data, unsigned int buffer_size, unsigned
     if (thread_id == 0 && offset == buffer_size / 2) {
         data[buffer_size - 1] = 0;
     }
-
+    if (buffer_size / offset > 512) {
+        DOWNSWEEP()
+        return;
+    }
     while (buffer_size / offset <= 512) {
         barrier(CLK_GLOBAL_MEM_FENCE);
         DOWNSWEEP()
