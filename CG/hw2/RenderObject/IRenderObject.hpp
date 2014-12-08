@@ -6,9 +6,11 @@
 struct IRenderObject {
     virtual void render() = 0;
 
-    virtual void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp) = 0;
+    virtual void setMatrices(GLfloat *, GLfloat *, GLfloat *, GLfloat *, GLfloat *) = 0;
 
     virtual void setTextureParams(GLfloat uvMultiplier) = 0;
+
+    virtual void setLightParams(GLfloat *, GLfloat *, GLfloat *, GLfloat *, GLfloat, GLfloat) = 0;
 
     virtual ~IRenderObject() {
     }

@@ -1,7 +1,6 @@
 #ifndef MODELOBJECT_HPP
 #define MODELOBJECT_HPP
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <vector>
@@ -19,15 +18,26 @@ public:
 
     virtual ~ModelObject();
 
-    void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp) override {
-        this->model = model;
+    void setMatrices(GLfloat *modelView, GLfloat *view, GLfloat *proj, GLfloat *mvp, GLfloat *normals) override {
+        this->modelView = modelView;
         this->view = view;
         this->proj = proj;
         this->mvp = mvp;
+        this->normalsMatrix = normals;
     }
 
     virtual void setTextureParams(GLfloat uvMultiplier) override {
         this->uvMultiplier = uvMultiplier;
+    }
+
+    virtual void setLightParams(GLfloat *lightView, GLfloat *ambient, GLfloat *diffuse, GLfloat *specular,
+            GLfloat specularStrength, GLfloat specularPower) override {
+        this->lightView = lightView;
+        this->ambient = ambient;
+        this->diffuse = diffuse;
+        this->specular = specular;
+        this->specularStrength = specularStrength;
+        this->specularPower = specularPower;
     }
 
 private:
@@ -42,9 +52,12 @@ private:
     std::vector<glm::vec2> texcoords;
     std::vector<GLuint> indices;
 
-    GLfloat *model, *view, *proj, *mvp;
+    GLfloat *modelView, *view, *proj, *mvp, *normalsMatrix;
     GLuint texture;
     GLfloat uvMultiplier;
+
+    GLfloat *lightView, *ambient, *diffuse, *specular;
+    GLfloat specularStrength, specularPower;
 };
 
 #endif /* end of include guard: MODELOBJECT_HPP */

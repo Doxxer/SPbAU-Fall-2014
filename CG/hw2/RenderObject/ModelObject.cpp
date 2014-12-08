@@ -6,8 +6,22 @@
 void ModelObject::render() {
     glUseProgram(shaderProgram);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "mvp"), 1, GL_FALSE, mvp);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, modelView);
+    glUniformMatrix3fv(glGetUniformLocation(shaderProgram, "normalsMatrix"), 1, GL_FALSE, normalsMatrix);
     glUniform1f(glGetUniformLocation(shaderProgram, "uv_mult"), uvMultiplier);
+
+    glUniform3fv(glGetUniformLocation(shaderProgram, "lightView"), 1, lightView);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "ambient"), 1, ambient);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "diffuse"), 1, diffuse);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "specular"), 1, specular);
+    glUniform1f(glGetUniformLocation(shaderProgram, "specularStrength"), specularStrength);
+    glUniform1f(glGetUniformLocation(shaderProgram, "specularPower"), specularPower);
+
+//    std::cout << " -------------- " << std::endl;
+//    std::cout << *lightView << std::endl;
+//    std::cout << *(lightView + 1) << std::endl;
+//    std::cout << *(lightView + 2) << std::endl;
+//    std::cout << " -------------- " << std::endl;
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
