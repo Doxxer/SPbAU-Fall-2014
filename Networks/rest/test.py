@@ -4,7 +4,7 @@ import urlparse
 
 import requests
 
-from main import TASK_URL
+from main import TASK_URL, ACCEPTED_MIME_TYPES
 
 
 BASE_URL = 'http://127.0.0.1:5000'
@@ -33,7 +33,7 @@ class TestRestAPI(unittest.TestCase):
         return request.status_code
 
     def run_task(self, id, content_type):
-        headers = {'Content-Type': content_type}
+        headers = {'Accept': content_type}
         request = requests.get(self.task_id_url % id, headers=headers)
         if request.status_code == httplib.OK:
             self.assertTrue(request.headers['content-type'].startswith(content_type))
@@ -56,9 +56,8 @@ class TestRestAPI(unittest.TestCase):
             self.assertEqual(self.update_task(id, **self.spb_location()), httplib.ACCEPTED)
 
     def run_all_tasks(self):
-        content_types = ['text/plain', 'application/json', 'application/xml', 'text/html', 'text/xml']
         for id in self.tasks:
-            for c in content_types:
+            for c in ACCEPTED_MIME_TYPES:
                 self.assertEqual(self.run_task(id, c), httplib.OK)
 
     def delete_all_tasks(self):

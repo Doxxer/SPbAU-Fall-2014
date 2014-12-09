@@ -20,6 +20,8 @@ app.config.from_object(__name__)
 
 import forecasts
 
+ACCEPTED_MIME_TYPES = ['text/plain', 'text/html', 'text/xml', 'application/xml', 'application/json']
+
 
 def get_coordinates(args):
     if len(args) != 2:
@@ -33,7 +35,8 @@ def plain_text_representation(data):
                "day_length: %s\n" \
                "min temperature: %s\n" \
                "max temperature: %s\n" \
-               "summary: %s" % (day_data['date'], day_data['day_length'], day_data['t_min'], day_data['t_max'], day_data['summary'])
+               "summary: %s" % (
+                   day_data['date'], day_data['day_length'], day_data['t_min'], day_data['t_max'], day_data['summary'])
 
     template = "latitude: %s\n" \
                "longitude: %s\n"
@@ -60,23 +63,25 @@ def xml_representation(data):
     return ElementTree.tostring(forecast)
 
 
+@app.route(BASE_URL)
+def index():
+    return flask.render_template('index.html')
+
+
 @app.route(TASK_ID_URL, methods=['GET'])
 def task_get(id):
     id = str(id)
     try:
         data = forecasts.read_forecast_from_database(id)
-        content_type = flask.request.headers.get('Content-Type')
-        if content_type:
-            content_type = content_type.split(':')[0]
-
-        if not content_type or content_type == 'text/html':
+        mime_type = flask.request.accept_mimetypes.best_match(ACCEPTED_MIME_TYPES)
+        if mime_type == 'text/html':
             return flask.render_template('task.html', id=id, latitude=data[0], longitude=data[1], data=data[2])
-        if content_type == 'text/plain':
-            return flask.Response(plain_text_representation(data), content_type=content_type)
-        if content_type == 'application/json':
+        if mime_type == 'text/plain':
+            return flask.Response(plain_text_representation(data), content_type=mime_type)
+        if mime_type == 'application/json':
             return flask.jsonify(json_representation(data))
-        if content_type in ['application/xml', 'text/xml']:
-            return flask.Response(xml_representation(data), content_type=content_type)
+        if mime_type in ['application/xml', 'text/xml']:
+            return flask.Response(xml_representation(data), content_type=mime_type)
 
         flask.abort(httplib.NOT_ACCEPTABLE)
     except KeyError:
