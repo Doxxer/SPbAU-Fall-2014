@@ -13,7 +13,13 @@ using glm::vec3;
 using glm::vec2;
 using std::string;
 
-void LoadOBJModel(string const &filename, vector<vec4> &vertices, vector<vec3> &normals, vector<vec2> &texcoords, vector<GLuint> &indices) {
+void LoadOBJModel(string const &filename,
+        vector<vec4> &vertices,
+        vector<vec3> &normals,
+        vector<vec2> &texcoords,
+        vector<GLuint> &indices,
+        vector<vec3> &tangents,
+        vector<vec3> &bitangents) {
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 
@@ -52,6 +58,72 @@ void LoadOBJModel(string const &filename, vector<vec4> &vertices, vector<vec3> &
 
     // indices
     indices = shapes[0].mesh.indices;
+
+    // tangents and bitangents
+    tangents.assign(vertices.size(), glm::vec3(0, 0, 0));
+    bitangents.assign(vertices.size(), glm::vec3(0, 0, 0));
+    for (size_t v = 0; v < indices.size(); v += 3) {
+        glm::vec4 &v0 = vertices[indices[v + 0]];
+        glm::vec4 &v1 = vertices[indices[v + 1]];
+        glm::vec4 &v2 = vertices[indices[v + 2]];
+        glm::vec2 &uv0 = texcoords[indices[v + 0]];
+        glm::vec2 &uv1 = texcoords[indices[v + 1]];
+        glm::vec2 &uv2 = texcoords[indices[v + 2]];
+
+        glm::vec3 deltaPos1 = glm::vec3(v1 - v0);
+        glm::vec3 deltaPos2 = glm::vec3(v2 - v0);
+        glm::vec2 deltaUV1 = uv1 - uv0;
+        glm::vec2 deltaUV2 = uv2 - uv0;
+
+        float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+
+        glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
+        glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
+
+        tangents[indices[v + 0]] += tangent;
+        tangents[indices[v + 1]] += tangent;
+        tangents[indices[v + 2]] += tangent;
+
+        bitangents[indices[v + 0]] += bitangent;
+        bitangents[indices[v + 1]] += bitangent;
+        bitangents[indices[v + 2]] += bitangent;
+    }
+
+    for (size_t i = 0; i < vertices.size(); i += 1) {
+        glm::vec3 &n = normals[i];
+        glm::vec3 &t = tangents[i];
+        glm::vec3 &b = bitangents[i];
+        t = glm::normalize(t - n * glm::dot(n, t));
+        if (glm::dot(glm::cross(n, t), b) < 0.0f) {
+            t *= -1;
+        }
+    }
+
+//    if (indices.size() == 6) {
+//        for (int i = 0; i < vertices.size(); ++i) {
+//            std::cout << vertices[i][0] << ", " << vertices[i][1] << ", " << vertices[i][2] << ", " << std::endl;
+//        }
+//        std::cout << "-----" << std::endl;
+//        for (int i = 0; i < normals.size(); ++i) {
+//            std::cout << normals[i][0] << ", " << normals[i][1] << ", " << normals[i][2] << ", " << std::endl;
+//        }
+//        std::cout << "-----" << std::endl;
+//        for (int i = 0; i < texcoords.size(); ++i) {
+//            std::cout << texcoords[i][0] << ", " << texcoords[i][1] << std::endl;
+//        }
+//        std::cout << "-----" << std::endl;
+//        for (int i = 0; i < tangents.size(); ++i) {
+//            std::cout << tangents[i][0] << ", " << tangents[i][1] << ", " << tangents[i][2]  << std::endl;
+//        }
+//        std::cout << "-----" << std::endl;
+//        for (int i = 0; i < bitangents.size(); ++i) {
+//            std::cout << bitangents[i][0] << ", " << bitangents[i][1] << ", " << bitangents[i][2] << std::endl;
+//        }
+//        std::cout << "-----" << std::endl;
+//        for (int i = 0; i < indices.size(); ++i) {
+//            std::cout << indices[i] << std::endl;
+//        }
+//    }
 }
 
 #endif

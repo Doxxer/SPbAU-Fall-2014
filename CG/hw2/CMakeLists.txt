@@ -8,28 +8,13 @@ find_package(OpenGL REQUIRED)
 
 include_directories(Utils RenderObject Context Model)
 
-set(SOURCE_FILES
-    RenderObject/IRenderObject.hpp
-    RenderObject/ModelObject.hpp
-    RenderObject/ModelObject.cpp
-    Model/Cow.hpp
-    Model/Sphere.hpp
-    Model/Cylinder.hpp
-    Model/Quad.hpp
-    Context/Scene.hpp
-    Scene/HW2scene.hpp
-    Scene/HW2scene.cpp
-    Utils/TextureLoader.hpp
-    Utils/ObjLoader.hpp
-    Utils/shader.cpp
-    Utils/shader.hpp
-    Utils/tiny_obj_loader.cc
-    Utils/tiny_obj_loader.h
-    Utils/lodepng.cpp
-    Utils/lodepng.h
-    Context/OpenGLContext.cpp
-    main.cpp
-    )
+file(GLOB SOURCE_FILES
+    Context/*.*
+    Model/*.*
+    RenderObject/*.*
+    Scene/*.*
+    Utils/*.*
+    main.cpp)
 
 set(RESOURCES Resources/main.vs Resources/main.fs
     Resources/cow.obj Resources/quad.obj Resources/sphere.obj Resources/cylinder.obj

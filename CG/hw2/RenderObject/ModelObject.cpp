@@ -5,28 +5,29 @@
 
 void ModelObject::render() {
     glUseProgram(shaderProgram);
+
+    // vertex shader
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "mvp"), 1, GL_FALSE, mvp);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelView"), 1, GL_FALSE, modelView);
-    glUniformMatrix3fv(glGetUniformLocation(shaderProgram, "normalsMatrix"), 1, GL_FALSE, normalsMatrix);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, view);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "lightPosition"), 1, lightPosition);
     glUniform1f(glGetUniformLocation(shaderProgram, "uv_mult"), uvMultiplier);
 
-    glUniform3fv(glGetUniformLocation(shaderProgram, "lightView"), 1, lightView);
+    // fragment shader
     glUniform3fv(glGetUniformLocation(shaderProgram, "ambient"), 1, ambient);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "diffuse"), 1, diffuse);
     glUniform3fv(glGetUniformLocation(shaderProgram, "specular"), 1, specular);
-    glUniform1f(glGetUniformLocation(shaderProgram, "specularStrength"), specularStrength);
     glUniform1f(glGetUniformLocation(shaderProgram, "specularPower"), specularPower);
+    glUniform1f(glGetUniformLocation(shaderProgram, "specularStrength"), specularStrength);
 
-//    std::cout << " -------------- " << std::endl;
-//    std::cout << *lightView << std::endl;
-//    std::cout << *(lightView + 1) << std::endl;
-//    std::cout << *(lightView + 2) << std::endl;
-//    std::cout << " -------------- " << std::endl;
-
+    // textures
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glUniform1i(glGetUniformLocation(shaderProgram, "textureSampler"), 0);
+    glBindTexture(GL_TEXTURE_2D, textureBrick);
+    glUniform1i(glGetUniformLocation(shaderProgram, "textureBrick"), 0);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textureNormal);
+    glUniform1i(glGetUniformLocation(shaderProgram, "textureNormal"), 1);
 
+    // draw
     glBindVertexArray(vertexArrayObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
     glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, NULL);
@@ -38,55 +39,45 @@ ModelObject::ModelObject(string pathToModel, string const &pathToVertexShader, s
     fragmentShader = create_shader(GL_FRAGMENT_SHADER, fsFilePath);
     shaderProgram = create_program(vertexShader, fragmentShader);
 
-    LoadOBJModel(modelFilePath, vertices, normals, texcoords, indices);
+    LoadOBJModel(modelFilePath, vertices, normals, texcoords, indices, tangents, bitangents);
 
     // init buffers
-    glGenBuffers(1, &vbo_vertices);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
-    glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr) (sizeof(vertices[0]) * vertices.size()), vertices.data(), GL_STATIC_DRAW);
-
-    glGenBuffers(1, &vbo_indices);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr) (sizeof(indices[0]) * indices.size()), indices.data(), GL_STATIC_DRAW);
-
-    glGenBuffers(1, &vbo_normals);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_normals);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr) (sizeof(normals[0]) * normals.size()), normals.data(), GL_STATIC_DRAW);
-
-    glGenBuffers(1, &vbo_texcoords);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_texcoords);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr) (sizeof(texcoords[0]) * texcoords.size()), texcoords.data(), GL_STATIC_DRAW);
+    createVertexBufferObject(&vbo_vertices, vertices);
+    createVertexBufferObject(&vbo_indices, indices);
+    createVertexBufferObject(&vbo_normals, normals);
+    createVertexBufferObject(&vbo_texcoords, texcoords);
+//    createVertexBufferObject(&vbo_tangents, tangents);
+//    createVertexBufferObject(&vbo_bitangents, bitangents);
 
     // init_VAO
     glGetError();
     glGenVertexArrays(1, &vertexArrayObject);
     glBindVertexArray(vertexArrayObject);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
-    GLuint vertex_coords_attribute = (GLuint) glGetAttribLocation(shaderProgram, "vertex_coords");
-    glVertexAttribPointer(vertex_coords_attribute, 4, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), NULL);
-    glEnableVertexAttribArray(vertex_coords_attribute);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_normals);
-    GLuint normal_coords_attribute = (GLuint) glGetAttribLocation(shaderProgram, "normal_coords");
-    glVertexAttribPointer(normal_coords_attribute, 3, GL_FLOAT, GL_FALSE, sizeof(normals[0]), NULL);
-    glEnableVertexAttribArray(normal_coords_attribute);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_texcoords);
-    GLuint tex_coords_attribute = (GLuint) glGetAttribLocation(shaderProgram, "tex_coords");
-    glVertexAttribPointer(tex_coords_attribute, 2, GL_FLOAT, GL_FALSE, sizeof(texcoords[0]), NULL);
-    glEnableVertexAttribArray(tex_coords_attribute);
+    bindVertexBufferObject(vbo_vertices, "vertex_coords", vertices, 4);
+    bindVertexBufferObject(vbo_normals, "normal_coords", normals, 3);
+    bindVertexBufferObject(vbo_texcoords, "uv_coords", texcoords, 2);
+//    bindVertexBufferObject(vbo_tangents, "tangent_coords", tangents, 3);
+//    bindVertexBufferObject(vbo_bitangents, "bitangent_coords", bitangents, 3);
 
     // load textures
-    auto image = loadTexture("Resources/texture.png");
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data.data());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    loadTexture("Resources/texture.png", &textureBrick);
+    loadTexture("Resources/normal.png", &textureNormal);
+}
+
+template<typename T>
+void ModelObject::createVertexBufferObject(GLuint *vbo, vector<T> const &data) {
+    glGenBuffers(1, vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, *vbo);
+    glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr) (sizeof(data[0]) * data.size()), data.data(), GL_STATIC_DRAW);
+}
+
+template<typename T>
+void ModelObject::bindVertexBufferObject(GLuint vbo, char const * attributeName, vector<T> const &data, GLint size) {
+    GLuint attribute = (GLuint) glGetAttribLocation(shaderProgram, attributeName);
+    glEnableVertexAttribArray(attribute);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(attribute, size, GL_FLOAT, GL_FALSE, (GLsizei) sizeof(data[0]), NULL);
 }
 
 ModelObject::~ModelObject() {

@@ -18,23 +18,21 @@ public:
 
     virtual ~ModelObject();
 
-    void setMatrices(GLfloat *modelView, GLfloat *view, GLfloat *proj, GLfloat *mvp, GLfloat *normals) override {
-        this->modelView = modelView;
+    void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp) override {
+        this->model = model;
         this->view = view;
         this->proj = proj;
         this->mvp = mvp;
-        this->normalsMatrix = normals;
     }
 
     virtual void setTextureParams(GLfloat uvMultiplier) override {
         this->uvMultiplier = uvMultiplier;
     }
 
-    virtual void setLightParams(GLfloat *lightView, GLfloat *ambient, GLfloat *diffuse, GLfloat *specular,
+    virtual void setLightParams(GLfloat *lightPosition, GLfloat *ambient, GLfloat *specular,
             GLfloat specularStrength, GLfloat specularPower) override {
-        this->lightView = lightView;
+        this->lightPosition = lightPosition;
         this->ambient = ambient;
-        this->diffuse = diffuse;
         this->specular = specular;
         this->specularStrength = specularStrength;
         this->specularPower = specularPower;
@@ -45,19 +43,26 @@ private:
 
     GLuint vertexShader, fragmentShader, shaderProgram;
     GLuint vbo_vertices, vbo_indices, vbo_normals, vbo_texcoords;
+//    GLuint vbo_tangents, vbo_bitangents;
     GLuint vertexArrayObject;
 
     std::vector<glm::vec4> vertices;
-    std::vector<glm::vec3> normals;
+    std::vector<glm::vec3> normals, tangents, bitangents;
     std::vector<glm::vec2> texcoords;
     std::vector<GLuint> indices;
 
-    GLfloat *modelView, *view, *proj, *mvp, *normalsMatrix;
-    GLuint texture;
+    GLfloat *model, *view, *proj, *mvp;
+    GLuint textureBrick, textureNormal;
     GLfloat uvMultiplier;
 
-    GLfloat *lightView, *ambient, *diffuse, *specular;
+    GLfloat *lightPosition, *ambient, *specular;
     GLfloat specularStrength, specularPower;
+
+    template<typename T>
+    void createVertexBufferObject(GLuint *vbo, std::vector<T> const &data);
+
+    template<typename T>
+    void bindVertexBufferObject(GLuint vbo, char const *attributeName, std::vector<T> const &data, GLint size);
 };
 
 #endif /* end of include guard: MODELOBJECT_HPP */

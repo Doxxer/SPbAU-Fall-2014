@@ -45,11 +45,10 @@ private:
 
     // fun with light
     glm::vec3 ambient_;
-    glm::vec3 diffuse_;
     glm::vec3 specular_;
     float specular_power_;
     float specular_strength_;
-    glm::vec3 light_direction_;
+    glm::vec3 light_position_;
 
     // rendering object
     renderObjectType currentRenderObjectType;

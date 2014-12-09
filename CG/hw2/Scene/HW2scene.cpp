@@ -11,17 +11,16 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
-          ambient_(0, 0, 0),
-          diffuse_(0, 0, 0),
-          specular_(0, 0, 0),
+          ambient_(0.1, 0.1, 0.1),
+          specular_(1, 0, 0),
           specular_power_(30),
-          specular_strength_(1),
-          light_direction_(0, -1, 0),
+          specular_strength_(5),
+          light_position_(0, 0, 10),
           currentRenderObjectType(renderObjectType::cow) {
     TwInit(TW_OPENGL_CORE, NULL);
 
     antTweakBar = TwNewBar("Parameters");
-    TwDefine("Parameters size='500 200' color='70 100 120' valueswidth=220 iconpos=topleft");
+    TwDefine("Parameters size='400 400' color='70 100 120' valueswidth=220 iconpos=topleft");
     TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, "true='ON' false='OFF' key=W");
     TwAddSeparator(antTweakBar, NULL, "group='Auto rotation'");
     TwAddVarRW(antTweakBar, "Enable", TW_TYPE_BOOLCPP, &autoRotation, " group='Auto rotation' true='ON' false='OFF' key=A");
@@ -31,6 +30,8 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
 
     TwAddSeparator(antTweakBar, NULL, "group='Texture manipulation'");
     TwAddVarRW(antTweakBar, "Tex-coords multiplier", TW_TYPE_FLOAT, &uvMultiplier, " group='Texture manipulation' min=0 max=30 step=0.1");
+
+    TwAddVarRW(antTweakBar, "LightPosition", TW_TYPE_DIR3F, &light_position_, "opened=true");
 
     TwEnumVal const values[] = {
             {renderObjectType::cow, "cow from hw1"},
@@ -59,14 +60,10 @@ void HW2scene::render(double time) {
     }
 
     glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight(), 0.1f, 100.0f);
-    glm::mat4 view = glm::lookAt(glm::vec3(0, 3, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
-    glm::mat4 modelView = view * model;
-    glm::mat4 mvp = proj * modelView;
-    glm::mat3 normalsMatrix = glm::inverseTranspose(glm::mat3(modelView));
-    light_direction_ = glm::normalize(light_direction_);
-    glm::vec3 lightView = glm::mat3(view) * -light_direction_;
+    glm::mat4 mvp = proj * view * model;
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -79,11 +76,11 @@ void HW2scene::render(double time) {
     else
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    renderObjects[currentRenderObjectType]->setMatrices(&modelView[0][0], &view[0][0], &proj[0][0], &mvp[0][0], &normalsMatrix[0][0]);
+    renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0]);
     renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier);
 
     renderObjects[currentRenderObjectType]->setLightParams(
-            &lightView[0], &ambient_[0], &diffuse_[0], &specular_[0],
+            &light_position_[0], &ambient_[0], &specular_[0],
             specular_strength_, specular_power_);
     renderObjects[currentRenderObjectType]->render();
 
