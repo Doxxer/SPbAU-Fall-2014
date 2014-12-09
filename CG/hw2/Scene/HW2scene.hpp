@@ -44,12 +44,13 @@ private:
     float uvMultiplier;
 
     // fun with light
-    glm::vec3 ambient_;
-    glm::vec3 specular_;
-    float specular_power_;
-    float specular_strength_;
-    glm::vec3 light_position_;
-
+    glm::vec3 ambient;
+    glm::vec3 specular;
+    float specularPower;
+    float specularStrength;
+    glm::vec3 lightPosition;
+    glm::vec3 lightColor;
+    float lightPower;
     // rendering object
     renderObjectType currentRenderObjectType;
 

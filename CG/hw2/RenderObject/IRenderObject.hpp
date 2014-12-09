@@ -10,7 +10,9 @@ struct IRenderObject {
 
     virtual void setTextureParams(GLfloat uvMultiplier) = 0;
 
-    virtual void setLightParams(GLfloat *, GLfloat *, GLfloat *, GLfloat, GLfloat) = 0;
+    virtual void setLightParams(GLfloat *ambient,
+            GLfloat *specular, GLfloat specularStrength, GLfloat specularPower,
+            GLfloat *lightPosition, GLfloat *lightColor, GLfloat lightPower) = 0;
 
     virtual ~IRenderObject() {
     }

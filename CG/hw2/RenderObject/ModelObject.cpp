@@ -18,6 +18,9 @@ void ModelObject::render() {
     glUniform3fv(glGetUniformLocation(shaderProgram, "specular"), 1, specular);
     glUniform1f(glGetUniformLocation(shaderProgram, "specularPower"), specularPower);
     glUniform1f(glGetUniformLocation(shaderProgram, "specularStrength"), specularStrength);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "lightPosition"), 1, lightPosition);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "lightColor"), 1, lightColor);
+    glUniform1f(glGetUniformLocation(shaderProgram, "lightPower"), lightPower);
 
     // textures
     glActiveTexture(GL_TEXTURE0);

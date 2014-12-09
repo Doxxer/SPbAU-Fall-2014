@@ -18,7 +18,7 @@ public:
 
     virtual ~ModelObject();
 
-    void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp) override {
+    void setMatrices(GLfloat *model,GLfloat *view, GLfloat *proj, GLfloat *mvp) override {
         this->model = model;
         this->view = view;
         this->proj = proj;
@@ -29,13 +29,18 @@ public:
         this->uvMultiplier = uvMultiplier;
     }
 
-    virtual void setLightParams(GLfloat *lightPosition, GLfloat *ambient, GLfloat *specular,
-            GLfloat specularStrength, GLfloat specularPower) override {
-        this->lightPosition = lightPosition;
+    virtual void setLightParams(GLfloat *ambient,
+            GLfloat *specular, GLfloat specularStrength, GLfloat specularPower,
+            GLfloat *lightPosition, GLfloat *lightColor, GLfloat lightPower) override {
         this->ambient = ambient;
+
         this->specular = specular;
         this->specularStrength = specularStrength;
         this->specularPower = specularPower;
+
+        this->lightPosition = lightPosition;
+        this->lightColor = lightColor;
+        this->lightPower = lightPower;
     }
 
 private:
@@ -43,7 +48,6 @@ private:
 
     GLuint vertexShader, fragmentShader, shaderProgram;
     GLuint vbo_vertices, vbo_indices, vbo_normals, vbo_texcoords;
-//    GLuint vbo_tangents, vbo_bitangents;
     GLuint vertexArrayObject;
 
     std::vector<glm::vec4> vertices;
@@ -55,8 +59,11 @@ private:
     GLuint textureBrick, textureNormal;
     GLfloat uvMultiplier;
 
-    GLfloat *lightPosition, *ambient, *specular;
+    GLfloat *ambient;
+    GLfloat *specular;
     GLfloat specularStrength, specularPower;
+    GLfloat *lightPosition, *lightColor;
+    GLfloat lightPower;
 
     template<typename T>
     void createVertexBufferObject(GLuint *vbo, std::vector<T> const &data);
