@@ -11,7 +11,7 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
-          lightDirection(0, 0, 1),
+          lightDirection(0, 0, -1),
           lightColor(1, 1, 1),
           specularColor(1, 1, 1),
           ambientPower(0.05),
@@ -68,7 +68,7 @@ void HW2scene::render(double time) {
 
     glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight(), 0.1f, 100.0f);
     glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-    glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
+    glm::quat rotation_by_time = glm::quat(glm::vec3(0, 0, glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
     glm::mat4 modelView = view * model;
     glm::mat4 mvp = proj * modelView;
@@ -80,10 +80,14 @@ void HW2scene::render(double time) {
     glClearDepth(1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (isWireFrame)
+    if (isWireFrame) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    else
+        glDisable(GL_CULL_FACE);
+    }
+    else {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glEnable(GL_CULL_FACE);
+    }
 
     renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0], &modelView[0][0], &modelView33[0][0]);
     renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier);

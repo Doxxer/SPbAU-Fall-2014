@@ -31,6 +31,6 @@ void main()
     vec3 b = cross(t, n);
     mat3 TBN = inverse(mat3(t, b, n));
 
-    v_out.lightDirection = TBN * (lightDirection);
+    v_out.lightDirection = TBN * (-lightDirection);
     v_out.eyeDirection = TBN * (-(view * model * vertex_coords).xyz);
 }
