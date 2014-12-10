@@ -18,11 +18,13 @@ public:
 
     virtual ~ModelObject();
 
-    void setMatrices(GLfloat *model,GLfloat *view, GLfloat *mvp, GLfloat *modelView33) override {
+    void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp, GLfloat *modelView, GLfloat *modelView33) override {
         this->model = model;
         this->view = view;
-        this->modelView33 = modelView33;
+        this->proj = proj;
         this->mvp = mvp;
+        this->modelView = modelView;
+        this->modelView33 = modelView33;
     }
 
     virtual void setTextureParams(GLfloat uvMultiplier) override {
@@ -53,7 +55,7 @@ private:
     std::vector<glm::vec2> texcoords;
     std::vector<GLuint> indices;
 
-    GLfloat *model, *view, *modelView33, *mvp;
+    GLfloat *model, *view, *proj, *modelView, *modelView33, *mvp;
     GLuint textureBrick, textureNormal;
     GLfloat uvMultiplier;
 

@@ -26,10 +26,10 @@ void main()
 
     v_out.uv = uv_coords * uv_mult;
 
-    vec3 t_c = modelView33 * tangent_coords;
-    vec3 b_c = modelView33 * bitangent_coords;
-    vec3 n_c = modelView33 * normal_coords;
-    mat3 TBN = inverse(mat3(t_c, b_c, n_c));
+    vec3 t = modelView33 * tangent_coords;
+    vec3 n = modelView33 * normal_coords;
+    vec3 b = cross(t, n);
+    mat3 TBN = inverse(mat3(t, b, n));
 
     v_out.lightDirection = TBN * (lightDirection);
     v_out.eyeDirection = TBN * (-(view * model * vertex_coords).xyz);

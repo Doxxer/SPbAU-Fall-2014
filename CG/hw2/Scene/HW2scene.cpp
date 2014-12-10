@@ -11,13 +11,13 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
-          lightDirection(0, 0, -1),
+          lightDirection(0, 0, 1),
           lightColor(1, 1, 1),
           specularColor(1, 1, 1),
           ambientPower(0.05),
           diffusePower(1),
           specularPower(1/80.0f),
-          currentRenderObjectType(renderObjectType::cow) {
+          currentRenderObjectType(renderObjectType::sphere) {
     TwInit(TW_OPENGL_CORE, NULL);
 
     antTweakBar = TwNewBar("Parameters");
@@ -70,8 +70,9 @@ void HW2scene::render(double time) {
     glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
-    glm::mat4 mvp = proj * view * model;
-    glm::mat3x3 modelView33 = glm::mat3x3(view * model);
+    glm::mat4 modelView = view * model;
+    glm::mat4 mvp = proj * modelView;
+    glm::mat3x3 modelView33 = glm::mat3x3(modelView);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -84,7 +85,7 @@ void HW2scene::render(double time) {
     else
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &mvp[0][0], &modelView33[0][0]);
+    renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0], &modelView[0][0], &modelView33[0][0]);
     renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier);
 
     renderObjects[currentRenderObjectType]->setLightParams(
