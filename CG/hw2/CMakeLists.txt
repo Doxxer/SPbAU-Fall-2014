@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 set(EXECUTABLE_NAME "hw2")
 project(${EXECUTABLE_NAME})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -pedantic -Ofast -march=native -mtune=native")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -pedantic -Ofast -march=native -mtune=native")
 
 find_package(OpenGL REQUIRED)
 

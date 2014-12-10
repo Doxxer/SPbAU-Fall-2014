@@ -31,6 +31,6 @@ void main()
     vec3 n_c = modelView33 * normal_coords;
     mat3 TBN = inverse(mat3(t_c, b_c, n_c));
 
-    v_out.lightDirection = TBN * (-lightDirection);
+    v_out.lightDirection = TBN * (lightDirection);
     v_out.eyeDirection = TBN * (-(view * model * vertex_coords).xyz);
 }
