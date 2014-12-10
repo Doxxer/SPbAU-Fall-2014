@@ -11,13 +11,12 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
-          ambient(0, 0, 0),
-          specular(1, 0, 0),
-          specularPower(1),
-          specularStrength(3),
-          lightPosition(0, 0, 10),
+          lightDirection(0, 0, -1),
           lightColor(1, 1, 1),
-          lightPower(100),
+          specularColor(1, 1, 1),
+          ambientPower(0.05),
+          diffusePower(1),
+          specularPower(1/80.0f),
           currentRenderObjectType(renderObjectType::cow) {
     TwInit(TW_OPENGL_CORE, NULL);
 
@@ -34,13 +33,12 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
     TwAddVarRW(antTweakBar, "Tex-coords multiplier", TW_TYPE_FLOAT, &uvMultiplier, " group='Texture manipulation' min=0 max=30 step=0.1");
 
     TwAddSeparator(antTweakBar, NULL, "group='Light manipulation'");
-    TwAddVarRW(antTweakBar, "Ambient", TW_TYPE_COLOR3F, &ambient, "group='Light manipulation'");
-    TwAddVarRW(antTweakBar, "Specular", TW_TYPE_COLOR3F, &specular, "group='Light manipulation'");
-    TwAddVarRW(antTweakBar, "Specular power", TW_TYPE_FLOAT, &specularPower, " group='Light manipulation' min=0 max=1 step=0.01");
-    TwAddVarRW(antTweakBar, "Specular strength", TW_TYPE_FLOAT, &specularStrength, " group='Light manipulation' min=0 max=5 step=0.1");
-    TwAddVarRW(antTweakBar, "Light position", TW_TYPE_DIR3F, &lightPosition, "group='Light manipulation' opened=true");
+    TwAddVarRW(antTweakBar, "Light direction", TW_TYPE_DIR3F, &lightDirection, "group='Light manipulation' opened=true");
     TwAddVarRW(antTweakBar, "Light color", TW_TYPE_COLOR3F, &lightColor, "group='Light manipulation'");
-    TwAddVarRW(antTweakBar, "Light power", TW_TYPE_FLOAT, &lightPower, "group='Light manipulation' min=0 max=500 step=1");
+    TwAddVarRW(antTweakBar, "Specular", TW_TYPE_COLOR3F, &specularColor, "group='Light manipulation'");
+    TwAddVarRW(antTweakBar, "ambient power", TW_TYPE_FLOAT, &ambientPower, " group='Light manipulation' min=0 max=1 step=0.01");
+    TwAddVarRW(antTweakBar, "Diffuse power", TW_TYPE_FLOAT, &diffusePower, "group='Light manipulation' min=0 max=1 step=0.01");
+    TwAddVarRW(antTweakBar, "Specular power", TW_TYPE_FLOAT, &specularPower, " group='Light manipulation' min=0 max=1 step=0.01");
 
     TwEnumVal const values[] = {
             {renderObjectType::cow, "cow from hw1"},
@@ -73,6 +71,7 @@ void HW2scene::render(double time) {
     glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
     glm::mat4 mvp = proj * view * model;
+    glm::mat3x3 modelView33 = glm::mat3x3(view * model);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -85,12 +84,13 @@ void HW2scene::render(double time) {
     else
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0]);
+    renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &mvp[0][0], &modelView33[0][0]);
     renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier);
 
-    renderObjects[currentRenderObjectType]->setLightParams(&ambient[0],
-            &specular[0], specularStrength, specularPower,
-            &lightPosition[0], &lightColor[0], lightPower);
+    renderObjects[currentRenderObjectType]->setLightParams(
+            &lightDirection[0],
+            &lightColor[0], &specularColor[0],
+            ambientPower, diffusePower, specularPower);
     renderObjects[currentRenderObjectType]->render();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

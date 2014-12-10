@@ -18,10 +18,10 @@ public:
 
     virtual ~ModelObject();
 
-    void setMatrices(GLfloat *model,GLfloat *view, GLfloat *proj, GLfloat *mvp) override {
+    void setMatrices(GLfloat *model,GLfloat *view, GLfloat *mvp, GLfloat *modelView33) override {
         this->model = model;
         this->view = view;
-        this->proj = proj;
+        this->modelView33 = modelView33;
         this->mvp = mvp;
     }
 
@@ -29,25 +29,23 @@ public:
         this->uvMultiplier = uvMultiplier;
     }
 
-    virtual void setLightParams(GLfloat *ambient,
-            GLfloat *specular, GLfloat specularStrength, GLfloat specularPower,
-            GLfloat *lightPosition, GLfloat *lightColor, GLfloat lightPower) override {
-        this->ambient = ambient;
-
-        this->specular = specular;
-        this->specularStrength = specularStrength;
-        this->specularPower = specularPower;
-
-        this->lightPosition = lightPosition;
+    virtual void setLightParams(GLfloat *lightDirection,
+            GLfloat *lightColor, GLfloat *specularColor,
+            GLfloat ambientPower, GLfloat diffusePower, GLfloat specularPower) override {
+        this->lightDirection = lightDirection;
         this->lightColor = lightColor;
-        this->lightPower = lightPower;
+        this->specularColor = specularColor;
+
+        this->ambientPower = ambientPower;
+        this->diffusePower = diffusePower;
+        this->specularPower = specularPower;
     }
 
 private:
     std::string modelFilePath, vsFilePath, fsFilePath;
 
     GLuint vertexShader, fragmentShader, shaderProgram;
-    GLuint vbo_vertices, vbo_indices, vbo_normals, vbo_texcoords;
+    GLuint vbo_vertices, vbo_indices, vbo_normals, vbo_texcoords, vbo_tangents, vbo_bitangents;
     GLuint vertexArrayObject;
 
     std::vector<glm::vec4> vertices;
@@ -55,15 +53,13 @@ private:
     std::vector<glm::vec2> texcoords;
     std::vector<GLuint> indices;
 
-    GLfloat *model, *view, *proj, *mvp;
+    GLfloat *model, *view, *modelView33, *mvp;
     GLuint textureBrick, textureNormal;
     GLfloat uvMultiplier;
 
-    GLfloat *ambient;
-    GLfloat *specular;
-    GLfloat specularStrength, specularPower;
-    GLfloat *lightPosition, *lightColor;
-    GLfloat lightPower;
+    GLfloat *lightDirection;
+    GLfloat *lightColor, *specularColor;
+    GLfloat ambientPower, diffusePower, specularPower;
 
     template<typename T>
     void createVertexBufferObject(GLuint *vbo, std::vector<T> const &data);

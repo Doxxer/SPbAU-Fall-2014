@@ -10,17 +10,16 @@ void ModelObject::render() {
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "mvp"), 1, GL_FALSE, mvp);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, view);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, model);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "lightPosition"), 1, lightPosition);
+    glUniformMatrix3fv(glGetUniformLocation(shaderProgram, "modelView33"), 1, GL_FALSE, modelView33);
     glUniform1f(glGetUniformLocation(shaderProgram, "uv_mult"), uvMultiplier);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "lightDirection"), 1, lightDirection);
 
     // fragment shader
-    glUniform3fv(glGetUniformLocation(shaderProgram, "ambient"), 1, ambient);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "specular"), 1, specular);
-    glUniform1f(glGetUniformLocation(shaderProgram, "specularPower"), specularPower);
-    glUniform1f(glGetUniformLocation(shaderProgram, "specularStrength"), specularStrength);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "lightPosition"), 1, lightPosition);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "lightColor"), 1, lightColor);
-    glUniform1f(glGetUniformLocation(shaderProgram, "lightPower"), lightPower);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "light.color"), 1, lightColor);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "light.specularColor"), 1, specularColor);
+    glUniform1f(glGetUniformLocation(shaderProgram, "light.ambientPower"), ambientPower);
+    glUniform1f(glGetUniformLocation(shaderProgram, "light.diffusePower"), diffusePower);
+    glUniform1f(glGetUniformLocation(shaderProgram, "light.specularPower"), 1.0f / specularPower);
 
     // textures
     glActiveTexture(GL_TEXTURE0);
@@ -49,8 +48,8 @@ ModelObject::ModelObject(string pathToModel, string const &pathToVertexShader, s
     createVertexBufferObject(&vbo_indices, indices);
     createVertexBufferObject(&vbo_normals, normals);
     createVertexBufferObject(&vbo_texcoords, texcoords);
-//    createVertexBufferObject(&vbo_tangents, tangents);
-//    createVertexBufferObject(&vbo_bitangents, bitangents);
+    createVertexBufferObject(&vbo_tangents, tangents);
+    createVertexBufferObject(&vbo_bitangents, bitangents);
 
     // init_VAO
     glGetError();
@@ -60,8 +59,8 @@ ModelObject::ModelObject(string pathToModel, string const &pathToVertexShader, s
     bindVertexBufferObject(vbo_vertices, "vertex_coords", vertices, 4);
     bindVertexBufferObject(vbo_normals, "normal_coords", normals, 3);
     bindVertexBufferObject(vbo_texcoords, "uv_coords", texcoords, 2);
-//    bindVertexBufferObject(vbo_tangents, "tangent_coords", tangents, 3);
-//    bindVertexBufferObject(vbo_bitangents, "bitangent_coords", bitangents, 3);
+    bindVertexBufferObject(vbo_tangents, "tangent_coords", tangents, 3);
+    bindVertexBufferObject(vbo_bitangents, "bitangent_coords", bitangents, 3);
 
     // load textures
     loadTexture("Resources/texture.png", &textureBrick);

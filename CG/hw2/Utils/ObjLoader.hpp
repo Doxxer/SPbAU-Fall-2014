@@ -98,32 +98,6 @@ void LoadOBJModel(string const &filename,
             t *= -1;
         }
     }
-
-//    if (indices.size() == 6) {
-//        for (int i = 0; i < vertices.size(); ++i) {
-//            std::cout << vertices[i][0] << ", " << vertices[i][1] << ", " << vertices[i][2] << ", " << std::endl;
-//        }
-//        std::cout << "-----" << std::endl;
-//        for (int i = 0; i < normals.size(); ++i) {
-//            std::cout << normals[i][0] << ", " << normals[i][1] << ", " << normals[i][2] << ", " << std::endl;
-//        }
-//        std::cout << "-----" << std::endl;
-//        for (int i = 0; i < texcoords.size(); ++i) {
-//            std::cout << texcoords[i][0] << ", " << texcoords[i][1] << std::endl;
-//        }
-//        std::cout << "-----" << std::endl;
-//        for (int i = 0; i < tangents.size(); ++i) {
-//            std::cout << tangents[i][0] << ", " << tangents[i][1] << ", " << tangents[i][2]  << std::endl;
-//        }
-//        std::cout << "-----" << std::endl;
-//        for (int i = 0; i < bitangents.size(); ++i) {
-//            std::cout << bitangents[i][0] << ", " << bitangents[i][1] << ", " << bitangents[i][2] << std::endl;
-//        }
-//        std::cout << "-----" << std::endl;
-//        for (int i = 0; i < indices.size(); ++i) {
-//            std::cout << indices[i] << std::endl;
-//        }
-//    }
 }
 
 #endif
