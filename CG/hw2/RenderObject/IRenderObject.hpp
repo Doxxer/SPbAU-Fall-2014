@@ -8,7 +8,7 @@ struct IRenderObject {
 
     virtual void setMatrices(GLfloat *, GLfloat *, GLfloat *, GLfloat *, GLfloat *, GLfloat *) = 0;
 
-    virtual void setTextureParams(GLfloat uvMultiplier) = 0;
+    virtual void setTextureParams(GLfloat uvMultiplier, bool mipmap) = 0;
 
     virtual void setLightParams(GLfloat *lightDirection,
             GLfloat *lightColor, GLfloat *specularColor,

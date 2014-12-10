@@ -27,8 +27,9 @@ public:
         this->modelView33 = modelView33;
     }
 
-    virtual void setTextureParams(GLfloat uvMultiplier) override {
+    virtual void setTextureParams(GLfloat uvMultiplier, bool mipmap) override {
         this->uvMultiplier = uvMultiplier;
+        this->mipmap = mipmap;
     }
 
     virtual void setLightParams(GLfloat *lightDirection,
@@ -58,6 +59,7 @@ private:
     GLfloat *model, *view, *proj, *modelView, *modelView33, *mvp;
     GLuint textureBrick, textureNormal;
     GLfloat uvMultiplier;
+    bool mipmap;
 
     GLfloat *lightDirection;
     GLfloat *lightColor, *specularColor;

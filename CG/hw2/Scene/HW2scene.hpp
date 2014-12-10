@@ -42,7 +42,7 @@ private:
 
     // fun with texture
     float uvMultiplier;
-
+    bool mipmap;
 
     // fun with light
     glm::vec3 lightDirection;

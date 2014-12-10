@@ -11,6 +11,7 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
+          mipmap(false),
           lightDirection(0, 0, -1),
           lightColor(1, 1, 1),
           specularColor(1, 1, 1),
@@ -31,6 +32,7 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
 
     TwAddSeparator(antTweakBar, NULL, "group='Texture manipulation'");
     TwAddVarRW(antTweakBar, "Tex-coords multiplier", TW_TYPE_FLOAT, &uvMultiplier, " group='Texture manipulation' min=0 max=30 step=0.1");
+    TwAddVarRW(antTweakBar, "MIP filtration", TW_TYPE_BOOLCPP, &mipmap, " group='Texture manipulation' true='ON' false='OFF' key=M");
 
     TwAddSeparator(antTweakBar, NULL, "group='Light manipulation'");
     TwAddVarRW(antTweakBar, "Light direction", TW_TYPE_DIR3F, &lightDirection, "group='Light manipulation' opened=true");
@@ -90,7 +92,7 @@ void HW2scene::render(double time) {
     }
 
     renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0], &modelView[0][0], &modelView33[0][0]);
-    renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier);
+    renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier, mipmap);
 
     renderObjects[currentRenderObjectType]->setLightParams(
             &lightDirection[0],
