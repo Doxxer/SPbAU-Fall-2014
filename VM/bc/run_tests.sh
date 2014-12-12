@@ -47,7 +47,7 @@ done
 	run_test ${FAIL}/vars 200
 
 echo "-------------- additional tests (all should be OK) -------------- "
-for test in casts complex fib_closure function-call 'function' vars; do
+for test in casts complex fib_closure function-call 'function' function-cast vars; do
     run_test ${ADDITIONAL}/${test} 0
 done
 
