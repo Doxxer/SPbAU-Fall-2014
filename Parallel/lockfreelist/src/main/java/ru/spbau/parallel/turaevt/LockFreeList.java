@@ -1,4 +1,4 @@
-import org.jetbrains.annotations.NotNull;
+package ru.spbau.parallel.turaevt;
 
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
@@ -16,7 +16,7 @@ public class LockFreeList<T> implements List<T> {
     }
 
     @Override
-    public boolean insert(@NotNull T element) {
+    public boolean insert(T element) {
         int key = element.hashCode();
 
         while (true) {
@@ -35,7 +35,7 @@ public class LockFreeList<T> implements List<T> {
     }
 
     @Override
-    public boolean contains(@NotNull T element) {
+    public boolean contains(T element) {
         int key = element.hashCode();
         boolean[] marked = {false};
 
@@ -47,7 +47,7 @@ public class LockFreeList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(@NotNull T element) {
+    public boolean remove(T element) {
         int key = element.hashCode();
 
         while (true) {
@@ -70,7 +70,8 @@ public class LockFreeList<T> implements List<T> {
         ListEntry pred, curr, succ;
         boolean[] marked = {false};
 
-        again: while (true) {
+        again:
+        while (true) {
             pred = head;
             curr = pred.next.getReference();
 
@@ -97,7 +98,7 @@ public class LockFreeList<T> implements List<T> {
             this(null, key, new AtomicMarkableReference<>(null, false));
         }
 
-        private ListEntry(@NotNull T object) {
+        private ListEntry(T object) {
             this(object, object.hashCode(), new AtomicMarkableReference<>(null, false));
         }
 

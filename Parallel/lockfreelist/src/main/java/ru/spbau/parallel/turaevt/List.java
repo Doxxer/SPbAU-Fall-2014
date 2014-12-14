@@ -1,4 +1,4 @@
-import org.jetbrains.annotations.NotNull;
+package ru.spbau.parallel.turaevt;
 
 /**
  * Our list interface
@@ -14,7 +14,7 @@ public interface List<T> {
      * @param element item to be inserted
      * @return true if list changed. Returns false if there was element with the same key
      */
-    boolean insert(@NotNull T element);
+    boolean insert(T element);
 
     /**
      * Seek for the given element
@@ -22,7 +22,7 @@ public interface List<T> {
      * @param element item to be found
      * @return true if there is given element
      */
-    boolean contains(@NotNull T element);
+    boolean contains(T element);
 
     /**
      * Removes given element (seek by its key)
@@ -30,5 +30,5 @@ public interface List<T> {
      * @param element element to be removed
      * @return true of list changed. False of there wasn't such element.
      */
-    boolean remove(@NotNull T element);
+    boolean remove(T element);
 }

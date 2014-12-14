@@ -1,4 +1,5 @@
-import java.text.MessageFormat;
+package ru.spbau.parallel.turaevt;
+
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -36,26 +37,26 @@ public class Main {
     }
 
     private static void readerFunction(List<Integer> blockingList, int maxOperations) {
-        int percent = maxOperations / 100;
+//        int percent = maxOperations / 100;
         for (int steps = 0; steps < maxOperations; steps++) {
             blockingList.contains(randomGenerator.nextInt(MAX_VALUE_IN_LIST));
-            if (steps % percent == 0) {
-                System.out.println(MessageFormat.format("thread #{0} - reader {1}% completed", Thread.currentThread().getId(), steps / percent));
-            }
+//            if (steps % percent == 0) {
+//                System.out.println(MessageFormat.format("thread #{0} - reader {1}% completed", Thread.currentThread().getId(), steps / percent));
+//            }
         }
     }
 
     private static void writerFunction(List<Integer> list, int maxOperations) {
-        int percent = maxOperations / 100;
+//        int percent = maxOperations / 100;
         for (int steps = 0; steps < maxOperations; steps++) {
             if (randomGenerator.nextBoolean()) {
                 list.insert(randomGenerator.nextInt(MAX_VALUE_IN_LIST));
             } else {
                 list.remove(randomGenerator.nextInt(MAX_VALUE_IN_LIST));
             }
-            if (steps % percent == 0) {
-                System.out.println(MessageFormat.format("thread #{0} - writer {1}% completed", Thread.currentThread().getId(), steps / percent));
-            }
+//            if (steps % percent == 0) {
+//                System.out.println(MessageFormat.format("thread #{0} - writer {1}% completed", Thread.currentThread().getId(), steps / percent));
+//            }
         }
     }
 }

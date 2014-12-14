@@ -1,4 +1,4 @@
-import org.jetbrains.annotations.NotNull;
+package ru.spbau.parallel.turaevt;
 
 /**
  * Blocking list
@@ -16,7 +16,7 @@ public class BlockingConcurrentList<T> implements List<T> {
     }
 
     @Override
-    public boolean insert(@NotNull T element) {
+    public boolean insert(T element) {
         ListEntry pred, curr;
         int key = element.hashCode();
 
@@ -42,7 +42,7 @@ public class BlockingConcurrentList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(@NotNull T element) {
+    public boolean remove(T element) {
         ListEntry pred, curr;
         int key = element.hashCode();
 
@@ -64,7 +64,7 @@ public class BlockingConcurrentList<T> implements List<T> {
     }
 
     @Override
-    public boolean contains(@NotNull T element) {
+    public boolean contains(T element) {
         ListEntry curr;
         int key = element.hashCode();
 
@@ -83,7 +83,7 @@ public class BlockingConcurrentList<T> implements List<T> {
             this(null, key, null);
         }
 
-        private ListEntry(@NotNull T object) {
+        private ListEntry(T object) {
             this(object, object.hashCode(), null);
         }
 

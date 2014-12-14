@@ -1,0 +1,13 @@
+HOW TO:
+------------
+build: mvn compile
+read usage: ./run
+run: ./run.sh <readers> <writers> <ops> <type>
+test: ./test.sh
+view result: cat result.txt
+clean: ./clean.sh
+
+
+REQUIREMENTS:
+- java 1.8
+- maven

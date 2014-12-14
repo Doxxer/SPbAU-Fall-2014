@@ -1,0 +1,9 @@
+2 2 100000 		 block: 0m0.289s free: 0m0.355s
+2 2 1000000 		 block: 0m1.294s free: 0m0.828s
+2 2 10000000 		 block: 0m8.928s free: 0m5.550s
+8 8 100000 		 block: 0m0.652s free: 0m1.186s
+8 8 1000000 		 block: 0m4.131s free: 0m2.368s
+8 8 10000000 		 block: 0m38.121s free: 0m20.134s
+16 16 100000 		 block: 0m1.119s free: 0m1.443s
+16 16 1000000 		 block: 0m8.730s free: 0m4.765s
+16 16 10000000 		 block: 1m20.730s free: 0m43.654s

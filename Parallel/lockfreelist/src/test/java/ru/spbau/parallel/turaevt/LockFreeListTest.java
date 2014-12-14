@@ -1,3 +1,5 @@
+package ru.spbau.parallel.turaevt;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
