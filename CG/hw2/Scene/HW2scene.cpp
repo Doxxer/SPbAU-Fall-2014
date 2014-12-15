@@ -11,7 +11,7 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
-          mipmap(false),
+          mipmap(true),
           lightDirection(0, 0, -1),
           lightColor(1, 1, 1),
           specularColor(1, 1, 1),
@@ -31,7 +31,8 @@ HW2scene::HW2scene(std::shared_ptr<OpenGLContext> openGLContext)
     TwAddVarRW(antTweakBar, "ObjRotation", TW_TYPE_QUAT4F, &rotation_by_control, "label='Object orientation' opened=true");
 
     TwAddSeparator(antTweakBar, NULL, "group='Texture manipulation'");
-    TwAddVarRW(antTweakBar, "Tex-coords multiplier", TW_TYPE_FLOAT, &uvMultiplier, " group='Texture manipulation' min=0 max=30 step=0.1");
+    TwAddVarRW(antTweakBar, "Tex-coords multiplier", TW_TYPE_FLOAT, &uvMultiplier,
+            " group='Texture manipulation' min=0 max=30 step=0.1 keydecr=E keyincr=R");
     TwAddVarRW(antTweakBar, "MIP filtration", TW_TYPE_BOOLCPP, &mipmap, " group='Texture manipulation' true='ON' false='OFF' key=M");
 
     TwAddSeparator(antTweakBar, NULL, "group='Light manipulation'");
