@@ -9,206 +9,41 @@ import jetbrains.mps.lang.smodel.generator.smodelAdapter.SModelOperations;
 import jetbrains.mps.internal.collections.runtime.IWhereFilter;
 import org.jetbrains.mps.openapi.model.SNode;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SPropertyOperations;
-import java.util.List;
-import java.util.Iterator;
-import jetbrains.mps.lang.smodel.generator.smodelAdapter.SNodeOperations;
+import jetbrains.mps.internal.collections.runtime.IVisitor;
+import TraceAspect.lang.runtime.Util;
 import jetbrains.mps.lang.smodel.generator.smodelAdapter.SLinkOperations;
-import jetbrains.mps.internal.collections.runtime.Sequence;
-import org.jetbrains.mps.openapi.persistence.PersistenceFacade;
-import jetbrains.mps.smodel.SModelUtil_new;
-import jetbrains.mps.smodel.SReference;
-import org.jetbrains.mps.openapi.model.SNodeAccessUtil;
-import jetbrains.mps.lang.typesystem.runtime.HUtil;
 
 @Generated
 public class QueriesGenerated {
   public final boolean NEEDS_OPCONTEXT = false;
 
-  public static void mappingScript_CodeBlock_3292382144807373399(final MappingScriptContext _context) {
-    if ((ListSequence.fromList(SModelOperations.getRoots(_context.getModel(), "TraceAspect.lang.structure.Tracer")).findFirst(new IWhereFilter<SNode>() {
+  public static void mappingScript_CodeBlock_762104646747627912(final MappingScriptContext _context) {
+    ListSequence.fromList(SModelOperations.getRoots(_context.getModel(), "TraceAspect.lang.structure.Tracer")).where(new IWhereFilter<SNode>() {
       public boolean accept(SNode it) {
         return SPropertyOperations.getString_def(it, "tracingEntity", null).equals("assignment");
       }
-    }) == null)) {
-      return;
-    }
-
-    List<SNode> assignments = SModelOperations.getNodes(_context.getModel(), "jetbrains.mps.baseLanguage.structure.AssignmentExpression");
-
-    {
-      Iterator<SNode> expr_it = ListSequence.fromList(assignments).iterator();
-      SNode expr_var;
-      while (expr_it.hasNext()) {
-        expr_var = expr_it.next();
-        String name = null;
-        if (SNodeOperations.isInstanceOf(SLinkOperations.getTarget(expr_var, "lValue", true), "jetbrains.mps.baseLanguage.structure.VariableReference")) {
-          name = SPropertyOperations.getString(SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(expr_var, "lValue", true), "jetbrains.mps.baseLanguage.structure.VariableReference"), "variableDeclaration", false), "name");
-        } else if (SNodeOperations.isInstanceOf(SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(expr_var, "lValue", true), "jetbrains.mps.baseLanguage.structure.DotExpression"), "operation", true), "jetbrains.mps.baseLanguage.structure.FieldReferenceOperation")) {
-          SNode node = SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(expr_var, "lValue", true), "jetbrains.mps.baseLanguage.structure.DotExpression"), "operation", true), "jetbrains.mps.baseLanguage.structure.FieldReferenceOperation"), "fieldDeclaration", false);
-          name = SPropertyOperations.getString(SNodeOperations.getAncestor(node, "jetbrains.mps.baseLanguage.structure.Classifier", false, false), "name") + "." + SPropertyOperations.getString(node, "name");
-        }
-
-        SLinkOperations.setTarget(expr_var, "rValue", _quotation_createNode_x583g4_a0d0e0b(name, SLinkOperations.getTarget(expr_var, "rValue", true)), true);
+    }).visitAll(new IVisitor<SNode>() {
+      public void visit(SNode it) {
+        Util.traceAssignments(_context.getModel(), SPropertyOperations.getBoolean(SLinkOperations.getTarget(it, "format", true), "showTime"));
       }
-    }
-  }
-
-  public static void mappingScript_CodeBlock_3168543803171214200(final MappingScriptContext _context) {
-    if ((ListSequence.fromList(SModelOperations.getRoots(_context.getModel(), "TraceAspect.lang.structure.Tracer")).findFirst(new IWhereFilter<SNode>() {
+    });
+    ListSequence.fromList(SModelOperations.getRoots(_context.getModel(), "TraceAspect.lang.structure.Tracer")).where(new IWhereFilter<SNode>() {
       public boolean accept(SNode it) {
         return SPropertyOperations.getString_def(it, "tracingEntity", null).equals("calls");
       }
-    }) == null)) {
-      return;
-    }
-
-    Iterable<SNode> calls = ListSequence.fromList(SModelOperations.getNodes(_context.getModel(), "jetbrains.mps.baseLanguage.structure.DotExpression")).where(new IWhereFilter<SNode>() {
-      public boolean accept(SNode it) {
-        return SNodeOperations.isInstanceOf(SLinkOperations.getTarget(it, "operation", true), "jetbrains.mps.baseLanguage.structure.InstanceMethodCallOperation");
+    }).visitAll(new IVisitor<SNode>() {
+      public void visit(SNode it) {
+        Util.traceCalls(_context.getModel(), SPropertyOperations.getBoolean(SLinkOperations.getTarget(it, "format", true), "showTime"));
       }
     });
-
-    for (SNode call : Sequence.fromIterable(calls)) {
-      SNode instanceMethodDeclaration = SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(call, "operation", true), "jetbrains.mps.baseLanguage.structure.InstanceMethodCallOperation"), "baseMethodDeclaration", false);
-      SPropertyOperations.getString(instanceMethodDeclaration, "name");
-      SLinkOperations.setTarget(call, "operand", _quotation_createNode_x583g4_a0c0e0c(SLinkOperations.getTarget(call, "operand", true), SPropertyOperations.getString(SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(call, "operand", true), "jetbrains.mps.baseLanguage.structure.VariableReference"), "variableDeclaration", false), "name"), SPropertyOperations.getString(instanceMethodDeclaration, "name")), true);
-    }
-
-    Iterable<SNode> declarations = ListSequence.fromList(SModelOperations.getNodes(_context.getModel(), "jetbrains.mps.baseLanguage.structure.LocalVariableDeclaration")).where(new IWhereFilter<SNode>() {
-      public boolean accept(SNode it) {
-        return SNodeOperations.isInstanceOf(SLinkOperations.getTarget(it, "initializer", true), "jetbrains.mps.baseLanguage.structure.GenericNewExpression");
-      }
-    });
-    for (SNode declaration : Sequence.fromIterable(declarations)) {
-      SNode ctor = SNodeOperations.as(SLinkOperations.getTarget(declaration, "initializer", true), "jetbrains.mps.baseLanguage.structure.GenericNewExpression");
-      SLinkOperations.setTarget(declaration, "initializer", _quotation_createNode_x583g4_a0b0h0c(ctor, SPropertyOperations.getString(declaration, "name"), SPropertyOperations.getString(SLinkOperations.getTarget(SNodeOperations.as(SLinkOperations.getTarget(ctor, "creator", true), "jetbrains.mps.baseLanguage.structure.ClassCreator"), "baseMethodDeclaration", false), "name")), true);
-    }
-
-  }
-
-  public static void mappingScript_CodeBlock_8296063131401742306(final MappingScriptContext _context) {
-    if ((ListSequence.fromList(SModelOperations.getRoots(_context.getModel(), "TraceAspect.lang.structure.Tracer")).findFirst(new IWhereFilter<SNode>() {
+    ListSequence.fromList(SModelOperations.getRoots(_context.getModel(), "TraceAspect.lang.structure.Tracer")).where(new IWhereFilter<SNode>() {
       public boolean accept(SNode it) {
         return SPropertyOperations.getString_def(it, "tracingEntity", null).equals("return");
       }
-    }) == null)) {
-      return;
-    }
-
-
-    List<SNode> bodyes = SModelOperations.getNodes(_context.getModel(), "jetbrains.mps.baseLanguage.structure.StatementList");
-    for (SNode body : ListSequence.fromList(bodyes)) {
-      List<SNode> bodyStatements = SLinkOperations.getTargets(body, "statement", true);
-      String methodName = SPropertyOperations.getString(SNodeOperations.getAncestor(body, "jetbrains.mps.baseLanguage.structure.BaseMethodDeclaration", false, false), "name");
-
-      if (!(SNodeOperations.isInstanceOf(ListSequence.fromList(bodyStatements).last(), "jetbrains.mps.baseLanguage.structure.ReturnStatement"))) {
-        ListSequence.fromList(bodyStatements).addElement(_quotation_createNode_x583g4_a0a0a3a4a3(methodName));
-      } else {
-        SNode returnStatement = SNodeOperations.as(ListSequence.fromList(bodyStatements).last(), "jetbrains.mps.baseLanguage.structure.ReturnStatement");
-        SLinkOperations.setTarget(returnStatement, "expression", _quotation_createNode_x583g4_a0b0a3a4a3(methodName, SLinkOperations.getTarget(returnStatement, "expression", true)), true);
+    }).visitAll(new IVisitor<SNode>() {
+      public void visit(SNode it) {
+        Util.traceReturn(_context.getModel(), SPropertyOperations.getBoolean(SLinkOperations.getTarget(it, "format", true), "showTime"));
       }
-    }
-  }
-
-  private static SNode _quotation_createNode_x583g4_a0d0e0b(Object parameter_1, Object parameter_2) {
-    PersistenceFacade facade = PersistenceFacade.getInstance();
-    SNode quotedNode_3 = null;
-    SNode quotedNode_4 = null;
-    SNode quotedNode_5 = null;
-    SNode quotedNode_6 = null;
-    SNode quotedNode_7 = null;
-    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StaticMethodCall", null, null, false);
-    quotedNode_3.setReference("baseMethodDeclaration", SReference.create("baseMethodDeclaration", quotedNode_3, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("3292382144807390005")));
-    quotedNode_3.setReference("classConcept", SReference.create("classConcept", quotedNode_3, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("3292382144807380716")));
-    quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_4, "value", (String) parameter_1);
-    quotedNode_3.addChild("actualArgument", quotedNode_4);
-    quotedNode_5 = (SNode) parameter_2;
-    if (quotedNode_5 != null) {
-      quotedNode_3.addChild("actualArgument", HUtil.copyIfNecessary(quotedNode_5));
-    }
-    return quotedNode_3;
-  }
-
-  private static SNode _quotation_createNode_x583g4_a0c0e0c(Object parameter_1, Object parameter_2, Object parameter_3) {
-    PersistenceFacade facade = PersistenceFacade.getInstance();
-    SNode quotedNode_4 = null;
-    SNode quotedNode_5 = null;
-    SNode quotedNode_6 = null;
-    SNode quotedNode_7 = null;
-    SNode quotedNode_8 = null;
-    SNode quotedNode_9 = null;
-    quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StaticMethodCall", null, null, false);
-    quotedNode_4.setReference("baseMethodDeclaration", SReference.create("baseMethodDeclaration", quotedNode_4, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("195158585673673282")));
-    quotedNode_4.setReference("classConcept", SReference.create("classConcept", quotedNode_4, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("3292382144807380716")));
-    quotedNode_5 = (SNode) parameter_1;
-    if (quotedNode_5 != null) {
-      quotedNode_4.addChild("actualArgument", HUtil.copyIfNecessary(quotedNode_5));
-    }
-    quotedNode_6 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_6, "value", (String) parameter_2);
-    quotedNode_4.addChild("actualArgument", quotedNode_6);
-    quotedNode_7 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_7, "value", (String) parameter_3);
-    quotedNode_4.addChild("actualArgument", quotedNode_7);
-    return quotedNode_4;
-  }
-
-  private static SNode _quotation_createNode_x583g4_a0b0h0c(Object parameter_1, Object parameter_2, Object parameter_3) {
-    PersistenceFacade facade = PersistenceFacade.getInstance();
-    SNode quotedNode_4 = null;
-    SNode quotedNode_5 = null;
-    SNode quotedNode_6 = null;
-    SNode quotedNode_7 = null;
-    quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StaticMethodCall", null, null, false);
-    quotedNode_4.setReference("baseMethodDeclaration", SReference.create("baseMethodDeclaration", quotedNode_4, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("195158585674807567")));
-    quotedNode_4.setReference("classConcept", SReference.create("classConcept", quotedNode_4, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("3292382144807380716")));
-    quotedNode_5 = (SNode) parameter_1;
-    if (quotedNode_5 != null) {
-      quotedNode_4.addChild("actualArgument", HUtil.copyIfNecessary(quotedNode_5));
-    }
-    quotedNode_6 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_6, "value", (String) parameter_2);
-    quotedNode_4.addChild("actualArgument", quotedNode_6);
-    quotedNode_7 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_7, "value", (String) parameter_3);
-    quotedNode_4.addChild("actualArgument", quotedNode_7);
-    return quotedNode_4;
-  }
-
-  private static SNode _quotation_createNode_x583g4_a0a0a3a4a3(Object parameter_1) {
-    PersistenceFacade facade = PersistenceFacade.getInstance();
-    SNode quotedNode_2 = null;
-    SNode quotedNode_3 = null;
-    SNode quotedNode_4 = null;
-    quotedNode_2 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.ExpressionStatement", null, null, false);
-    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StaticMethodCall", null, null, false);
-    quotedNode_3.setReference("baseMethodDeclaration", SReference.create("baseMethodDeclaration", quotedNode_3, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("416578148490036887")));
-    quotedNode_3.setReference("classConcept", SReference.create("classConcept", quotedNode_3, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("3292382144807380716")));
-    quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_4, "value", (String) parameter_1);
-    quotedNode_3.addChild("actualArgument", quotedNode_4);
-    quotedNode_2.addChild("expression", quotedNode_3);
-    return quotedNode_2;
-  }
-
-  private static SNode _quotation_createNode_x583g4_a0b0a3a4a3(Object parameter_1, Object parameter_2) {
-    PersistenceFacade facade = PersistenceFacade.getInstance();
-    SNode quotedNode_3 = null;
-    SNode quotedNode_4 = null;
-    SNode quotedNode_5 = null;
-    SNode quotedNode_6 = null;
-    SNode quotedNode_7 = null;
-    quotedNode_3 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StaticMethodCall", null, null, false);
-    quotedNode_3.setReference("baseMethodDeclaration", SReference.create("baseMethodDeclaration", quotedNode_3, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("2085073781388035711")));
-    quotedNode_3.setReference("classConcept", SReference.create("classConcept", quotedNode_3, facade.createModelReference("r:37995143-823f-45fb-bad3-9603ab3b98d0(TraceAspect.lang.runtime)"), facade.createNodeId("3292382144807380716")));
-    quotedNode_4 = SModelUtil_new.instantiateConceptDeclaration("jetbrains.mps.baseLanguage.structure.StringLiteral", null, null, false);
-    SNodeAccessUtil.setProperty(quotedNode_4, "value", (String) parameter_1);
-    quotedNode_3.addChild("actualArgument", quotedNode_4);
-    quotedNode_5 = (SNode) parameter_2;
-    if (quotedNode_5 != null) {
-      quotedNode_3.addChild("actualArgument", HUtil.copyIfNecessary(quotedNode_5));
-    }
-    return quotedNode_3;
+    });
   }
 }

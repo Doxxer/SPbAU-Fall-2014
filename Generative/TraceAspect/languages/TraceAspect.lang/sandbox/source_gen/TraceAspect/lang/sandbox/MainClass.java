@@ -9,46 +9,55 @@ public class MainClass {
 
 
   public MainClass() {
-    Tracer.traceVoidReturn("MainClass");
+    Tracer.traceVoidReturn("MainClass", "false");
   }
 
 
 
   public MainClass(int v) {
-    n = Tracer.traceAssignment("n", v);
-    Tracer.traceVoidReturn("MainClass");
+    n = Tracer.traceAssignment("n", v, "true");
+    Tracer.traceVoidReturn("MainClass", "false");
+  }
+
+
+
+  /*package*/ void justmethod() {
+    n = Tracer.traceAssignment("n", n + 1, "true");
+    n++;
+    n += 3;
+    Tracer.traceVoidReturn("justmethod", "false");
   }
 
 
 
   /*package*/ int assignments(String s) {
     int k;
-    s = Tracer.traceAssignment("s", "test2");
-    n = Tracer.traceAssignment("n", 8);
-    this.n = Tracer.traceAssignment("MainClass.n", 19);
-    k = Tracer.traceAssignment("k", n + Tracer.traceCall(s, "s", "length").length());
+    s = Tracer.traceAssignment("s", "test2", "true");
+    n = Tracer.traceAssignment("n", k = Tracer.traceAssignment("k", 8, "true"), "true");
+    this.n = Tracer.traceAssignment("MainClass.n", 19, "true");
+    k = Tracer.traceAssignment("k", n + Tracer.traceCall(s, "s", "length", "false").length(), "true");
 
     voidMethod();
 
-    return Tracer.traceNonVoidReturn("assignments", 3232);
+    return Tracer.traceNonVoidReturn("assignments", 3232, "false");
   }
 
 
 
   /*package*/ void voidMethod() {
-    Tracer.traceCall(System.out, "out", "println").println("We're inside void method");
-    Tracer.traceVoidReturn("voidMethod");
+    Tracer.traceCall(System.out, "out", "println", "false").println("We're inside void method");
+    Tracer.traceVoidReturn("voidMethod", "false");
   }
 
 
 
   public static void main(String[] args) {
-    MainClass a = Tracer.traceConstructor(new MainClass(), "a", "MainClass");
-    Tracer.traceCall(a, "a", "assignments").assignments("qwerty");
+    MainClass a = Tracer.traceConstructor(new MainClass(), "a", "MainClass", "false");
+    Tracer.traceCall(a, "a", "assignments", "false").assignments("qwerty");
 
-    MainClass b = Tracer.traceConstructor(new MainClass(142), "b", "MainClass");
-    Tracer.traceCall(b, "b", "voidMethod").voidMethod();
-    Tracer.traceVoidReturn("main");
+    MainClass b = Tracer.traceConstructor(new MainClass(142), "b", "MainClass", "false");
+    Tracer.traceCall(b, "b", "voidMethod", "false").voidMethod();
+    Tracer.traceVoidReturn("main", "false");
   }
 
 

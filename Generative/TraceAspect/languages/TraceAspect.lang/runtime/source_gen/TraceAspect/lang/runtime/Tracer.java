@@ -13,7 +13,7 @@ public class Tracer {
 
 
   private static void log(String message) {
-    if (Tracer.showTime) {
+    if (showTime) {
       System.out.print(MessageFormat.format("[{0}]: ", dateFormat.format(new Date())));
     }
     System.out.println(MessageFormat.format("{0}", message));
@@ -21,41 +21,51 @@ public class Tracer {
 
 
 
-  public static <T> T traceAssignment(String name, T value) {
+  public static <T> T traceAssignment(String name, T value, String time) {
+    setFormatShowTime(Boolean.valueOf(time));
+
     log(MessageFormat.format("assignment to ''{0}'' value = ''{1}''", name, value));
     return value;
   }
 
 
 
-  public static <T> T traceCall(T operand, String operandName, String methodName) {
+  public static <T> T traceCall(T operand, String operandName, String methodName, String time) {
+    setFormatShowTime(Boolean.valueOf(time));
+
     log(MessageFormat.format("calling method ''{0}'' from object ''{1}''", methodName, operandName));
     return operand;
   }
 
 
 
-  public static <T> T traceConstructor(T creator, String objectName, String typeName) {
+  public static <T> T traceConstructor(T creator, String objectName, String typeName, String time) {
+    setFormatShowTime(Boolean.valueOf(time));
+
     log(MessageFormat.format("creating object ''{0}'' of type ''{1}''", objectName, typeName));
     return creator;
   }
 
 
 
-  public static void traceVoidReturn(String methodName) {
+  public static void traceVoidReturn(String methodName, String time) {
+    setFormatShowTime(Boolean.valueOf(time));
+
     log(MessageFormat.format("returning (implicit) from method ''{0}''", methodName));
   }
 
 
 
-  public static <T> T traceNonVoidReturn(String methodName, T returnValue) {
+  public static <T> T traceNonVoidReturn(String methodName, T returnValue, String time) {
+    setFormatShowTime(Boolean.valueOf(time));
+
     log(MessageFormat.format("returning (explicit) from method ''{0}'' with value = ''{1}''", methodName, returnValue.toString()));
     return returnValue;
   }
 
 
 
-  public static void setFormatShowTime(boolean showTime) {
-    Tracer.showTime = showTime;
+  public static void setFormatShowTime(boolean time) {
+    showTime = time;
   }
 }
