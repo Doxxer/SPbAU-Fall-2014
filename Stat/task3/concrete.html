@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Тураев Тимур" />
+
+
+<title>Бетон</title>
+
+<script src="concrete_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="concrete_files/bootstrap-2.3.2/css/spacelab.min.css" rel="stylesheet" />
+<link href="concrete_files/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<script src="concrete_files/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">Бетон</h1>
+<h4 class="author"><em>Тураев Тимур</em></h4>
+<h4 class="date"><em>16 декабря 2014 г.</em></h4>
+</div>
+
+
+<pre><code>## Loading required package: RColorBrewer</code></pre>
+<p>Загружаем:</p>
+<pre class="sourceCode r"><code class="sourceCode r">data.concrete &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/concrete.csv&quot;</span>, <span class="dt">comment.char =</span> <span class="st">&#39;#&#39;</span>)
+<span class="kw">names</span>(data.concrete)[<span class="kw">names</span>(data.concrete) ==<span class="st"> &#39;ConcreteCompressiveStrength&#39;</span>] &lt;-<span class="st"> &#39;POWER&#39;</span>
+<span class="kw">summary</span>(data.concrete)</code></pre>
+<pre><code>##      Cement      BlastFurnaceSlag     FlyAsh           Water      
+##  Min.   :102.0   Min.   :  0.0    Min.   :  0.00   Min.   :121.8  
+##  1st Qu.:192.4   1st Qu.:  0.0    1st Qu.:  0.00   1st Qu.:164.9  
+##  Median :272.9   Median : 22.0    Median :  0.00   Median :185.0  
+##  Mean   :281.2   Mean   : 73.9    Mean   : 54.19   Mean   :181.6  
+##  3rd Qu.:350.0   3rd Qu.:142.9    3rd Qu.:118.30   3rd Qu.:192.0  
+##  Max.   :540.0   Max.   :359.4    Max.   :200.10   Max.   :247.0  
+##  Superplasticizer CoarseAggregate  FineAggregate        Age        
+##  Min.   : 0.000   Min.   : 801.0   Min.   :594.0   Min.   :  1.00  
+##  1st Qu.: 0.000   1st Qu.: 932.0   1st Qu.:731.0   1st Qu.:  7.00  
+##  Median : 6.400   Median : 968.0   Median :779.5   Median : 28.00  
+##  Mean   : 6.205   Mean   : 972.9   Mean   :773.6   Mean   : 45.66  
+##  3rd Qu.:10.200   3rd Qu.:1029.4   3rd Qu.:824.0   3rd Qu.: 56.00  
+##  Max.   :32.200   Max.   :1145.0   Max.   :992.6   Max.   :365.00  
+##      POWER      
+##  Min.   : 2.33  
+##  1st Qu.:23.71  
+##  Median :34.45  
+##  Mean   :35.82  
+##  3rd Qu.:46.13  
+##  Max.   :82.60</code></pre>
+<p>Scatter plot:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">splom</span>(~data.concrete, <span class="dt">data=</span>data.concrete,
+      <span class="dt">upper.panel=</span>function(x, y, ...) { <span class="kw">panel.xyplot</span>(x, y, ...); <span class="kw">panel.loess</span>(x, y, ..., <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) },
+      <span class="dt">lower.panel=</span>function(x, y, ...) { },
+      <span class="dt">pscale=</span><span class="dv">0</span>, <span class="dt">varname.cex=</span><span class="fl">1.4</span>, <span class="dt">par.settings=</span><span class="kw">simpleTheme</span>(<span class="dt">pch=</span><span class="dv">17</span>, <span class="dt">cex=</span><span class="fl">0.2</span>))</code></pre>
+<div class="figure">
+<img src="concrete_files/figure-html/unnamed-chunk-3-1.png" />
+</div>
+<p>Зависимости:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corrplot.mixed</span>(<span class="kw">cor</span>(data.concrete), <span class="dt">tl.cex=</span><span class="fl">1.5</span>)</code></pre>
+<div class="figure">
+<img src="concrete_files/figure-html/unnamed-chunk-4-1.png" />
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

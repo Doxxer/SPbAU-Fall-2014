@@ -1,0 +1,42 @@
+---
+title: "Бетон"
+author: "Тураев Тимур"
+date: "16 декабря 2014 г."
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 15
+    fig_width: 15
+    highlight: tango
+    self_contained: no
+    theme: spacelab
+---
+```{r echo=FALSE}
+library(knitr)
+library(lattice)
+library(MASS)
+library(e1071)
+library(corrplot)
+library(latticeExtra)
+```
+
+Загружаем:
+```{r}
+data.concrete <- read.csv("data/concrete.csv", comment.char = '#')
+names(data.concrete)[names(data.concrete) == 'ConcreteCompressiveStrength'] <- 'POWER'
+summary(data.concrete)
+```
+
+Scatter plot:
+```{r}
+splom(~data.concrete, data=data.concrete,
+      upper.panel=function(x, y, ...) { panel.xyplot(x, y, ...); panel.loess(x, y, ..., col='red') },
+      lower.panel=function(x, y, ...) { },
+      pscale=0, varname.cex=1.4, par.settings=simpleTheme(pch=17, cex=0.2))
+```
+
+Зависимости:
+```{r}
+corrplot.mixed(cor(data.concrete), tl.cex=1.5)
+```
+
