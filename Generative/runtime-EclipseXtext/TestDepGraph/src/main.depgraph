@@ -1,0 +1,13 @@
+person A is in relationships with {
+	A, B, C, Dasha
+};
+
+person B is in relationships with {
+	B, C
+};
+
+person C is in relationships with {
+	Dasha
+};
+
+person Dasha is alone;

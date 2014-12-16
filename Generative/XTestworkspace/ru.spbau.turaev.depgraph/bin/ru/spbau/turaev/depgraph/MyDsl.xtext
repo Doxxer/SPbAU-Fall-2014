@@ -1,0 +1,20 @@
+grammar ru.spbau.turaev.depgraph.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate myDsl "http://www.spbau.ru/turaev/depgraph/MyDsl"
+
+Model:
+	(persons+=Person)*;
+
+Person:
+	'person' name=ID rels=(RelationshipDescription | NoRelationships)';'
+;
+
+RelationshipDescription:
+	'is in relationships with {'
+		rel+=[Person] (',' rel+=[Person])*
+	'}'
+;
+
+NoRelationships:
+	rel='is alone'
+;
