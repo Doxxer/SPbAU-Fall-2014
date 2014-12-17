@@ -20,11 +20,12 @@ library(corrplot)
 library(latticeExtra)
 ```
 
-Загружаем:
+Загружаем и переименую нашу Y в POWER (это немного сократит ее длину на графиках) - а POWER это что-то типа прочности на сжатие в мегапаскалях, видимо основная характеристика бетона.
 ```{r}
 data.concrete <- read.csv("data/concrete.csv", comment.char = '#')
 names(data.concrete)[names(data.concrete) == 'ConcreteCompressiveStrength'] <- 'POWER'
 summary(data.concrete)
+marginal.plot(data.concrete)
 ```
 
 Scatter plot:
@@ -40,3 +41,67 @@ splom(~data.concrete, data=data.concrete,
 corrplot.mixed(cor(data.concrete), tl.cex=1.5)
 ```
 
+
+Сначала пристально посмотрим на то, что нам пришло.
+
+Видна прямая линейная зависимость между ПОВЕР и собственно цементом. Кроме этого еще с суперпластификатором (представляет собой нафталинформальдегидный суперпластификатор для бетонов и строительных растворов :) короче, уплотнитель).
+
+Также, видно, что Fine Aggregate и Coarse Aggregate после какого-то значения перестают оказывать влияние.
+Зависимость от воды и возраста бетона не так просты, мне кажется это от неравномерности данных: в левой и правой части графика по воде почти нет значений, а в центре много: может поэтому она так сильно вниз улетела где-то посередине. А график возраста очень "дискретен". И если присмотреться, кажется, что его значения распределены как-то неравномерно... Но к этому мы еще вернемся.
+
+Кроме этого, по коррплоту видно, что довольно много зависимых друг от друга параметров.
+
+Поперебирав параметры (я на этом не хочу заострять внимание, с этим мы потренировались на первых двух домашках), я получил следующее, вроде самая лучшая модель, если не издеваться над параметрами:
+```{r}
+fit1 <- lm(POWER ~ Age + Cement + Water*Superplasticizer + BlastFurnaceSlag + FlyAsh, data.concrete)
+summary(fit1)
+```
+
+Коэффициенты у параметров очень маленькие, если сравнивать с Intercept модели, но все p-value очень небольшие: все они хорошо влияют.
+
+Вернемся к замечанию про нелинейность Age: что если его прологарифмировать?
+
+```{r}
+fit2 <- lm(POWER ~ log(Age) + Cement + Water*Superplasticizer + BlastFurnaceSlag + FlyAsh, data.concrete)
+summary(fit2)
+```
+
+Все улучшилось, ожидаемо.
+
+Далее, посмотрим (как написано в задании) поближе на зависимость POWER от воды и возраста: какие-то графики на скаттере получились сильно изломленные, возможно это кандидаты на фактор:
+```{r}
+f <- function(p) {
+  p=xyplot(POWER ~ p, data.concrete);
+}
+f(data.concrete$Water)
+f(data.concrete$Age)
+```
+
+Вода: судя по всему на нелинейность повлияли даннные: их слишком много на 230, но можно сделать фактором "воды меньше 200"
+Возраст: тоже такой же фактор, возраст < 110.
+
+Построим модель и выкинем некоторые ненужные параметры (сразу конечный результат):
+```{r}
+data.concrete$waterFactor <- data.concrete$Water < 220
+data.concrete$ageFactor <- data.concrete$Age < 110
+fit3 <- lm(POWER ~ ageFactor:log(Age) + waterFactor:Water + Water*Superplasticizer + Cement + BlastFurnaceSlag + FlyAsh, data.concrete)
+summary(fit3)
+# fit3 <- stepAIC(fit3)
+```
+
+Проверим все полученные модели:
+```{r}
+resplot = function(p) {
+  xyplot(resid(p) ~ fitted(p), panel = function(...) { panel.xyplot(...);  panel.lmline(...); })
+}
+plot(c(fit1=resplot(fit1),
+       fit2=resplot(fit2),
+       fit3=resplot(fit3)))
+cv <- function(data) { tune(lm, data$call$formula, data = data.concrete, tunecontrol = tune.control(sampling = "cross")) }
+cv(fit1)
+cv(fit2)
+cv(fit3)
+anova(fit1, fit2, fit3)
+```
+
+Хоть эта модель и лучше предыдущих, но все равно ошибка высока, если посмотреть на разброс значений POWER: от 2 до 80

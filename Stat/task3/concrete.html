@@ -71,7 +71,7 @@ code > span.er { font-weight: bold; }
 
 
 <pre><code>## Loading required package: RColorBrewer</code></pre>
-<p>Загружаем:</p>
+<p>Загружаем и переименую нашу Y в POWER (это немного сократит ее длину на графиках) - а POWER это что-то типа прочности на сжатие в мегапаскалях, видимо основная характеристика бетона.</p>
 <pre class="sourceCode r"><code class="sourceCode r">data.concrete &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/concrete.csv&quot;</span>, <span class="dt">comment.char =</span> <span class="st">&#39;#&#39;</span>)
 <span class="kw">names</span>(data.concrete)[<span class="kw">names</span>(data.concrete) ==<span class="st"> &#39;ConcreteCompressiveStrength&#39;</span>] &lt;-<span class="st"> &#39;POWER&#39;</span>
 <span class="kw">summary</span>(data.concrete)</code></pre>
@@ -96,6 +96,10 @@ code > span.er { font-weight: bold; }
 ##  Mean   :35.82  
 ##  3rd Qu.:46.13  
 ##  Max.   :82.60</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">marginal.plot</span>(data.concrete)</code></pre>
+<div class="figure">
+<img src="concrete_files/figure-html/unnamed-chunk-2-1.png" />
+</div>
 <p>Scatter plot:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">splom</span>(~data.concrete, <span class="dt">data=</span>data.concrete,
       <span class="dt">upper.panel=</span>function(x, y, ...) { <span class="kw">panel.xyplot</span>(x, y, ...); <span class="kw">panel.loess</span>(x, y, ..., <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) },
@@ -109,6 +113,145 @@ code > span.er { font-weight: bold; }
 <div class="figure">
 <img src="concrete_files/figure-html/unnamed-chunk-4-1.png" />
 </div>
+<p>Сначала пристально посмотрим на то, что нам пришло.</p>
+<p>Видна прямая линейная зависимость между ПОВЕР и собственно цементом. Кроме этого еще с суперпластификатором (представляет собой нафталинформальдегидный суперпластификатор для бетонов и строительных растворов :) короче, уплотнитель).</p>
+<p>Также, видно, что Fine Aggregate и Coarse Aggregate после какого-то значения перестают оказывать влияние. Зависимость от воды и возраста бетона не так просты, мне кажется это от неравномерности данных: в левой и правой части графика по воде почти нет значений, а в центре много: может поэтому она так сильно вниз улетела где-то посередине. А график возраста очень “дискретен”. И если присмотреться, кажется, что его значения распределены как-то неравномерно… Но к этому мы еще вернемся.</p>
+<p>Кроме этого, по коррплоту видно, что довольно много зависимых друг от друга параметров.</p>
+<p>Поперебирав параметры (я на этом не хочу заострять внимание, с этим мы потренировались на первых двух домашках), я получил следующее, вроде самая лучшая модель, если не издеваться над параметрами:</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(POWER ~<span class="st"> </span>Age +<span class="st"> </span>Cement +<span class="st"> </span>Water*Superplasticizer +<span class="st"> </span>BlastFurnaceSlag +<span class="st"> </span>FlyAsh, data.concrete)
+<span class="kw">summary</span>(fit1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = POWER ~ Age + Cement + Water * Superplasticizer + 
+##     BlastFurnaceSlag + FlyAsh, data = data.concrete)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -30.439  -6.400   0.209   6.940  33.095 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)            45.502486   5.121626   8.884  &lt; 2e-16 ***
+## Age                     0.120990   0.005502  21.989  &lt; 2e-16 ***
+## Cement                  0.104717   0.004189  25.001  &lt; 2e-16 ***
+## Water                  -0.304965   0.026125 -11.673  &lt; 2e-16 ***
+## Superplasticizer       -2.351854   0.477719  -4.923 9.93e-07 ***
+## BlastFurnaceSlag        0.082116   0.004967  16.532  &lt; 2e-16 ***
+## FlyAsh                  0.048647   0.008447   5.759 1.12e-08 ***
+## Water:Superplasticizer  0.015927   0.002890   5.511 4.52e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 10.26 on 1022 degrees of freedom
+## Multiple R-squared:  0.6252, Adjusted R-squared:  0.6226 
+## F-statistic: 243.5 on 7 and 1022 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Коэффициенты у параметров очень маленькие, если сравнивать с Intercept модели, но все p-value очень небольшие: все они хорошо влияют.</p>
+<p>Вернемся к замечанию про нелинейность Age: что если его прологарифмировать?</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(POWER ~<span class="st"> </span><span class="kw">log</span>(Age) +<span class="st"> </span>Cement +<span class="st"> </span>Water*Superplasticizer +<span class="st"> </span>BlastFurnaceSlag +<span class="st"> </span>FlyAsh, data.concrete)
+<span class="kw">summary</span>(fit2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = POWER ~ log(Age) + Cement + Water * Superplasticizer + 
+##     BlastFurnaceSlag + FlyAsh, data = data.concrete)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -22.9591  -4.4094   0.0202   4.2865  28.9493 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)            19.464258   3.468202   5.612 2.57e-08 ***
+## log(Age)                8.712859   0.192143  45.346  &lt; 2e-16 ***
+## Cement                  0.109381   0.002929  37.343  &lt; 2e-16 ***
+## Water                  -0.283281   0.017676 -16.027  &lt; 2e-16 ***
+## Superplasticizer       -1.164789   0.325079  -3.583 0.000356 ***
+## BlastFurnaceSlag        0.083428   0.003473  24.023  &lt; 2e-16 ***
+## FlyAsh                  0.050869   0.005905   8.614  &lt; 2e-16 ***
+## Water:Superplasticizer  0.007442   0.001965   3.787 0.000161 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.177 on 1022 degrees of freedom
+## Multiple R-squared:  0.8167, Adjusted R-squared:  0.8154 
+## F-statistic: 650.4 on 7 and 1022 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Все улучшилось, ожидаемо.</p>
+<p>Далее, посмотрим (как написано в задании) поближе на зависимость POWER от воды и возраста: какие-то графики на скаттере получились сильно изломленные, возможно это кандидаты на фактор:</p>
+<pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(p) {
+  p=<span class="kw">xyplot</span>(POWER ~<span class="st"> </span>p, data.concrete);
+}
+<span class="kw">f</span>(data.concrete$Water)
+<span class="kw">f</span>(data.concrete$Age)</code></pre>
+<p>Вода: судя по всему на нелинейность повлияли даннные: их слишком много на 230, но можно сделать фактором “воды меньше 200” Возраст: тоже такой же фактор, возраст &lt; 110.</p>
+<p>Построим модель и выкинем некоторые ненужные параметры (сразу конечный результат):</p>
+<pre class="sourceCode r"><code class="sourceCode r">data.concrete$waterFactor &lt;-<span class="st"> </span>data.concrete$Water &lt;<span class="st"> </span><span class="dv">220</span>
+data.concrete$ageFactor &lt;-<span class="st"> </span>data.concrete$Age &lt;<span class="st"> </span><span class="dv">110</span>
+fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(POWER ~<span class="st"> </span>ageFactor:<span class="kw">log</span>(Age) +<span class="st"> </span>waterFactor:Water +<span class="st"> </span>Water*Superplasticizer +<span class="st"> </span>Cement +<span class="st"> </span>BlastFurnaceSlag +<span class="st"> </span>FlyAsh, data.concrete)
+<span class="kw">summary</span>(fit3)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = POWER ~ ageFactor:log(Age) + waterFactor:Water + 
+##     Water * Superplasticizer + Cement + BlastFurnaceSlag + FlyAsh, 
+##     data = data.concrete)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -22.464  -4.501  -0.191   4.410  26.805 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             28.920119   4.446329   6.504 1.22e-10 ***
+## Water                   -0.299662   0.019337 -15.497  &lt; 2e-16 ***
+## Superplasticizer        -1.535249   0.347109  -4.423 1.08e-05 ***
+## Cement                   0.108390   0.002830  38.307  &lt; 2e-16 ***
+## BlastFurnaceSlag         0.079751   0.003345  23.841  &lt; 2e-16 ***
+## FlyAsh                   0.042979   0.005776   7.441 2.12e-13 ***
+## ageFactorFALSE:log(Age)  7.494889   0.221611  33.820  &lt; 2e-16 ***
+## ageFactorTRUE:log(Age)   9.362553   0.210208  44.539  &lt; 2e-16 ***
+## waterFactorTRUE:Water   -0.037694   0.005638  -6.686 3.77e-11 ***
+## Water:Superplasticizer   0.009038   0.002078   4.350 1.50e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.855 on 1020 degrees of freedom
+## Multiple R-squared:  0.8331, Adjusted R-squared:  0.8316 
+## F-statistic: 565.8 on 9 and 1020 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit3 &lt;- stepAIC(fit3)</span></code></pre>
+<p>Проверим все полученные модели:</p>
+<pre class="sourceCode r"><code class="sourceCode r">resplot =<span class="st"> </span>function(p) {
+  <span class="kw">xyplot</span>(<span class="kw">resid</span>(p) ~<span class="st"> </span><span class="kw">fitted</span>(p), <span class="dt">panel =</span> function(...) { <span class="kw">panel.xyplot</span>(...);  <span class="kw">panel.lmline</span>(...); })
+}
+<span class="kw">plot</span>(<span class="kw">c</span>(<span class="dt">fit1=</span><span class="kw">resplot</span>(fit1),
+       <span class="dt">fit2=</span><span class="kw">resplot</span>(fit2),
+       <span class="dt">fit3=</span><span class="kw">resplot</span>(fit3)))</code></pre>
+<div class="figure">
+<img src="concrete_files/figure-html/unnamed-chunk-9-1.png" />
+</div>
+<pre class="sourceCode r"><code class="sourceCode r">cv &lt;-<span class="st"> </span>function(data) { <span class="kw">tune</span>(lm, data$call$formula, <span class="dt">data =</span> data.concrete, <span class="dt">tunecontrol =</span> <span class="kw">tune.control</span>(<span class="dt">sampling =</span> <span class="st">&quot;cross&quot;</span>)) }
+<span class="kw">cv</span>(fit1)</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 106.1122</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv</span>(fit2)</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 52.14152</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv</span>(fit3)</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 47.61111</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit1, fit2, fit3)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: POWER ~ Age + Cement + Water * Superplasticizer + BlastFurnaceSlag + 
+##     FlyAsh
+## Model 2: POWER ~ log(Age) + Cement + Water * Superplasticizer + BlastFurnaceSlag + 
+##     FlyAsh
+## Model 3: POWER ~ ageFactor:log(Age) + waterFactor:Water + Water * Superplasticizer + 
+##     Cement + BlastFurnaceSlag + FlyAsh
+##   Res.Df    RSS Df Sum of Sq     F    Pr(&gt;F)    
+## 1   1022 107645                                 
+## 2   1022  52647  0     54998                    
+## 3   1020  47925  2      4722 50.25 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Хоть эта модель и лучше предыдущих, но все равно ошибка высока, если посмотреть на разброс значений POWER: от 2 до 80</p>
 
 
 </div>
