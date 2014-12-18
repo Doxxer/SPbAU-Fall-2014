@@ -59,7 +59,7 @@ summary(fit1)
 
 Коэффициенты у параметров очень маленькие, если сравнивать с Intercept модели, но все p-value очень небольшие: все они хорошо влияют.
 
-Вернемся к замечанию про нелинейность Age: что если его прологарифмировать?
+На скаттере можно видеть что Age распределен как-то неравномерно, похоже что он нелинеен: что если его прологарифмировать?
 
 ```{r}
 fit2 <- lm(POWER ~ log(Age) + Cement + Water*Superplasticizer + BlastFurnaceSlag + FlyAsh, data.concrete)
@@ -71,10 +71,10 @@ summary(fit2)
 Далее, посмотрим (как написано в задании) поближе на зависимость POWER от воды и возраста: какие-то графики на скаттере получились сильно изломленные, возможно это кандидаты на фактор:
 ```{r}
 f <- function(p) {
-  p=xyplot(POWER ~ p, data.concrete);
+  xyplot(POWER ~ p, data.concrete, panel = function(...) { panel.xyplot(...); panel.loess(..., col='red') });
 }
-f(data.concrete$Water)
-f(data.concrete$Age)
+plot(f(data.concrete$Water))
+plot(f(data.concrete$Age))
 ```
 
 Вода: судя по всему на нелинейность повлияли даннные: их слишком много на 230, но можно сделать фактором "воды меньше 200"

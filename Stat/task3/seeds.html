@@ -74,6 +74,7 @@ code > span.er { font-weight: bold; }
 <p>Загружаем наши данные и переименовываем столбцы так, как указано в комментариях к данным.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&#39;data/seeds.txt&#39;</span>)
 <span class="kw">names</span>(df) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;area&quot;</span>, <span class="st">&quot;perimeter&quot;</span>, <span class="st">&quot;compactness&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="st">&quot;width&quot;</span>, <span class="st">&quot;asymmetry&quot;</span>, <span class="st">&quot;grooveLength&quot;</span>, <span class="st">&quot;variety&quot;</span>)
+df$variety &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df$variety)
 <span class="kw">summary</span>(df)</code></pre>
 <pre><code>##       area         perimeter      compactness         length     
 ##  Min.   :10.59   Min.   :12.41   Min.   :0.8081   Min.   :4.899  
@@ -82,13 +83,13 @@ code > span.er { font-weight: bold; }
 ##  Mean   :14.85   Mean   :14.56   Mean   :0.8710   Mean   :5.629  
 ##  3rd Qu.:17.30   3rd Qu.:15.71   3rd Qu.:0.8878   3rd Qu.:5.980  
 ##  Max.   :21.18   Max.   :17.25   Max.   :0.9183   Max.   :6.675  
-##      width         asymmetry       grooveLength      variety 
-##  Min.   :2.630   Min.   :0.7651   Min.   :4.519   Min.   :1  
-##  1st Qu.:2.944   1st Qu.:2.5615   1st Qu.:5.045   1st Qu.:1  
-##  Median :3.237   Median :3.5990   Median :5.223   Median :2  
-##  Mean   :3.259   Mean   :3.7002   Mean   :5.408   Mean   :2  
-##  3rd Qu.:3.562   3rd Qu.:4.7687   3rd Qu.:5.877   3rd Qu.:3  
-##  Max.   :4.033   Max.   :8.4560   Max.   :6.550   Max.   :3</code></pre>
+##      width         asymmetry       grooveLength   variety
+##  Min.   :2.630   Min.   :0.7651   Min.   :4.519   1:70   
+##  1st Qu.:2.944   1st Qu.:2.5615   1st Qu.:5.045   2:70   
+##  Median :3.237   Median :3.5990   Median :5.223   3:70   
+##  Mean   :3.259   Mean   :3.7002   Mean   :5.408          
+##  3rd Qu.:3.562   3rd Qu.:4.7687   3rd Qu.:5.877          
+##  Max.   :4.033   Max.   :8.4560   Max.   :6.550</code></pre>
 <p>Построим всякие графики:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">splom</span>(~df, <span class="dt">data=</span>df,
       <span class="dt">upper.panel=</span>function(x, y, ...) { <span class="kw">panel.xyplot</span>(x, y, ...); <span class="kw">panel.loess</span>(x, y, ..., <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) },
@@ -97,7 +98,7 @@ code > span.er { font-weight: bold; }
 <div class="figure">
 <img src="seeds_files/figure-html/unnamed-chunk-3-1.png" />
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corrplot.mixed</span>(<span class="kw">cor</span>(df), <span class="dt">tl.cex=</span><span class="fl">1.5</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corrplot.mixed</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(df, <span class="dt">select=</span>-variety)), <span class="dt">tl.cex=</span><span class="fl">1.5</span>)</code></pre>
 <div class="figure">
 <img src="seeds_files/figure-html/unnamed-chunk-4-1.png" />
 </div>
@@ -105,26 +106,27 @@ code > span.er { font-weight: bold; }
 <div class="figure">
 <img src="seeds_files/figure-html/unnamed-chunk-5-1.png" />
 </div>
-<div id="lda" class="section level3">
-<h3>LDA</h3>
+<p>Поделим выборку на обучающую и тестовую в отношении 2/1:</p>
 <pre class="sourceCode r"><code class="sourceCode r">train.idx &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(df), <span class="dt">size =</span> <span class="kw">nrow</span>(df) *<span class="st"> </span><span class="fl">0.6666</span>)
 df.train &lt;-<span class="st"> </span>df[train.idx, ]
 df.test &lt;-<span class="st"> </span>df[-train.idx, ]</code></pre>
+<div id="lda" class="section level3">
+<h3>LDA</h3>
 <p>Установим функцию тестирования нашей модели (10-fold cross validation) и проверим test-train (выведем относительную ошибку)</p>
-<pre class="sourceCode r"><code class="sourceCode r">check.testTrain =<span class="st"> </span>function(f) {
+<pre class="sourceCode r"><code class="sourceCode r">check.testTrain.lda &lt;-<span class="st"> </span>function(f) {
   m.predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">lda</span>(f, <span class="dt">data =</span> df.train), df.test)
   <span class="kw">print</span>(<span class="kw">table</span>(m.predicted$class, df.test$variety))
   <span class="kw">mean</span>(m.predicted$class !=<span class="st"> </span>df.test$variety)
 }
 
-check =<span class="st"> </span>function(f) {
+check.lda =<span class="st"> </span>function(f) {
   <span class="kw">print</span>(<span class="kw">lda</span>(f, df))
-  t &lt;-<span class="st"> </span><span class="kw">tune</span>(lda, f, <span class="dt">data =</span> df, <span class="dt">predict.func =</span> function(...) <span class="kw">as.numeric</span>(<span class="kw">predict</span>(...)$class))
-  <span class="kw">print</span>(<span class="kw">check.testTrain</span>(f))
+  t &lt;-<span class="st"> </span><span class="kw">tune</span>(lda, f, <span class="dt">data =</span> df, <span class="dt">predict.func =</span> function(...) <span class="kw">predict</span>(...)$class)
+  <span class="kw">print</span>(<span class="kw">check.testTrain.lda</span>(f))
   t
 }
 
-<span class="kw">check</span>(variety ~<span class="st"> </span>.)</code></pre>
+<span class="kw">check.lda</span>(variety ~<span class="st"> </span>.)</code></pre>
 <pre><code>## Call:
 ## lda(f, data = df)
 ## 
@@ -153,17 +155,17 @@ check =<span class="st"> </span>function(f) {
 ## 0.6814 0.3186 
 ##    
 ##      1  2  3
-##   1 18  0  2
-##   2  0 22  0
-##   3  4  0 25
-## [1] 0.08450704</code></pre>
+##   1 23  1  0
+##   2  0 25  0
+##   3  1  0 21
+## [1] 0.02816901</code></pre>
 <pre><code>## 
-## Error estimation of &#39;lda&#39; using 10-fold cross validation: 0.1238095</code></pre>
+## Error estimation of &#39;lda&#39; using 10-fold cross validation: 0.03809524</code></pre>
 <p>Надо бы избавиться в модели от зависимых параметров.</p>
 <p>Area и perimeter превращаются по формуле (в датасете она есть в описании данных) в compactness. Одно из измерений ядра тоже можно выкинуть.</p>
 <p>После всех проб и ошибок я выбрал такую модель, минимизирующую ошибку: оставим только длины зерна и “groove” (однажды я вообще получил полное совпадение)</p>
-<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span>variety ~<span class="st"> </span>. -<span class="st"> </span>area -<span class="st"> </span>perimeter -<span class="st"> </span>width -<span class="st"> </span>asymmetry -<span class="st"> </span>compactness
-<span class="kw">check</span>(model)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span>variety ~<span class="st"> </span>length +<span class="st"> </span>grooveLength
+<span class="kw">check.lda</span>(model)</code></pre>
 <pre><code>## Call:
 ## lda(f, data = df)
 ## 
@@ -187,16 +189,215 @@ check =<span class="st"> </span>function(f) {
 ## 0.7006 0.2994 
 ##    
 ##      1  2  3
-##   1 20  0  0
-##   2  0 22  0
-##   3  2  0 27
+##   1 23  0  0
+##   2  0 25  0
+##   3  1  1 21
 ## [1] 0.02816901</code></pre>
 <pre><code>## 
-## Error estimation of &#39;lda&#39; using 10-fold cross validation: 0.09047619</code></pre>
+## Error estimation of &#39;lda&#39; using 10-fold cross validation: 0.03333333</code></pre>
 <p>От запуска к запуску цифры все время разные, но раз модели предсказания почти одинаковые, почему бы не взять ту, которая проще :)</p>
 </div>
 <div id="naive-bayes" class="section level2">
 <h2>Naive Bayes</h2>
+<p>Снова тестовая функция:</p>
+<pre class="sourceCode r"><code class="sourceCode r">check.testTrain.nb =<span class="st"> </span>function(f) {
+  m.predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">naiveBayes</span>(f, <span class="dt">data =</span> df.train), df.test)
+  <span class="kw">print</span>(<span class="kw">table</span>(m.predicted, df.test$variety))
+  <span class="kw">mean</span>(m.predicted !=<span class="st"> </span>df.test$variety)
+}
+
+check.nb =<span class="st"> </span>function(f) {
+  <span class="kw">print</span>(<span class="kw">naiveBayes</span>(f, df))
+  t &lt;-<span class="st"> </span><span class="kw">tune</span>(naiveBayes, f, <span class="dt">data =</span> df)
+  <span class="kw">print</span>(<span class="kw">check.testTrain.nb</span>(f))
+  t
+}
+
+<span class="kw">check.nb</span>(<span class="kw">as.factor</span>(variety) ~<span class="st"> </span>.)</code></pre>
+<pre><code>## 
+## Naive Bayes Classifier for Discrete Predictors
+## 
+## Call:
+## naiveBayes.default(x = X, y = Y, laplace = laplace)
+## 
+## A-priori probabilities:
+## Y
+##         1         2         3 
+## 0.3333333 0.3333333 0.3333333 
+## 
+## Conditional probabilities:
+##    area
+## Y       [,1]      [,2]
+##   1 14.33443 1.2157036
+##   2 18.33429 1.4394963
+##   3 11.87386 0.7230036
+## 
+##    perimeter
+## Y       [,1]      [,2]
+##   1 14.29429 0.5765831
+##   2 16.13571 0.6169950
+##   3 13.24786 0.3401956
+## 
+##    compactness
+## Y        [,1]       [,2]
+##   1 0.8800700 0.01619093
+##   2 0.8835171 0.01550004
+##   3 0.8494086 0.02175963
+## 
+##    length
+## Y       [,1]      [,2]
+##   1 5.508057 0.2315080
+##   2 6.148029 0.2681911
+##   3 5.229514 0.1380152
+## 
+##    width
+## Y       [,1]      [,2]
+##   1 3.244629 0.1776155
+##   2 3.677414 0.1855391
+##   3 2.853771 0.1475161
+## 
+##    asymmetry
+## Y       [,1]     [,2]
+##   1 2.667403 1.173901
+##   2 3.644800 1.181868
+##   3 4.788400 1.336465
+## 
+##    grooveLength
+## Y       [,1]      [,2]
+##   1 5.087214 0.2636987
+##   2 6.020600 0.2539338
+##   3 5.116400 0.1620683
+## 
+##            
+## m.predicted  1  2  3
+##           1 22  4  0
+##           2  0 22  0
+##           3  2  0 21
+## [1] 0.08450704</code></pre>
+<pre><code>## 
+## Error estimation of &#39;naiveBayes&#39; using 10-fold cross validation: 0.1</code></pre>
+<p>Попробуем ту же модель, что мы нашли для lda:</p>
+<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">as.factor</span>(variety) ~<span class="st"> </span>length +<span class="st"> </span>grooveLength
+<span class="kw">check.nb</span>(model)</code></pre>
+<pre><code>## 
+## Naive Bayes Classifier for Discrete Predictors
+## 
+## Call:
+## naiveBayes.default(x = X, y = Y, laplace = laplace)
+## 
+## A-priori probabilities:
+## Y
+##         1         2         3 
+## 0.3333333 0.3333333 0.3333333 
+## 
+## Conditional probabilities:
+##    length
+## Y       [,1]      [,2]
+##   1 5.508057 0.2315080
+##   2 6.148029 0.2681911
+##   3 5.229514 0.1380152
+## 
+##    grooveLength
+## Y       [,1]      [,2]
+##   1 5.087214 0.2636987
+##   2 6.020600 0.2539338
+##   3 5.116400 0.1620683
+## 
+##            
+## m.predicted  1  2  3
+##           1 20  2  4
+##           2  0 24  0
+##           3  4  0 17
+## [1] 0.1408451</code></pre>
+<pre><code>## 
+## Error estimation of &#39;naiveBayes&#39; using 10-fold cross validation: 0.1428571</code></pre>
+<p>Не очень. Оказалось, что такая чуть лучше, но все равно не кардинально улучшает модель, да и от запуска к запуску числа разные.</p>
+<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">as.factor</span>(variety) ~<span class="st"> </span>area +<span class="st"> </span>grooveLength
+<span class="kw">check.nb</span>(model)</code></pre>
+<pre><code>## 
+## Naive Bayes Classifier for Discrete Predictors
+## 
+## Call:
+## naiveBayes.default(x = X, y = Y, laplace = laplace)
+## 
+## A-priori probabilities:
+## Y
+##         1         2         3 
+## 0.3333333 0.3333333 0.3333333 
+## 
+## Conditional probabilities:
+##    area
+## Y       [,1]      [,2]
+##   1 14.33443 1.2157036
+##   2 18.33429 1.4394963
+##   3 11.87386 0.7230036
+## 
+##    grooveLength
+## Y       [,1]      [,2]
+##   1 5.087214 0.2636987
+##   2 6.020600 0.2539338
+##   3 5.116400 0.1620683
+## 
+##            
+## m.predicted  1  2  3
+##           1 21  1  2
+##           2  0 25  0
+##           3  3  0 19
+## [1] 0.08450704</code></pre>
+<pre><code>## 
+## Error estimation of &#39;naiveBayes&#39; using 10-fold cross validation: 0.09047619</code></pre>
+<p>Это, я думаю, происходит оттого, что данных не сказать что бы много, да и очень много зависимых параметров.</p>
+</div>
+<div id="multinomial-regression" class="section level2">
+<h2>Multinomial regression</h2>
+<p>Снова тестовые фукнции</p>
+<pre class="sourceCode r"><code class="sourceCode r">check.testTrain.mr =<span class="st"> </span>function(f) {
+  m.predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="kw">multinom</span>(f, df.train, <span class="dt">maxit =</span> <span class="dv">2000</span>, <span class="dt">trace=</span><span class="ot">FALSE</span>), df.test)
+  <span class="kw">print</span>(<span class="kw">table</span>(m.predicted, df.test$variety))
+  <span class="kw">mean</span>(m.predicted !=<span class="st"> </span>df.test$variety)
+}
+
+check.mr =<span class="st"> </span>function(f) {
+  (mr &lt;-<span class="st"> </span><span class="kw">multinom</span>(f, df, <span class="dt">maxit =</span> <span class="dv">2000</span>, <span class="dt">trace=</span><span class="ot">FALSE</span>))
+  t &lt;-<span class="st"> </span><span class="kw">tune</span>(multinom, f, <span class="dt">data =</span> df, <span class="dt">maxit=</span><span class="dv">2000</span>, <span class="dt">trace=</span><span class="ot">FALSE</span>)
+  <span class="kw">print</span>(<span class="kw">check.testTrain.mr</span>(f))
+  t
+}
+
+<span class="kw">check.mr</span>(<span class="kw">as.factor</span>(variety) ~<span class="st"> </span>.)</code></pre>
+<pre><code>##            
+## m.predicted  1  2  3
+##           1 23  0  1
+##           2  0 26  0
+##           3  1  0 20
+## [1] 0.02816901</code></pre>
+<pre><code>## 
+## Error estimation of &#39;multinom&#39; using 10-fold cross validation: 0.02857143</code></pre>
+<p>Даже такая полная модель дала очень маленькую ошибку. Может попробовать поискать модель попроще с ошибкой той же степени? Попробуем формулу LDA:</p>
+<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">as.factor</span>(variety) ~<span class="st"> </span>length +<span class="st"> </span>grooveLength
+<span class="kw">check.mr</span>(model)</code></pre>
+<pre><code>##            
+## m.predicted  1  2  3
+##           1 23  0  1
+##           2  0 25  0
+##           3  1  1 20
+## [1] 0.04225352</code></pre>
+<pre><code>## 
+## Error estimation of &#39;multinom&#39; using 10-fold cross validation: 0.04285714</code></pre>
+<p>Ошибка чуть больше.</p>
+<p>Или из Байеса:</p>
+<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">as.factor</span>(variety) ~<span class="st"> </span>area +<span class="st"> </span>grooveLength
+<span class="kw">check.mr</span>(model)</code></pre>
+<pre><code>##            
+## m.predicted  1  2  3
+##           1 22  3  0
+##           2  0 23  0
+##           3  2  0 21
+## [1] 0.07042254</code></pre>
+<pre><code>## 
+## Error estimation of &#39;multinom&#39; using 10-fold cross validation: 0.07142857</code></pre>
+<p>Еще увеличилась.</p>
+<p>В целом, ничего лучше начальной самой общей модели мне найти не удалось, LDA-формула оказалась ближе всех, да и модель вышла довольно простая.</p>
 </div>
 
 

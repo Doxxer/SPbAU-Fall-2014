@@ -146,7 +146,7 @@ code > span.er { font-weight: bold; }
 ## Multiple R-squared:  0.6252, Adjusted R-squared:  0.6226 
 ## F-statistic: 243.5 on 7 and 1022 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Коэффициенты у параметров очень маленькие, если сравнивать с Intercept модели, но все p-value очень небольшие: все они хорошо влияют.</p>
-<p>Вернемся к замечанию про нелинейность Age: что если его прологарифмировать?</p>
+<p>На скаттере можно видеть что Age распределен как-то неравномерно, похоже что он нелинеен: что если его прологарифмировать?</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(POWER ~<span class="st"> </span><span class="kw">log</span>(Age) +<span class="st"> </span>Cement +<span class="st"> </span>Water*Superplasticizer +<span class="st"> </span>BlastFurnaceSlag +<span class="st"> </span>FlyAsh, data.concrete)
 <span class="kw">summary</span>(fit2)</code></pre>
 <pre><code>## 
@@ -177,10 +177,16 @@ code > span.er { font-weight: bold; }
 <p>Все улучшилось, ожидаемо.</p>
 <p>Далее, посмотрим (как написано в задании) поближе на зависимость POWER от воды и возраста: какие-то графики на скаттере получились сильно изломленные, возможно это кандидаты на фактор:</p>
 <pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(p) {
-  p=<span class="kw">xyplot</span>(POWER ~<span class="st"> </span>p, data.concrete);
+  <span class="kw">xyplot</span>(POWER ~<span class="st"> </span>p, data.concrete, <span class="dt">panel =</span> function(...) { <span class="kw">panel.xyplot</span>(...); <span class="kw">panel.loess</span>(..., <span class="dt">col=</span><span class="st">&#39;red&#39;</span>) });
 }
-<span class="kw">f</span>(data.concrete$Water)
-<span class="kw">f</span>(data.concrete$Age)</code></pre>
+<span class="kw">plot</span>(<span class="kw">f</span>(data.concrete$Water))</code></pre>
+<div class="figure">
+<img src="concrete_files/figure-html/unnamed-chunk-7-1.png" />
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">f</span>(data.concrete$Age))</code></pre>
+<div class="figure">
+<img src="concrete_files/figure-html/unnamed-chunk-7-2.png" />
+</div>
 <p>Вода: судя по всему на нелинейность повлияли даннные: их слишком много на 230, но можно сделать фактором “воды меньше 200” Возраст: тоже такой же фактор, возраст &lt; 110.</p>
 <p>Построим модель и выкинем некоторые ненужные параметры (сразу конечный результат):</p>
 <pre class="sourceCode r"><code class="sourceCode r">data.concrete$waterFactor &lt;-<span class="st"> </span>data.concrete$Water &lt;<span class="st"> </span><span class="dv">220</span>
@@ -229,13 +235,13 @@ fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(POWER ~<span class
 <pre class="sourceCode r"><code class="sourceCode r">cv &lt;-<span class="st"> </span>function(data) { <span class="kw">tune</span>(lm, data$call$formula, <span class="dt">data =</span> data.concrete, <span class="dt">tunecontrol =</span> <span class="kw">tune.control</span>(<span class="dt">sampling =</span> <span class="st">&quot;cross&quot;</span>)) }
 <span class="kw">cv</span>(fit1)</code></pre>
 <pre><code>## 
-## Error estimation of &#39;lm&#39; using 10-fold cross validation: 106.1122</code></pre>
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 106.9503</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv</span>(fit2)</code></pre>
 <pre><code>## 
-## Error estimation of &#39;lm&#39; using 10-fold cross validation: 52.14152</code></pre>
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 52.1561</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv</span>(fit3)</code></pre>
 <pre><code>## 
-## Error estimation of &#39;lm&#39; using 10-fold cross validation: 47.61111</code></pre>
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 47.56382</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit1, fit2, fit3)</code></pre>
 <pre><code>## Analysis of Variance Table
 ## 
