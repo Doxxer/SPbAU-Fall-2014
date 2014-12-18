@@ -1,0 +1,53 @@
+---
+title: "Bandplot.R"
+author: "Тураев Тимур"
+date: "16 декабря 2014 г."
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 15
+    fig_width: 15
+    highlight: tango
+    self_contained: no
+    theme: spacelab
+---
+```{r}
+library(lattice)
+```
+
+```{r}
+bandplot <- function(formula, data, ...) {
+  # panel from Deepayan Sarkar + sorting x variable
+  my.panel.bands <- function(x, y, high, low, col, fill, subscripts, ...) {
+    high <- high[subscripts[order(x)]]
+    low <- low[subscripts[order(x)]]
+    x <- sort(x) # the same as x <- x[order(x)]
+    panel.polygon(c(x, rev(x)), c(high, rev(low)), col=fill, border = FALSE, ...)
+    panel.lines(x, high, col = 'red');
+    panel.lines(rev(x), rev(low), col = 'red');
+    }
+  
+  xyplot(formula, data,
+         prepanel = function(x,y,high,low,...) { p<-prepanel.default.xyplot(x,y,...); p$ylim <- c(min(low), max(high)); p },
+         panel = function(x, y,...) {
+           panel.superpose(x, y, panel.groups = my.panel.bands, type='b', col='gray',...);
+           panel.xyplot(x, y, type='p', cex=0.6, lty=1,...);           
+           panel.loess(x, y, ...);
+           }, ...)
+  }
+```
+
+Пример:
+```{r}
+size=100
+x <- rnorm(size)
+y <- x + runif(size, -1, 1)
+df <- data.frame(x=x, y=y)
+bandplot(y ~ x, df, high=y+2, low=y-2, groups=(x<100))
+```
+
+C группами:
+```{r}
+bandplot(y ~ x, df, high=y+2, low=y-2, groups=(x<0))
+```
+

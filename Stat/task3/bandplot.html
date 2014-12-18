@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Тураев Тимур" />
+
+
+<title>Bandplot.R</title>
+
+<script src="bandplot_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="bandplot_files/bootstrap-2.3.2/css/spacelab.min.css" rel="stylesheet" />
+<link href="bandplot_files/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<script src="bandplot_files/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">Bandplot.R</h1>
+<h4 class="author"><em>Тураев Тимур</em></h4>
+<h4 class="date"><em>16 декабря 2014 г.</em></h4>
+</div>
+
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lattice)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">bandplot &lt;-<span class="st"> </span>function(formula, data, ...) {
+  <span class="co"># panel from Deepayan Sarkar + sorting x variable</span>
+  my.panel.bands &lt;-<span class="st"> </span>function(x, y, high, low, col, fill, subscripts, ...) {
+    high &lt;-<span class="st"> </span>high[subscripts[<span class="kw">order</span>(x)]]
+    low &lt;-<span class="st"> </span>low[subscripts[<span class="kw">order</span>(x)]]
+    x &lt;-<span class="st"> </span><span class="kw">sort</span>(x) <span class="co"># the same as x &lt;- x[order(x)]</span>
+    <span class="kw">panel.polygon</span>(<span class="kw">c</span>(x, <span class="kw">rev</span>(x)), <span class="kw">c</span>(high, <span class="kw">rev</span>(low)), <span class="dt">col=</span>fill, <span class="dt">border =</span> <span class="ot">FALSE</span>, ...)
+    <span class="kw">panel.lines</span>(x, high, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>);
+    <span class="kw">panel.lines</span>(<span class="kw">rev</span>(x), <span class="kw">rev</span>(low), <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>);
+    }
+  
+  <span class="kw">xyplot</span>(formula, data,
+         <span class="dt">prepanel =</span> function(x,y,high,low,...) { p&lt;-<span class="kw">prepanel.default.xyplot</span>(x,y,...); p$ylim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">min</span>(low), <span class="kw">max</span>(high)); p },
+         <span class="dt">panel =</span> function(x, y,...) {
+           <span class="kw">panel.superpose</span>(x, y, <span class="dt">panel.groups =</span> my.panel.bands, <span class="dt">type=</span><span class="st">&#39;b&#39;</span>, <span class="dt">col=</span><span class="st">&#39;gray&#39;</span>,...);
+           <span class="kw">panel.xyplot</span>(x, y, <span class="dt">type=</span><span class="st">&#39;p&#39;</span>, <span class="dt">cex=</span><span class="fl">0.6</span>, <span class="dt">lty=</span><span class="dv">1</span>,...);           
+           <span class="kw">panel.loess</span>(x, y, ...);
+           }, ...)
+  }</code></pre>
+<p>Пример:</p>
+<pre class="sourceCode r"><code class="sourceCode r">size=<span class="dv">100</span>
+x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(size)
+y &lt;-<span class="st"> </span>x +<span class="st"> </span><span class="kw">runif</span>(size, -<span class="dv">1</span>, <span class="dv">1</span>)
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)
+<span class="kw">bandplot</span>(y ~<span class="st"> </span>x, df, <span class="dt">high=</span>y<span class="dv">+2</span>, <span class="dt">low=</span>y<span class="dv">-2</span>, <span class="dt">groups=</span>(x&lt;<span class="dv">100</span>))</code></pre>
+<div class="figure">
+<img src="bandplot_files/figure-html/unnamed-chunk-3-1.png" />
+</div>
+<p>C группами:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bandplot</span>(y ~<span class="st"> </span>x, df, <span class="dt">high=</span>y<span class="dv">+2</span>, <span class="dt">low=</span>y<span class="dv">-2</span>, <span class="dt">groups=</span>(x&lt;<span class="dv">0</span>))</code></pre>
+<div class="figure">
+<img src="bandplot_files/figure-html/unnamed-chunk-4-1.png" />
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

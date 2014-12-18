@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Тураев Тимур" />
+
+
+<title>stepCV.R</title>
+
+<script src="stepCV_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="stepCV_files/bootstrap-2.3.2/css/spacelab.min.css" rel="stylesheet" />
+<link href="stepCV_files/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<script src="stepCV_files/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">stepCV.R</h1>
+<h4 class="author"><em>Тураев Тимур</em></h4>
+<h4 class="date"><em>16 декабря 2014 г.</em></h4>
+</div>
+
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(e1071)
+<span class="kw">library</span>(MASS)</code></pre>
+<p>Ниже идет небольшой ад: это просто код функции stepAIC. Пришлось хорошо в нем покопаться. И я нашел, что функция, которая считает информационный критерий Акаике не размазана по коду, а прям называется extractAIC. Она возвращает лист из двух значений: equivalent degrees of freedom и собственно сам критерий.</p>
+<p>Все что я тут заменил: зареплейсил вызов extractAIC на мой мега-экстрактор, который берет из cv эти же значения, вроде работает…</p>
+<p>Но я не понял, где именно находится код вывода модели на каждом шагу: там все еще участвует AIC (и сразу к нему три вопроса: как тебя удалить, АИК? 2) а влияешь ли ты еще на ход функции? 3) ладно, не удалить, то как хотя бы с тобой рядом напечататься?) и мне кажется у меня не получилось обмануть таким простым способом код :)</p>
+<p>Но так или иначе, повозился с исходным кодом некоторых функций в R…</p>
+<pre class="sourceCode r"><code class="sourceCode r">stepCV &lt;-<span class="st"> </span>function (df, object, scope, <span class="dt">scale =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="kw">c</span>(<span class="st">&quot;both&quot;</span>, <span class="st">&quot;backward&quot;</span>, 
+                                                           <span class="st">&quot;forward&quot;</span>), <span class="dt">trace =</span> <span class="dv">1</span>, <span class="dt">keep =</span> <span class="ot">NULL</span>, <span class="dt">steps =</span> <span class="dv">1000</span>, <span class="dt">use.start =</span> <span class="ot">FALSE</span>, 
+                   <span class="dt">k =</span> <span class="dv">2</span>, ...) 
+  {
+  myMegaExtractor &lt;-<span class="st"> </span>function(x, scale, k, ...) {
+    t &lt;-<span class="st"> </span><span class="kw">tune</span>(lm, <span class="kw">formula</span>(x$terms), <span class="dt">data =</span> df)
+    <span class="kw">c</span>(t$best.model$rank, t$best.performance)
+  }
+  mydeviance &lt;-<span class="st"> </span>function(x, ...) {
+    dev &lt;-<span class="st"> </span><span class="kw">deviance</span>(x)
+    if (!<span class="kw">is.null</span>(dev)) 
+      dev
+    else <span class="kw">myMegaExtractor</span>(x, <span class="dt">k =</span> <span class="dv">0</span>)[2L]
+    }
+  cut.string &lt;-<span class="st"> </span>function(string) {
+    if (<span class="kw">length</span>(string) &gt;<span class="st"> </span>1L) 
+      string[-1L] &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, string[-1L], <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+    string
+    }  
+  re.arrange &lt;-<span class="st"> </span>function(keep) {
+    namr &lt;-<span class="st"> </span><span class="kw">names</span>(k1 &lt;-<span class="st"> </span>keep[[1L]])
+    namc &lt;-<span class="st"> </span><span class="kw">names</span>(keep)
+    nc &lt;-<span class="st"> </span><span class="kw">length</span>(keep)
+    nr &lt;-<span class="st"> </span><span class="kw">length</span>(k1)
+    <span class="kw">array</span>(<span class="kw">unlist</span>(keep, <span class="dt">recursive =</span> <span class="ot">FALSE</span>), <span class="kw">c</span>(nr, nc), <span class="kw">list</span>(namr, 
+                                                           namc))
+    }
+  step.results &lt;-<span class="st"> </span>function(models, fit, object, <span class="dt">usingCp =</span> <span class="ot">FALSE</span>) {
+    change &lt;-<span class="st"> </span><span class="kw">sapply</span>(models, <span class="st">&quot;[[&quot;</span>, <span class="st">&quot;change&quot;</span>)
+    rd &lt;-<span class="st"> </span><span class="kw">sapply</span>(models, <span class="st">&quot;[[&quot;</span>, <span class="st">&quot;deviance&quot;</span>)
+    dd &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="kw">abs</span>(<span class="kw">diff</span>(rd)))
+    rdf &lt;-<span class="st"> </span><span class="kw">sapply</span>(models, <span class="st">&quot;[[&quot;</span>, <span class="st">&quot;df.resid&quot;</span>)
+    ddf &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="kw">abs</span>(<span class="kw">diff</span>(rdf)))
+    AIC &lt;-<span class="st"> </span><span class="kw">sapply</span>(models, <span class="st">&quot;[[&quot;</span>, <span class="st">&quot;AIC&quot;</span>)
+    heading &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Stepwise Model Path </span><span class="ch">\n</span><span class="st">Analysis of Deviance Table&quot;</span>, 
+                 <span class="st">&quot;</span><span class="ch">\n</span><span class="st">Initial Model:&quot;</span>, <span class="kw">deparse</span>(<span class="kw">formula</span>(object)), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">Final Model:&quot;</span>, 
+                 <span class="kw">deparse</span>(<span class="kw">formula</span>(fit)), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+    aod &lt;-<span class="st"> </span>if (usingCp) 
+      <span class="kw">data.frame</span>(<span class="dt">Step =</span> change, <span class="dt">Df =</span> ddf, <span class="dt">Deviance =</span> dd, 
+                 <span class="st">`</span><span class="dt">Resid. Df</span><span class="st">`</span> =<span class="st"> </span>rdf, <span class="st">`</span><span class="dt">Resid. Dev</span><span class="st">`</span> =<span class="st"> </span>rd, <span class="dt">Cp =</span> AIC, 
+                 <span class="dt">check.names =</span> <span class="ot">FALSE</span>)
+    else <span class="kw">data.frame</span>(<span class="dt">Step =</span> change, <span class="dt">Df =</span> ddf, <span class="dt">Deviance =</span> dd, 
+                    <span class="st">`</span><span class="dt">Resid. Df</span><span class="st">`</span> =<span class="st"> </span>rdf, <span class="st">`</span><span class="dt">Resid. Dev</span><span class="st">`</span> =<span class="st"> </span>rd, <span class="dt">AIC =</span> AIC, 
+                    <span class="dt">check.names =</span> <span class="ot">FALSE</span>)
+    <span class="kw">attr</span>(aod, <span class="st">&quot;heading&quot;</span>) &lt;-<span class="st"> </span>heading
+    <span class="kw">class</span>(aod) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Anova&quot;</span>, <span class="st">&quot;data.frame&quot;</span>)
+    fit$anova &lt;-<span class="st"> </span>aod
+    fit
+    }
+  Terms &lt;-<span class="st"> </span><span class="kw">terms</span>(object)
+  object$formula &lt;-<span class="st"> </span>Terms
+  if (<span class="kw">inherits</span>(object, <span class="st">&quot;lme&quot;</span>)) 
+    object$call$fixed &lt;-<span class="st"> </span>Terms
+  else if (<span class="kw">inherits</span>(object, <span class="st">&quot;gls&quot;</span>)) 
+    object$call$model &lt;-<span class="st"> </span>Terms
+  else object$call$formula &lt;-<span class="st"> </span>Terms
+  if (use.start) 
+    <span class="kw">warning</span>(<span class="st">&quot;&#39;use.start&#39; cannot be used with R&#39;s version of &#39;glm&#39;&quot;</span>)
+  md &lt;-<span class="st"> </span><span class="kw">missing</span>(direction)
+  direction &lt;-<span class="st"> </span><span class="kw">match.arg</span>(direction)
+  backward &lt;-<span class="st"> </span>direction ==<span class="st"> &quot;both&quot;</span> |<span class="st"> </span>direction ==<span class="st"> &quot;backward&quot;</span>
+  forward &lt;-<span class="st"> </span>direction ==<span class="st"> &quot;both&quot;</span> |<span class="st"> </span>direction ==<span class="st"> &quot;forward&quot;</span>
+  if (<span class="kw">missing</span>(scope)) {
+    fdrop &lt;-<span class="st"> </span><span class="kw">numeric</span>()
+    fadd &lt;-<span class="st"> </span><span class="kw">attr</span>(Terms, <span class="st">&quot;factors&quot;</span>)
+    if (md) 
+      forward &lt;-<span class="st"> </span><span class="ot">FALSE</span>
+    }
+  else {
+    if (<span class="kw">is.list</span>(scope)) {
+      fdrop &lt;-<span class="st"> </span>if (!<span class="kw">is.null</span>(fdrop &lt;-<span class="st"> </span>scope$lower)) 
+        <span class="kw">attr</span>(<span class="kw">terms</span>(<span class="kw">update.formula</span>(object, fdrop)), <span class="st">&quot;factors&quot;</span>)
+      else <span class="kw">numeric</span>()
+      fadd &lt;-<span class="st"> </span>if (!<span class="kw">is.null</span>(fadd &lt;-<span class="st"> </span>scope$upper)) 
+        <span class="kw">attr</span>(<span class="kw">terms</span>(<span class="kw">update.formula</span>(object, fadd)), <span class="st">&quot;factors&quot;</span>)
+      }
+    else {
+      fadd &lt;-<span class="st"> </span>if (!<span class="kw">is.null</span>(fadd &lt;-<span class="st"> </span>scope)) 
+        <span class="kw">attr</span>(<span class="kw">terms</span>(<span class="kw">update.formula</span>(object, scope)), <span class="st">&quot;factors&quot;</span>)
+      fdrop &lt;-<span class="st"> </span><span class="kw">numeric</span>()
+      }
+    }
+  models &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, steps)
+  if (!<span class="kw">is.null</span>(keep)) 
+    keep.list &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, steps)
+  n &lt;-<span class="st"> </span><span class="kw">nobs</span>(object, <span class="dt">use.fallback =</span> <span class="ot">TRUE</span>)
+  fit &lt;-<span class="st"> </span>object
+  bAIC &lt;-<span class="st"> </span><span class="kw">myMegaExtractor</span>(fit, scale, <span class="dt">k =</span> k, ...)
+  edf &lt;-<span class="st"> </span>bAIC[1L]
+  bAIC &lt;-<span class="st"> </span>bAIC[2L]
+  if (<span class="kw">is.na</span>(bAIC)) 
+    <span class="kw">stop</span>(<span class="st">&quot;AIC is not defined for this model, so &#39;stepAIC&#39; cannot proceed&quot;</span>)
+  if (bAIC ==<span class="st"> </span>-<span class="ot">Inf</span>) 
+    <span class="kw">stop</span>(<span class="st">&quot;AIC is -infinity for this model, so &#39;stepAIC&#39; cannot proceed&quot;</span>)
+  nm &lt;-<span class="st"> </span><span class="dv">1</span>
+  Terms &lt;-<span class="st"> </span><span class="kw">terms</span>(fit)
+  if (trace) {
+    <span class="kw">cat</span>(<span class="st">&quot;Start:  Error estimation using 10-fold CV=&quot;</span>, <span class="kw">format</span>(<span class="kw">round</span>(bAIC, <span class="dv">2</span>)), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">cut.string</span>(<span class="kw">deparse</span>(<span class="kw">formula</span>(fit))), 
+        <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+    utils::<span class="kw">flush.console</span>()
+    }
+  models[[nm]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">deviance =</span> <span class="kw">mydeviance</span>(fit), <span class="dt">df.resid =</span> n -<span class="st"> </span>
+<span class="st">                         </span>edf, <span class="dt">change =</span> <span class="st">&quot;&quot;</span>, <span class="dt">AIC =</span> bAIC)
+  if (!<span class="kw">is.null</span>(keep)) 
+    keep.list[[nm]] &lt;-<span class="st"> </span><span class="kw">keep</span>(fit, bAIC)
+  usingCp &lt;-<span class="st"> </span><span class="ot">FALSE</span>
+  while (steps &gt;<span class="st"> </span><span class="dv">0</span>) {
+    steps &lt;-<span class="st"> </span>steps -<span class="st"> </span><span class="dv">1</span>
+    AIC &lt;-<span class="st"> </span>bAIC
+    ffac &lt;-<span class="st"> </span><span class="kw">attr</span>(Terms, <span class="st">&quot;factors&quot;</span>)
+    if (!<span class="kw">is.null</span>(sp &lt;-<span class="st"> </span><span class="kw">attr</span>(Terms, <span class="st">&quot;specials&quot;</span>)) &amp;&amp;<span class="st"> </span>!<span class="kw">is.null</span>(st &lt;-<span class="st"> </span>sp$strata)) 
+      ffac &lt;-<span class="st"> </span>ffac[-st, ]
+    scope &lt;-<span class="st"> </span><span class="kw">factor.scope</span>(ffac, <span class="kw">list</span>(<span class="dt">add =</span> fadd, <span class="dt">drop =</span> fdrop))
+    aod &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    change &lt;-<span class="st"> </span><span class="ot">NULL</span>
+    if (backward &amp;&amp;<span class="st"> </span><span class="kw">length</span>(scope$drop)) {
+      aod &lt;-<span class="st"> </span><span class="kw">dropterm</span>(fit, scope$drop, <span class="dt">scale =</span> scale, 
+                      <span class="dt">trace =</span> <span class="kw">max</span>(<span class="dv">0</span>, trace -<span class="st"> </span><span class="dv">1</span>), <span class="dt">k =</span> k, ...)
+      rn &lt;-<span class="st"> </span><span class="kw">row.names</span>(aod)
+      <span class="kw">row.names</span>(aod) &lt;-<span class="st"> </span><span class="kw">c</span>(rn[1L], <span class="kw">paste</span>(<span class="st">&quot;-&quot;</span>, rn[-1L], 
+                                        <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))
+      if (<span class="kw">any</span>(aod$Df ==<span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) {
+        zdf &lt;-<span class="st"> </span>aod$Df ==<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span>!<span class="kw">is.na</span>(aod$Df)
+        nc &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw">c</span>(<span class="st">&quot;Cp&quot;</span>, <span class="st">&quot;AIC&quot;</span>), <span class="kw">names</span>(aod))
+        nc &lt;-<span class="st"> </span>nc[!<span class="kw">is.na</span>(nc)][1L]
+        ch &lt;-<span class="st"> </span><span class="kw">abs</span>(aod[zdf, nc] -<span class="st"> </span>aod[<span class="dv">1</span>, nc]) &gt;<span class="st"> </span><span class="fl">0.01</span>
+        if (<span class="kw">any</span>(<span class="kw">is.finite</span>(ch) &amp;<span class="st"> </span>ch)) {
+          <span class="kw">warning</span>(<span class="st">&quot;0 df terms are changing AIC&quot;</span>)
+          zdf &lt;-<span class="st"> </span>zdf[!ch]
+          }
+        if (<span class="kw">length</span>(zdf) &gt;<span class="st"> </span>0L) 
+          change &lt;-<span class="st"> </span><span class="kw">rev</span>(<span class="kw">rownames</span>(aod)[zdf])[1L]
+        }
+      }
+    if (<span class="kw">is.null</span>(change)) {
+      if (forward &amp;&amp;<span class="st"> </span><span class="kw">length</span>(scope$add)) {
+        aodf &lt;-<span class="st"> </span><span class="kw">addterm</span>(fit, scope$add, <span class="dt">scale =</span> scale, 
+                        <span class="dt">trace =</span> <span class="kw">max</span>(<span class="dv">0</span>, trace -<span class="st"> </span><span class="dv">1</span>), <span class="dt">k =</span> k, ...)
+        rn &lt;-<span class="st"> </span><span class="kw">row.names</span>(aodf)
+        <span class="kw">row.names</span>(aodf) &lt;-<span class="st"> </span><span class="kw">c</span>(rn[1L], <span class="kw">paste</span>(<span class="st">&quot;+&quot;</span>, rn[-1L], 
+                                           <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))
+        aod &lt;-<span class="st"> </span>if (<span class="kw">is.null</span>(aod)) 
+          aodf
+        else <span class="kw">rbind</span>(aod, aodf[-<span class="dv">1</span>, , <span class="dt">drop =</span> <span class="ot">FALSE</span>])
+        }
+      <span class="kw">attr</span>(aod, <span class="st">&quot;heading&quot;</span>) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+      if (<span class="kw">is.null</span>(aod) ||<span class="st"> </span><span class="kw">ncol</span>(aod) ==<span class="st"> </span><span class="dv">0</span>) 
+        break
+      nzdf &lt;-<span class="st"> </span>if (!<span class="kw">is.null</span>(aod$Df)) 
+        aod$Df !=<span class="st"> </span><span class="dv">0</span> |<span class="st"> </span><span class="kw">is.na</span>(aod$Df)
+      aod &lt;-<span class="st"> </span>aod[nzdf, ]
+      if (<span class="kw">is.null</span>(aod) ||<span class="st"> </span><span class="kw">ncol</span>(aod) ==<span class="st"> </span><span class="dv">0</span>) 
+        break
+      nc &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw">c</span>(<span class="st">&quot;Cp&quot;</span>, <span class="st">&quot;AIC&quot;</span>), <span class="kw">names</span>(aod))
+      nc &lt;-<span class="st"> </span>nc[!<span class="kw">is.na</span>(nc)][1L]
+      o &lt;-<span class="st"> </span><span class="kw">order</span>(aod[, nc])
+      if (trace) {
+        <span class="kw">print</span>(aod[o, ])
+        utils::<span class="kw">flush.console</span>()
+        }
+      if (o[1L] ==<span class="st"> </span><span class="dv">1</span>) 
+        break
+      change &lt;-<span class="st"> </span><span class="kw">rownames</span>(aod)[o[1L]]
+      }
+    usingCp &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="st">&quot;Cp&quot;</span>, <span class="kw">names</span>(aod), <span class="dv">0</span>) &gt;<span class="st"> </span><span class="dv">0</span>
+    fit &lt;-<span class="st"> </span><span class="kw">update</span>(fit, <span class="kw">paste</span>(<span class="st">&quot;~ .&quot;</span>, change), <span class="dt">evaluate =</span> <span class="ot">FALSE</span>)
+    fit &lt;-<span class="st"> </span><span class="kw">eval.parent</span>(fit)
+    nnew &lt;-<span class="st"> </span><span class="kw">nobs</span>(fit, <span class="dt">use.fallback =</span> <span class="ot">TRUE</span>)
+    if (<span class="kw">all</span>(<span class="kw">is.finite</span>(<span class="kw">c</span>(n, nnew))) &amp;&amp;<span class="st"> </span>nnew !=<span class="st"> </span>n) 
+      <span class="kw">stop</span>(<span class="st">&quot;number of rows in use has changed: remove missing values?&quot;</span>)
+    Terms &lt;-<span class="st"> </span><span class="kw">terms</span>(fit)
+    bAIC &lt;-<span class="st"> </span><span class="kw">myMegaExtractor</span>(fit, scale, <span class="dt">k =</span> k, ...)
+    edf &lt;-<span class="st"> </span>bAIC[1L]
+    bAIC &lt;-<span class="st"> </span>bAIC[2L]
+    if (trace) {
+      <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Step:  Error estimation using 10-fold CV=&quot;</span>, <span class="kw">format</span>(<span class="kw">round</span>(bAIC, <span class="dv">2</span>)), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, 
+          <span class="kw">cut.string</span>(<span class="kw">deparse</span>(<span class="kw">formula</span>(fit))), <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+      utils::<span class="kw">flush.console</span>()
+      }
+    if (bAIC &gt;=<span class="st"> </span>AIC +<span class="st"> </span><span class="fl">1e-07</span>) 
+      break
+    nm &lt;-<span class="st"> </span>nm +<span class="st"> </span><span class="dv">1</span>
+    models[[nm]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">deviance =</span> <span class="kw">mydeviance</span>(fit), <span class="dt">df.resid =</span> n -<span class="st"> </span>
+<span class="st">                           </span>edf, <span class="dt">change =</span> change, <span class="dt">AIC =</span> bAIC)
+    if (!<span class="kw">is.null</span>(keep)) 
+      keep.list[[nm]] &lt;-<span class="st"> </span><span class="kw">keep</span>(fit, bAIC)
+    }
+  if (!<span class="kw">is.null</span>(keep)) 
+    fit$keep &lt;-<span class="st"> </span><span class="kw">re.arrange</span>(keep.list[<span class="kw">seq</span>(nm)])
+  <span class="kw">step.results</span>(<span class="dt">models =</span> models[<span class="kw">seq</span>(nm)], fit, object, usingCp)
+  }</code></pre>
+<p>Пример:</p>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>mtcars
+f &lt;-<span class="st"> </span>mpg ~<span class="st"> </span>.
+l &lt;-<span class="st"> </span><span class="kw">lm</span>(f, df)
+(l.aic &lt;-<span class="st"> </span><span class="kw">stepAIC</span>(l, <span class="dt">trace =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre><code>## Start:  AIC=70.9
+## mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
+## 
+##        Df Sum of Sq    RSS    AIC
+## - cyl   1    0.0799 147.57 68.915
+## - vs    1    0.1601 147.66 68.932
+## - carb  1    0.4067 147.90 68.986
+## - gear  1    1.3531 148.85 69.190
+## - drat  1    1.6270 149.12 69.249
+## - disp  1    3.9167 151.41 69.736
+## - hp    1    6.8399 154.33 70.348
+## - qsec  1    8.8641 156.36 70.765
+## &lt;none&gt;              147.49 70.898
+## - am    1   10.5467 158.04 71.108
+## - wt    1   27.0144 174.51 74.280
+## 
+## Step:  AIC=68.92
+## mpg ~ disp + hp + drat + wt + qsec + vs + am + gear + carb
+## 
+##        Df Sum of Sq    RSS    AIC
+## - vs    1    0.2685 147.84 66.973
+## - carb  1    0.5201 148.09 67.028
+## - gear  1    1.8211 149.40 67.308
+## - drat  1    1.9826 149.56 67.342
+## - disp  1    3.9009 151.47 67.750
+## - hp    1    7.3632 154.94 68.473
+## &lt;none&gt;              147.57 68.915
+## - qsec  1   10.0933 157.67 69.032
+## - am    1   11.8359 159.41 69.384
+## - wt    1   27.0280 174.60 72.297
+## 
+## Step:  AIC=66.97
+## mpg ~ disp + hp + drat + wt + qsec + am + gear + carb
+## 
+##        Df Sum of Sq    RSS    AIC
+## - carb  1    0.6855 148.53 65.121
+## - gear  1    2.1437 149.99 65.434
+## - drat  1    2.2139 150.06 65.449
+## - disp  1    3.6467 151.49 65.753
+## - hp    1    7.1060 154.95 66.475
+## &lt;none&gt;              147.84 66.973
+## - am    1   11.5694 159.41 67.384
+## - qsec  1   15.6830 163.53 68.200
+## - wt    1   27.3799 175.22 70.410
+## 
+## Step:  AIC=65.12
+## mpg ~ disp + hp + drat + wt + qsec + am + gear
+## 
+##        Df Sum of Sq    RSS    AIC
+## - gear  1     1.565 150.09 63.457
+## - drat  1     1.932 150.46 63.535
+## &lt;none&gt;              148.53 65.121
+## - disp  1    10.110 158.64 65.229
+## - am    1    12.323 160.85 65.672
+## - hp    1    14.826 163.35 66.166
+## - qsec  1    26.408 174.94 68.358
+## - wt    1    69.127 217.66 75.350
+## 
+## Step:  AIC=63.46
+## mpg ~ disp + hp + drat + wt + qsec + am
+## 
+##        Df Sum of Sq    RSS    AIC
+## - drat  1     3.345 153.44 62.162
+## - disp  1     8.545 158.64 63.229
+## &lt;none&gt;              150.09 63.457
+## - hp    1    13.285 163.38 64.171
+## - am    1    20.036 170.13 65.466
+## - qsec  1    25.574 175.67 66.491
+## - wt    1    67.572 217.66 73.351
+## 
+## Step:  AIC=62.16
+## mpg ~ disp + hp + wt + qsec + am
+## 
+##        Df Sum of Sq    RSS    AIC
+## - disp  1     6.629 160.07 61.515
+## &lt;none&gt;              153.44 62.162
+## - hp    1    12.572 166.01 62.682
+## - qsec  1    26.470 179.91 65.255
+## - am    1    32.198 185.63 66.258
+## - wt    1    69.043 222.48 72.051
+## 
+## Step:  AIC=61.52
+## mpg ~ hp + wt + qsec + am
+## 
+##        Df Sum of Sq    RSS    AIC
+## - hp    1     9.219 169.29 61.307
+## &lt;none&gt;              160.07 61.515
+## - qsec  1    20.225 180.29 63.323
+## - am    1    25.993 186.06 64.331
+## - wt    1    78.494 238.56 72.284
+## 
+## Step:  AIC=61.31
+## mpg ~ wt + qsec + am
+## 
+##        Df Sum of Sq    RSS    AIC
+## &lt;none&gt;              169.29 61.307
+## - am    1    26.178 195.46 63.908
+## - qsec  1   109.034 278.32 75.217
+## - wt    1   183.347 352.63 82.790</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt + qsec + am, data = df)
+## 
+## Coefficients:
+## (Intercept)           wt         qsec           am  
+##       9.618       -3.917        1.226        2.936</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(l.cv &lt;-<span class="st"> </span><span class="kw">stepCV</span>(df, l, <span class="dt">trace =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre><code>## Start:  Error estimation using 10-fold CV=11.88
+## mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
+## 
+##        Df Sum of Sq    RSS    AIC
+## - cyl   1    0.0799 147.57 68.915
+## - vs    1    0.1601 147.66 68.932
+## - carb  1    0.4067 147.90 68.986
+## - gear  1    1.3531 148.85 69.190
+## - drat  1    1.6270 149.12 69.249
+## - disp  1    3.9167 151.41 69.736
+## - hp    1    6.8399 154.33 70.348
+## - qsec  1    8.8641 156.36 70.765
+## &lt;none&gt;              147.49 70.898
+## - am    1   10.5467 158.04 71.108
+## - wt    1   27.0144 174.51 74.280
+## 
+## Step:  Error estimation using 10-fold CV=13.9
+## mpg ~ disp + hp + drat + wt + qsec + vs + am + gear + carb</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp + hp + drat + wt + qsec + vs + am + gear + 
+##     carb, data = df)
+## 
+## Coefficients:
+## (Intercept)         disp           hp         drat           wt  
+##    10.96007      0.01283     -0.02191      0.83520     -3.69251  
+##        qsec           vs           am         gear         carb  
+##     0.84244      0.38975      2.57743      0.71155     -0.21958</code></pre>
+<p>Вроде бы после AIC и CV формулы получаются разными, что намекает, что может быть-таки удалось впихнуть туда CV…</p>
+<p>Это просто как я искал нужные данные в tune:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(l)</code></pre>
+<pre><code>## [1] 11.00000 70.89774</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(t<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">tune</span>(lm, mpg ~<span class="st"> </span>hp +<span class="st"> </span>qsec +<span class="st"> </span>am +<span class="st"> </span>wt, <span class="dt">data =</span> df))</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 7.203485</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(t<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">tune</span>(lm, mpg ~<span class="st"> </span>qsec +<span class="st"> </span>am +<span class="st"> </span>wt, <span class="dt">data =</span> df))</code></pre>
+<pre><code>## 
+## Error estimation of &#39;lm&#39; using 10-fold cross validation: 7.80104</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(t<span class="fl">.1</span>$best.model$rank, t<span class="fl">.1</span>$best.performance)</code></pre>
+<pre><code>## [1] 5.000000 7.203485</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(t<span class="fl">.2</span>$best.model$rank, t<span class="fl">.2</span>$best.performance)</code></pre>
+<pre><code>## [1] 4.00000 7.80104</code></pre>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
