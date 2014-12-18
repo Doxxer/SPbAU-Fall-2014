@@ -118,7 +118,7 @@ check.nb(model)
 
 ## Multinomial regression
 
-Снова тестовые фукнции
+Снова тестовые фукнции (как написано в письме (аж от 3 ноября :( ) trace выключен, там все сходится)
 ```{r}
 check.testTrain.mr = function(f) {
   m.predicted <- predict(multinom(f, df.train, maxit = 2000, trace=FALSE), df.test)
