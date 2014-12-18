@@ -1,0 +1,83 @@
+---
+title: "Seeds"
+author: "Тураев Тимур"
+date: "16 декабря 2014 г."
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 15
+    fig_width: 15
+    highlight: tango
+    self_contained: no
+    theme: spacelab
+---
+```{r echo=FALSE}
+library(knitr)
+library(lattice)
+library(MASS)
+library(e1071)
+library(corrplot)
+library(latticeExtra)
+```
+
+Загружаем наши данные и переименовываем столбцы так, как указано в комментариях к данным.
+```{r}
+df <- read.table('data/seeds.txt')
+names(df) <- c("area", "perimeter", "compactness", "length", "width", "asymmetry", "grooveLength", "variety")
+summary(df)
+```
+
+Построим всякие графики:
+```{r}
+splom(~df, data=df,
+      upper.panel=function(x, y, ...) { panel.xyplot(x, y, ...); panel.loess(x, y, ..., col='red') },
+      lower.panel=function(x, y, ...) { },
+      pscale=0, varname.cex=1.4, par.settings=simpleTheme(pch=17, cex=0.2))
+```
+
+```{r}
+corrplot.mixed(cor(df), tl.cex=1.5)
+```
+
+```{r}
+marginal.plot(df)
+```
+
+### LDA
+```{r}
+train.idx <- sample(nrow(df), size = nrow(df) * 0.6666)
+df.train <- df[train.idx, ]
+df.test <- df[-train.idx, ]
+```
+
+Установим функцию тестирования нашей модели (10-fold cross validation) и проверим test-train (выведем относительную ошибку)
+```{r}
+check.testTrain = function(f) {
+  m.predicted <- predict(lda(f, data = df.train), df.test)
+  print(table(m.predicted$class, df.test$variety))
+  mean(m.predicted$class != df.test$variety)
+}
+
+check = function(f) {
+  print(lda(f, df))
+  t <- tune(lda, f, data = df, predict.func = function(...) as.numeric(predict(...)$class))
+  print(check.testTrain(f))
+  t
+}
+
+check(variety ~ .)
+```
+
+Надо бы избавиться в модели от зависимых параметров.
+
+Area и perimeter превращаются по формуле (в датасете она есть в описании данных) в compactness. Одно из измерений ядра тоже можно выкинуть. 
+
+После всех проб и ошибок я выбрал такую модель, минимизирующую ошибку: оставим только длины зерна и "groove" (однажды я вообще получил полное совпадение)
+```{r}
+model <- variety ~ . - area - perimeter - width - asymmetry - compactness
+check(model)
+```
+
+От запуска к запуску цифры все время разные, но раз модели предсказания почти одинаковые, почему бы не взять ту, которая проще :)
+
+## Naive Bayes
