@@ -36,6 +36,21 @@ long getTimestamp() {
     return (time.tv_sec % (24 * 60 * 60)) * 1000 + time.tv_usec / 1000;
 }
 
+bool checkPacket(icmp *packet) {
+    if (packet == 0) {
+        return false;
+    }
+
+    u_short cksum = packet->icmp_cksum;
+    packet->icmp_cksum = 0;
+
+    uint16_t checkSum1 = checkSum((uint16_t *) packet, sizeof(*packet));
+    bool result = (cksum == checkSum1);
+    printf("%d %d\n", cksum, checkSum1);
+    packet->icmp_cksum = cksum;
+    return result;
+}
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         cout << "Usage: sudo ./time <NTP server IP>" << endl;
@@ -52,6 +67,10 @@ int main(int argc, char *argv[]) {
         }
         return EXIT_FAILURE;
     }
+
+    timeval timeout = {0};
+    timeout.tv_sec = 2;
+    setsockopt(icmpSocket, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeval));
 
     long timestamp = getTimestamp();
 
@@ -86,7 +105,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    icmp *icmpReceivedPacket;
+    icmp *icmpReceivedPacket = NULL;
     do {
         char receivedPacket[MAX_PACKET_LEN];
         ssize_t bytesReceived = recv(icmpSocket, receivedPacket, MAX_PACKET_LEN, 0);
@@ -99,15 +118,31 @@ int main(int argc, char *argv[]) {
     } while (icmpReceivedPacket->icmp_type != ICMP_TSTAMPREPLY);
     close(icmpSocket);
 
-    printf("originate = %u, "
-            "receive = %u, "
-            "transmite: = %u, "
-            "rtt = %li ms\n"
-            "difference = %u ms\n",
-            ntohl(icmpReceivedPacket->icmp_otime),
-            ntohl(icmpReceivedPacket->icmp_rtime),
-            ntohl(icmpReceivedPacket->icmp_ttime),
-            ntohl(icmpReceivedPacket->icmp_rtime) - timestamp,
-            ntohl(icmpReceivedPacket->icmp_rtime) - ntohl(icmpReceivedPacket->icmp_otime));
+//    checkPacket(icmpReceivedPacket);
+
+    long currentTime = getTimestamp();
+
+    long travelTime = (
+            (ntohl(icmpReceivedPacket->icmp_rtime) - ntohl(icmpReceivedPacket->icmp_otime)) +
+                    (currentTime - ntohl(icmpReceivedPacket->icmp_ttime))) / 2;
+
+    long delta = (ntohl(icmpReceivedPacket->icmp_rtime) - ntohl(icmpReceivedPacket->icmp_otime)) - travelTime;
+
+    printf("Local %li ms\n", currentTime);
+    printf("TravelTime %li ms\n", travelTime);
+    printf("Delta = %li ms\n", delta);
+
+//    printf("originate = %u, "
+//            "receive = %u, "
+//            "transmite: = %u, "
+//            "RTT = %li ms\n"
+//            "difference = %u ms\n"
+//            "should correct time by (differece - RTT/2) %li ms\n",
+//            ntohl(icmpReceivedPacket->icmp_otime), // orig
+//            ntohl(icmpReceivedPacket->icmp_rtime), // recv
+//            ntohl(icmpReceivedPacket->icmp_ttime), // transmit
+//            timestampEnd - timestamp, // RTT
+//            ntohl(icmpReceivedPacket->icmp_rtime) - ntohl(icmpReceivedPacket->icmp_otime),
+//            (ntohl(icmpReceivedPacket->icmp_rtime) - ntohl(icmpReceivedPacket->icmp_otime)) - (timestampEnd - timestamp) / 2);
     return 0;
 }
