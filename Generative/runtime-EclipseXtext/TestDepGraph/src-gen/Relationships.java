@@ -1,6 +1,6 @@
 class A {
 	public List<Class> getDependencies() {
-		return Arrays.asList(A.class, B.class, C.class, D.class);
+		return Arrays.asList(A.class, B.class, C.class, Dasha.class);
 	}
 }
 
@@ -14,12 +14,12 @@ class B {
 
 class C {
 	public List<Class> getDependencies() {
-		return Arrays.asList(D.class);
+		return Arrays.asList(Dasha.class);
 	}
 }
 
 
-class D {
+class Dasha {
 	public List<Class> getDependencies() {
 		return Collections.emptyList();
 	}
