@@ -4,6 +4,7 @@
 package ru.spbau.turaev.depgraph.generator;
 
 import com.google.common.collect.Iterators;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
@@ -41,7 +42,7 @@ public class MyDslGenerator implements IGenerator {
     fsa.generateFile("Relationships.java", _join);
   }
   
-  public CharSequence compile(final Person p) {
+  protected CharSequence _compile(final Person p) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("class ");
     String _name = p.getName();
@@ -54,8 +55,8 @@ public class MyDslGenerator implements IGenerator {
     _builder.append("\t\t");
     _builder.append("return ");
     EObject _rels = p.getRels();
-    CharSequence _compileRel = this.compileRel(_rels);
-    _builder.append(_compileRel, "\t\t");
+    Object _compile = this.compile(_rels);
+    _builder.append(_compile, "\t\t");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -66,23 +67,13 @@ public class MyDslGenerator implements IGenerator {
     return _builder;
   }
   
-  public CharSequence compileRel(final EObject object) {
-    if ((object instanceof NoRelationships)) {
-      return this.compile(((NoRelationships) object));
-    }
-    if ((object instanceof RelationshipDescription)) {
-      return this.compile(((RelationshipDescription) object));
-    }
-    throw new UnsupportedOperationException("Unknown relationship");
-  }
-  
-  public CharSequence compile(final NoRelationships rels) {
+  protected CharSequence _compile(final NoRelationships rels) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Collections.emptyList()");
     return _builder;
   }
   
-  public CharSequence compile(final RelationshipDescription rels) {
+  protected CharSequence _compile(final RelationshipDescription rels) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Arrays.asList(");
     EList<Person> _rel = rels.getRel();
@@ -97,5 +88,18 @@ public class MyDslGenerator implements IGenerator {
     _builder.append(_join, "");
     _builder.append(")");
     return _builder;
+  }
+  
+  public CharSequence compile(final EObject rels) {
+    if (rels instanceof NoRelationships) {
+      return _compile((NoRelationships)rels);
+    } else if (rels instanceof Person) {
+      return _compile((Person)rels);
+    } else if (rels instanceof RelationshipDescription) {
+      return _compile((RelationshipDescription)rels);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(rels).toString());
+    }
   }
 }

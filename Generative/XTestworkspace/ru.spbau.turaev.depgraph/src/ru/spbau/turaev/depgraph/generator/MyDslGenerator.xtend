@@ -26,26 +26,16 @@ class MyDslGenerator implements IGenerator {
 				.join('\n\n'))
 	}
 	
-	def compile(Person p) '''
+	dispatch def compile(Person p) '''
 		class «p.name» {
 			public List<Class> getDependencies() {
-				return «p.rels.compileRel»;
+				return «p.rels.compile»;
 			}
 		}
 	'''
 	
-	def compileRel(EObject object) {
-		if (object instanceof NoRelationships) {
-			return compile(object as NoRelationships);			
-		}
-		if (object instanceof RelationshipDescription) {
-			return compile(object as RelationshipDescription);
-		}
-		throw new UnsupportedOperationException("Unknown relationship")
-	}
+	dispatch def compile(NoRelationships rels) '''Collections.emptyList()'''
 	
-	def compile(NoRelationships rels) '''Collections.emptyList()'''
-	
-	def compile(RelationshipDescription rels) '''
+	dispatch def compile(RelationshipDescription rels) '''
 		Arrays.asList(«rels.rel.map[it | it.name + ".class"].join(', ')»)'''
 }

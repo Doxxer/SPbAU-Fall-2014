@@ -24,3 +24,10 @@ class Dasha {
 		return Collections.emptyList();
 	}
 }
+
+
+class Dilya {
+	public List<Class> getDependencies() {
+		return Collections.emptyList();
+	}
+}

@@ -11,3 +11,5 @@ person C is in relationships with {
 };
 
 person Dasha is alone;
+
+person Dilya is alone;
