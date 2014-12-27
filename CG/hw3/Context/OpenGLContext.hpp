@@ -9,6 +9,7 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <glm/gtc/constants.hpp>
 #include "Scene.hpp"
 
 using std::string;
@@ -16,12 +17,12 @@ using std::string;
 class OpenGLContext {
 public:
     OpenGLContext(string const &windowTitle, int const windowWidth, int const windowHeight)
-            : windowTitle(windowTitle), windowWidth(windowWidth), windowHeight(windowHeight) {
+            : windowTitle(windowTitle), windowWidth(windowWidth), windowHeight(windowHeight),
+              prevLeftMouseButtonPressed(false), yaw(glm::pi<double>()), pitch(0) {
         init();
     }
 
     void run();
-
 
     float const getWindowWidth() const {
         return (float) windowWidth;
@@ -45,16 +46,32 @@ private:
     size_t framesCounter = 0;
     double frameTime = 0;
 
+    static bool leftMouseButtonPressed;
+    static double mouseXPosition;
+    static double mouseYPosition;
+
+    bool prevLeftMouseButtonPressed;
+    double yaw;
+    double pitch;
+    char keysPressed;
+
     void init();
 
     void drawScene();
 
     static void mouse_buttons_callback(GLFWwindow *, int button, int action, int mods) {
-        TwEventMouseButtonGLFW(button, action);
+        if (TwEventMouseButtonGLFW(button, action)) {
+            return;
+        }
+
+        OpenGLContext::leftMouseButtonPressed = button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS;
     }
 
-    static void mouse_position_callback(GLFWwindow *, double x, double y) {
-        TwEventMousePosGLFW((int) x, (int) y);
+    static void mouse_position_callback(GLFWwindow *window, double x, double y) {
+        if (TwEventMousePosGLFW((int) x, (int) y)) {
+            return;
+        }
+        glfwGetCursorPos(window, &mouseXPosition, &mouseYPosition);
     }
 
     static void mouse_scroll_callback(GLFWwindow *window, double x, double y) {
@@ -81,6 +98,8 @@ private:
         glViewport(0, 0, width, height);
         TwWindowSize(width, height);
     }
+
+    void handleUserInput();
 };
 
 #endif

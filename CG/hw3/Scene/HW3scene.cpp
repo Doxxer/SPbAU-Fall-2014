@@ -8,6 +8,7 @@
 HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
         : Scene(openGLContext),
           isWireFrame(false),
+          position(0, 0, 15),
           autoRotation(false),
           rotation_velocity(90),
           uvMultiplier(1.0f),
@@ -23,9 +24,9 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
 
     antTweakBar = TwNewBar("Parameters");
     TwDefine("Parameters size='350 600' color='70 100 120' valueswidth=200 iconpos=topleft");
-    TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, "true='ON' false='OFF' key=W");
+    TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, "true='ON' false='OFF'");
     TwAddSeparator(antTweakBar, NULL, "group='Auto rotation'");
-    TwAddVarRW(antTweakBar, "Enable", TW_TYPE_BOOLCPP, &autoRotation, " group='Auto rotation' true='ON' false='OFF' key=A");
+    TwAddVarRW(antTweakBar, "Enable", TW_TYPE_BOOLCPP, &autoRotation, " group='Auto rotation' true='ON' false='OFF'");
     TwAddVarRW(antTweakBar, "Velocity", TW_TYPE_FLOAT, &rotation_velocity, " group='Auto rotation' min=0 max=1000 step=10");
 
     TwAddVarRW(antTweakBar, "ObjRotation", TW_TYPE_QUAT4F, &rotation_by_control, "label='Object orientation' opened=true");
@@ -62,17 +63,38 @@ HW3scene::~HW3scene() {
     TwTerminate();
 }
 
-void HW3scene::render(double time) {
+void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
     if (autoRotation) {
         rotation_angle += time * rotation_velocity;
     } else {
         rotation_angle = 0;
     }
 
+    double speed = 1.0f;
+
     glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight(), 0.1f, 100.0f);
-    glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+
+    glm::vec3 direction(cos(pitch) * sin(yaw), sin(pitch), cos(pitch) * cos(yaw));
+    glm::vec3 right(sin(yaw - glm::half_pi<double>()), 0.0f, cos(yaw - glm::half_pi<double>()));
+    glm::vec3 up = glm::cross(right, direction);
+    if (keysPressed & (1 << 0)) {
+        position -= right * speed;
+    }
+    if (keysPressed & (1 << 1)) {
+        position += direction * speed;
+    }
+    if (keysPressed & (1 << 2)) {
+        position -= direction * speed;
+    }
+    if (keysPressed & (1 << 3)) {
+        position += right * speed;
+    }
+
+    glm::mat4 view = glm::lookAt(position, position + direction, up);
+
     glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
+
     glm::mat4 modelView = view * model;
     glm::mat4 mvp = proj * modelView;
     glm::mat3x3 modelView33 = glm::mat3x3(modelView);

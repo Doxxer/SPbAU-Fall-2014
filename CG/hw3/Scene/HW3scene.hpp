@@ -16,7 +16,7 @@ public:
 
     ~HW3scene();
 
-    virtual void render(double time) override;
+    virtual void render(double time, double yaw, double pitch, char keysPressed) override;
 
 private:
     enum renderObjectType {
@@ -32,6 +32,8 @@ private:
     TwBar *antTweakBar;
 
     bool isWireFrame;
+
+    glm::vec3 position;
 
     // auto rotation
     bool autoRotation;

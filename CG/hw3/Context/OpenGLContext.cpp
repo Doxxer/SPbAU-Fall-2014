@@ -1,5 +1,9 @@
 #include "OpenGLContext.hpp"
 
+bool OpenGLContext::leftMouseButtonPressed = false;
+double OpenGLContext::mouseXPosition;
+double OpenGLContext::mouseYPosition;
+
 void OpenGLContext::init() {
     glfwSetErrorCallback(glfw_error_callback);
 
@@ -43,9 +47,29 @@ void OpenGLContext::init() {
 void OpenGLContext::run() {
     while (!glfwWindowShouldClose(window)) {
         drawScene();
+        handleUserInput();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+}
+
+void OpenGLContext::handleUserInput() {
+    static double x, y;
+    double mouseSpeed = 0.005;
+    if (leftMouseButtonPressed) {
+        yaw += (x - mouseXPosition) * mouseSpeed;
+        pitch += (y - mouseYPosition) * mouseSpeed;
+    }
+
+    keysPressed = 0;
+    keysPressed |= ((glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) << 0);
+    keysPressed |= ((glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) << 1);
+    keysPressed |= ((glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) << 2);
+    keysPressed |= ((glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) << 3);
+
+    prevLeftMouseButtonPressed = leftMouseButtonPressed;
+    x = mouseXPosition;
+    y = mouseYPosition;
 }
 
 void OpenGLContext::drawScene() {
@@ -62,7 +86,7 @@ void OpenGLContext::drawScene() {
         sprintf(newTitle, "%s (%.1f FPS)", windowTitle.c_str(), FPS);
         glfwSetWindowTitle(window, newTitle);
     }
-    scene->render(dt);
+    scene->render(dt, yaw, pitch, keysPressed);
     TwDraw();
 }
 

@@ -11,7 +11,7 @@ public:
 
     }
 
-    virtual void render(double timeFromStart) = 0;
+    virtual void render(double timeFromStart, double yaw, double pitch, char keysPressed) = 0;
 
     virtual ~Scene() {
     }
