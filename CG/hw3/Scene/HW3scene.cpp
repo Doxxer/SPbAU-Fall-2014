@@ -68,7 +68,7 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
     GLuint framebufferTexture;
     glGenTextures(1, &framebufferTexture);
     glBindTexture(GL_TEXTURE_2D, framebufferTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) openGLContext->getWindowWidth(),
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) openGLContext->getWindowWidth() / 2,
             (GLsizei) openGLContext->getWindowHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -76,7 +76,7 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
     GLuint renderbufferDepth;
     glGenRenderbuffers(1, &renderbufferDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, renderbufferDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, (GLsizei) openGLContext->getWindowWidth(),
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, (GLsizei) openGLContext->getWindowWidth() / 2,
             (GLsizei) openGLContext->getWindowHeight());
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderbufferDepth);
     glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, framebufferTexture, 0);
@@ -91,8 +91,8 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
     framebufferQuad.reset(new FramebufferQuad("Resources/frame.obj", "Resources/passthrough.vs", "Resources/boxBlur.fs", framebufferTexture));
 
     postProcessEffects[postProcessEffect::boxBlur] = "Resources/boxBlur.fs";
-    postProcessEffects[postProcessEffect::gaussBlur] = "Resources/simple.fs";
-    postProcessEffects[postProcessEffect::sobelFilter] = "Resources/simple.fs";
+    postProcessEffects[postProcessEffect::gaussBlur] = "Resources/gaussBlur.fs";
+    postProcessEffects[postProcessEffect::sobelFilter] = "Resources/sobelFilter.fs";
 }
 
 HW3scene::~HW3scene() {
@@ -109,8 +109,7 @@ void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
 
     double speed = 1.0f;
 
-    glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight(), 0.1f, 100.0f);
-
+    glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight() / 2, 0.1f, 100.0f);
     glm::vec3 direction(cos(pitch) * sin(yaw), sin(pitch), cos(pitch) * cos(yaw));
     glm::vec3 right(sin(yaw - glm::half_pi<double>()), 0.0f, cos(yaw - glm::half_pi<double>()));
     glm::vec3 up = glm::cross(right, direction);
@@ -128,10 +127,8 @@ void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
     }
 
     glm::mat4 view = glm::lookAt(position, position + direction, up);
-
     glm::quat rotation_by_time = glm::quat(glm::vec3(0, glm::radians(rotation_angle), -glm::radians(rotation_angle)));
     glm::mat4 model = glm::mat4_cast(rotation_by_control * rotation_by_time);
-
     glm::mat4 modelView = view * model;
     glm::mat4 mvp = proj * modelView;
     glm::mat3x3 modelView33 = glm::mat3x3(modelView);
@@ -148,13 +145,28 @@ void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
             &lightColor[0], &specularColor[0],
             ambientPower, diffusePower, specularPower);
 
-    // render to texture
+    // clear
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClearColor(0.2f, 0.2f, 0.2f, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glClearColor(0.2f, 0.2f, 0.2f, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // render original to screen
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, (int) openGLContext->getWindowWidth() / 2, (int) openGLContext->getWindowHeight());
     renderObjects[currentRenderObjectType]->render();
 
-    // render to screen
+    // render to texture
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glViewport(0, 0, (int) openGLContext->getWindowWidth() / 2, (int) openGLContext->getWindowHeight());
+    renderObjects[currentRenderObjectType]->render();
+
+    // render texture to screen
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport((GLint) openGLContext->getWindowWidth() / 2, 0, (GLint) openGLContext->getWindowWidth() / 2, (GLint) openGLContext->getWindowHeight());
     framebufferQuad->setFragmentShader(postProcessEffects[currentPostProcessEffect]);
-    framebufferQuad->setPostProcessingParams(openGLContext->getWindowWidth(), openGLContext->getWindowHeight(), blurSize);
+    framebufferQuad->setPostProcessingParams(openGLContext->getWindowWidth() / 2, openGLContext->getWindowHeight(), blurSize);
     framebufferQuad->render();
 }

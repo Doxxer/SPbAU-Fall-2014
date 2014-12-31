@@ -95,7 +95,6 @@ private:
         if (width <= 0 || height <= 0) {
             return;
         }
-        glViewport(0, 0, width, height);
         TwWindowSize(width, height);
     }
 

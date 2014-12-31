@@ -40,8 +40,6 @@ public:
     }
 
     virtual void render() override {
-        glClearColor(0.2f, 0.2f, 0.2f, 1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(shaderProgram);
 
         glUniform1i(glGetUniformLocation(shaderProgram, "blurSize"), blurSize);
