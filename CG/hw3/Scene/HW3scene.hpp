@@ -62,6 +62,9 @@ private:
     float diffusePower;
     float specularPower;
 
+    // post processing
+    int blurSize;
+
     // rendering object
     renderObjectType currentRenderObjectType;
     postProcessEffect currentPostProcessEffect;

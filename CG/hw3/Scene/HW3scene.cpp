@@ -18,6 +18,7 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
           ambientPower(0.05),
           diffusePower(1),
           specularPower(1/80.0f),
+          blurSize(3),
           currentRenderObjectType(renderObjectType::sphere),
           currentPostProcessEffect(postProcessEffect::boxBlur) {
     TwInit(TW_OPENGL_CORE, NULL);
@@ -42,6 +43,9 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
     TwAddVarRW(antTweakBar, "ambient power", TW_TYPE_FLOAT, &ambientPower, " group='Light manipulation' min=0 max=1 step=0.01");
     TwAddVarRW(antTweakBar, "Diffuse power", TW_TYPE_FLOAT, &diffusePower, "group='Light manipulation' min=0 max=1 step=0.01");
     TwAddVarRW(antTweakBar, "Specular power", TW_TYPE_FLOAT, &specularPower, " group='Light manipulation' min=0 max=1 step=0.01");
+
+    TwAddSeparator(antTweakBar, NULL, "group='Post processing'");
+    TwAddVarRW(antTweakBar, "Blur size", TW_TYPE_INT32, &blurSize, "group='Post processing' min=1 max=31 step=2");
 
     TwEnumVal const renderModelsDescriptions[] = {
             {renderObjectType::cow, "cow from hw1"},
@@ -151,5 +155,6 @@ void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
     // render to screen
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     framebufferQuad->setFragmentShader(postProcessEffects[currentPostProcessEffect]);
+    framebufferQuad->setPostProcessingParams(openGLContext->getWindowWidth(), openGLContext->getWindowHeight(), blurSize);
     framebufferQuad->render();
 }

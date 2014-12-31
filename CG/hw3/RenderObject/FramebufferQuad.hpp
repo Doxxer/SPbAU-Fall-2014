@@ -16,6 +16,9 @@ private:
     std::vector<GLuint> indices;
 
     std::string fragmentShaderPath;
+
+    int blurSize;
+    float width, height;
 public:
 
     FramebufferQuad(string pathToModel, string const &pathToVertexShader, string const &pathToFragmentShader, GLuint frameTexture)
@@ -41,6 +44,10 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(shaderProgram);
 
+        glUniform1i(glGetUniformLocation(shaderProgram, "blurSize"), blurSize);
+        glUniform1f(glGetUniformLocation(shaderProgram, "pixelSizeH"), 1.0f / width);
+        glUniform1f(glGetUniformLocation(shaderProgram, "pixelSizeV"), 1.0f / height);
+
         // textures
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, frameTexture);
@@ -49,6 +56,12 @@ public:
         glBindVertexArray(vertexArrayObject);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
         glDrawElements(GL_TRIANGLES, (GLsizei) indices.size(), GL_UNSIGNED_INT, NULL);
+    }
+
+    void setPostProcessingParams(float width, float height, int blurSize) {
+        this->width = width;
+        this->height = height;
+        this->blurSize = blurSize;
     }
 
     void setFragmentShader(std::string shader) {
