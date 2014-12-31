@@ -5,6 +5,7 @@
 #include <glm/ext.hpp>
 #include <vector>
 #include <string>
+#include <GL/glew.h>
 #include "IRenderObject.hpp"
 
 using std::string;
@@ -18,7 +19,7 @@ public:
 
     virtual ~ModelObject();
 
-    void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp, GLfloat *modelView, GLfloat *modelView33) override {
+    void setMatrices(GLfloat *model, GLfloat *view, GLfloat *proj, GLfloat *mvp, GLfloat *modelView, GLfloat *modelView33) {
         this->model = model;
         this->view = view;
         this->proj = proj;
@@ -27,14 +28,14 @@ public:
         this->modelView33 = modelView33;
     }
 
-    virtual void setTextureParams(GLfloat uvMultiplier, bool mipmap) override {
+    virtual void setTextureParams(GLfloat uvMultiplier, bool mipmap) {
         this->uvMultiplier = uvMultiplier;
         this->mipmap = mipmap;
     }
 
     virtual void setLightParams(GLfloat *lightDirection,
             GLfloat *lightColor, GLfloat *specularColor,
-            GLfloat ambientPower, GLfloat diffusePower, GLfloat specularPower) override {
+            GLfloat ambientPower, GLfloat diffusePower, GLfloat specularPower) {
         this->lightDirection = lightDirection;
         this->lightColor = lightColor;
         this->specularColor = specularColor;

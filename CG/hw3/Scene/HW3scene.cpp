@@ -7,7 +7,6 @@
 
 HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
         : Scene(openGLContext),
-          isWireFrame(false),
           position(0, 0, 15),
           autoRotation(false),
           rotation_velocity(90),
@@ -19,12 +18,12 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
           ambientPower(0.05),
           diffusePower(1),
           specularPower(1/80.0f),
-          currentRenderObjectType(renderObjectType::sphere) {
+          currentRenderObjectType(renderObjectType::sphere),
+          currentPostProcessEffect(postProcessEffect::boxBlur) {
     TwInit(TW_OPENGL_CORE, NULL);
 
     antTweakBar = TwNewBar("Parameters");
     TwDefine("Parameters size='350 600' color='70 100 120' valueswidth=200 iconpos=topleft");
-    TwAddVarRW(antTweakBar, "Wireframe mode", TW_TYPE_BOOLCPP, &isWireFrame, "true='ON' false='OFF'");
     TwAddSeparator(antTweakBar, NULL, "group='Auto rotation'");
     TwAddVarRW(antTweakBar, "Enable", TW_TYPE_BOOLCPP, &autoRotation, " group='Auto rotation' true='ON' false='OFF'");
     TwAddVarRW(antTweakBar, "Velocity", TW_TYPE_FLOAT, &rotation_velocity, " group='Auto rotation' min=0 max=1000 step=10");
@@ -44,18 +43,52 @@ HW3scene::HW3scene(std::shared_ptr<OpenGLContext> openGLContext)
     TwAddVarRW(antTweakBar, "Diffuse power", TW_TYPE_FLOAT, &diffusePower, "group='Light manipulation' min=0 max=1 step=0.01");
     TwAddVarRW(antTweakBar, "Specular power", TW_TYPE_FLOAT, &specularPower, " group='Light manipulation' min=0 max=1 step=0.01");
 
-    TwEnumVal const values[] = {
+    TwEnumVal const renderModelsDescriptions[] = {
             {renderObjectType::cow, "cow from hw1"},
             {renderObjectType::quad, "simple big quad"},
             {renderObjectType::sphere, "common sphere"},
             {renderObjectType::cylinder, "cylinder"}
     };
-    TwAddVarRW(antTweakBar, "Render object:", TwDefineEnum(NULL, values, renderObjectType::count), &currentRenderObjectType, "key=Q");
+    TwAddVarRW(antTweakBar, "Render object:", TwDefineEnum(NULL, renderModelsDescriptions, renderObjectType::countRenderObjectType), &currentRenderObjectType, "key=Q");
+
+    TwEnumVal const postProcessEffectDescriptions[] = {
+            {postProcessEffect::boxBlur, "9 point box blur"},
+            {postProcessEffect::gaussBlur, "Gauss blur"},
+            {postProcessEffect::sobelFilter, "Sobel edge detection"}
+    };
+    TwAddVarRW(antTweakBar, "Postprocces effect", TwDefineEnum(NULL, postProcessEffectDescriptions, postProcessEffect::countPostProcessEffect), &currentPostProcessEffect, "key=Z");
+
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+    GLuint framebufferTexture;
+    glGenTextures(1, &framebufferTexture);
+    glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) openGLContext->getWindowWidth(),
+            (GLsizei) openGLContext->getWindowHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    GLuint renderbufferDepth;
+    glGenRenderbuffers(1, &renderbufferDepth);
+    glBindRenderbuffer(GL_RENDERBUFFER, renderbufferDepth);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, (GLsizei) openGLContext->getWindowWidth(),
+            (GLsizei) openGLContext->getWindowHeight());
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderbufferDepth);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, framebufferTexture, 0);
+
+    GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, drawBuffers);
 
     renderObjects[renderObjectType::cow].reset(new Cow());
     renderObjects[renderObjectType::quad].reset(new Quad());
     renderObjects[renderObjectType::sphere].reset(new Sphere());
     renderObjects[renderObjectType::cylinder].reset(new Cylinder());
+    framebufferQuad.reset(new FramebufferQuad("Resources/frame.obj", "Resources/passthrough.vs", "Resources/boxBlur.fs", framebufferTexture));
+
+    postProcessEffects[postProcessEffect::boxBlur] = "Resources/boxBlur.fs";
+    postProcessEffects[postProcessEffect::gaussBlur] = "Resources/simple.fs";
+    postProcessEffects[postProcessEffect::sobelFilter] = "Resources/simple.fs";
 }
 
 HW3scene::~HW3scene() {
@@ -100,28 +133,23 @@ void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
     glm::mat3x3 modelView33 = glm::mat3x3(modelView);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LEQUAL);
-    glClearColor(0.2f, 0.2f, 0.2f, 1);
-    glClearDepth(1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    if (isWireFrame) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDisable(GL_CULL_FACE);
-    }
-    else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glEnable(GL_CULL_FACE);
-    }
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     renderObjects[currentRenderObjectType]->setMatrices(&model[0][0], &view[0][0], &proj[0][0], &mvp[0][0], &modelView[0][0], &modelView33[0][0]);
     renderObjects[currentRenderObjectType]->setTextureParams(uvMultiplier, mipmap);
-
     renderObjects[currentRenderObjectType]->setLightParams(
             &lightDirection[0],
             &lightColor[0], &specularColor[0],
             ambientPower, diffusePower, specularPower);
+
+    // render to texture
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     renderObjects[currentRenderObjectType]->render();
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    // render to screen
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    framebufferQuad->setFragmentShader(postProcessEffects[currentPostProcessEffect]);
+    framebufferQuad->render();
 }

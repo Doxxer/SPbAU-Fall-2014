@@ -6,9 +6,10 @@
 #include <glm/ext.hpp>
 #include <memory>
 #include <array>
-#include "IRenderObject.hpp"
+#include "ModelObject.hpp"
 #include "Scene.hpp"
 #include "OpenGLContext.hpp"
+#include "FramebufferQuad.hpp"
 
 class HW3scene : public Scene {
 public:
@@ -24,14 +25,21 @@ private:
         quad,
         sphere,
         cylinder,
-        count
+        countRenderObjectType
     };
+
+    enum postProcessEffect {
+        boxBlur = 0,
+        gaussBlur,
+        sobelFilter,
+        countPostProcessEffect
+    };
+
+    GLuint framebuffer = 0;
 
     double rotation_angle = 0;
 
     TwBar *antTweakBar;
-
-    bool isWireFrame;
 
     glm::vec3 position;
 
@@ -56,8 +64,12 @@ private:
 
     // rendering object
     renderObjectType currentRenderObjectType;
+    postProcessEffect currentPostProcessEffect;
 
-    std::array<std::unique_ptr<IRenderObject>, renderObjectType::count> renderObjects;
+    std::array<std::unique_ptr<ModelObject>, renderObjectType::countRenderObjectType> renderObjects;
+    std::array<std::string, postProcessEffect::countPostProcessEffect> postProcessEffects;
+
+    std::unique_ptr<FramebufferQuad> framebufferQuad;
 };
 
 #endif /* end of include guard: SIMPLET_HPP */

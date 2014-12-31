@@ -17,7 +17,8 @@ file(GLOB SOURCE_FILES
     main.cpp)
 
 set(RESOURCES Resources/main.vs Resources/main.fs
-    Resources/cow.obj Resources/quad.obj Resources/sphere.obj Resources/cylinder.obj
+    Resources/passthrough.vs Resources/boxBlur.fs Resources/simple.fs
+    Resources/cow.obj Resources/quad.obj Resources/sphere.obj Resources/cylinder.obj Resources/frame.obj
     Resources/texture.png Resources/normal.png)
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES} ${SHADERS})
