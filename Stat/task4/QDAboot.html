@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Тураев Тимур" />
+
+
+<title>QDAboot</title>
+
+<script src="QDAboot_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="QDAboot_files/bootstrap-2.3.2/css/spacelab.min.css" rel="stylesheet" />
+<link href="QDAboot_files/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<script src="QDAboot_files/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">QDAboot</h1>
+<h4 class="author"><em>Тураев Тимур</em></h4>
+<h4 class="date"><em>16 января 2015 г.</em></h4>
+</div>
+
+
+<pre><code>## Loading required package: RColorBrewer</code></pre>
+<pre><code>## Warning: package &#39;mvtnorm&#39; was built under R version 3.1.2</code></pre>
+<pre><code>## Warning: package &#39;plyr&#39; was built under R version 3.1.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;boot&#39;
+## 
+## The following object is masked from &#39;package:lattice&#39;:
+## 
+##     melanoma</code></pre>
+<p>Модель (матрицы ковариации отдельно по сортам):</p>
+<pre class="sourceCode r"><code class="sourceCode r">make.model &lt;-<span class="st"> </span>function(data, groups) {
+  data &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(data)
+  means &lt;-<span class="st"> </span><span class="kw">aggregate</span>(data, <span class="kw">list</span>(<span class="dt">groups =</span> groups), mean)
+  covs =<span class="st"> </span><span class="kw">by</span>(data, groups, cov)
+  <span class="kw">list</span>(<span class="dt">cov =</span> covs, <span class="dt">means =</span> means[, -<span class="dv">1</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])
+}
+model &lt;-<span class="st"> </span><span class="kw">make.model</span>(<span class="kw">subset</span>(iris, <span class="dt">select =</span> -Species), iris$Species)</code></pre>
+<p>Вспомогательная функция, строящая данные. За основу взята функция из примера:</p>
+<pre class="sourceCode r"><code class="sourceCode r">make.data &lt;-<span class="st"> </span>function(data, groups, model, <span class="dt">size =</span> <span class="kw">nrow</span>(data), <span class="dt">groups.name =</span> <span class="st">&quot;Species&quot;</span>) {
+  ind &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq_along</span>(<span class="kw">levels</span>(groups)), <span class="dt">size =</span> size, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+  ind &lt;-<span class="st"> </span><span class="kw">sort</span>(ind)
+  res &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name =</span> <span class="kw">factor</span>(<span class="kw">levels</span>(groups)[ind], <span class="dt">levels =</span> <span class="kw">levels</span>(groups)))
+  <span class="kw">names</span>(res) &lt;-<span class="st"> </span>groups.name
+  mx &lt;-<span class="st"> </span><span class="kw">Map</span>(function(i) <span class="kw">rmvnorm</span>(<span class="kw">count</span>(res)[<span class="dv">2</span>][i, ], <span class="dt">mean =</span> <span class="kw">as.numeric</span>(model$means[i,]), <span class="dt">sigma =</span> model$cov[[i]]), <span class="kw">seq_along</span>(<span class="kw">levels</span>(groups)))  
+  mx &lt;-<span class="st"> </span><span class="kw">Reduce</span>(rbind, mx)
+  res &lt;-<span class="st"> </span><span class="kw">cbind</span>(res, mx)
+  <span class="kw">colnames</span>(res) &lt;-<span class="st"> </span><span class="kw">c</span>(groups.name, <span class="kw">colnames</span>(model$cov[[<span class="dv">1</span>]]))
+  <span class="kw">rownames</span>(res) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  res
+}</code></pre>
+<p>Строим данные с помощью нашей функции make.data:</p>
+<pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">make.data</span>(iris, iris$Species, model)
+<span class="kw">splom</span>(res, <span class="dt">groups =</span> res$Species)</code></pre>
+<div class="figure">
+<img src="QDAboot_files/figure-html/unnamed-chunk-4-1.png" />
+</div>
+<p>Далее просто делаем параметрический бутстрапинг, аналогично примеру.</p>
+<pre class="sourceCode r"><code class="sourceCode r">my.qda &lt;-<span class="st"> </span>function(x, data, ...) {
+  out &lt;-<span class="st"> </span><span class="kw">qda</span>(x, data, ...)
+  out$data &lt;-<span class="st"> </span>data
+  out
+}
+
+my.statistic &lt;-<span class="st"> </span>function(data) {
+  tn &lt;-<span class="st"> </span><span class="kw">tune</span>(my.qda, Species ~<span class="st"> </span>., <span class="dt">data =</span> data, <span class="dt">predict.func=</span>function(...) <span class="kw">predict</span>(...)$class, <span class="dt">tunecontrol=</span><span class="kw">tune.control</span>(<span class="dt">sampling=</span><span class="st">&quot;fix&quot;</span>, <span class="dt">fix=</span><span class="dv">1</span>/<span class="dv">2</span>))
+  tn$best.performance
+}
+
+b &lt;-<span class="st"> </span><span class="kw">boot</span>(iris, my.statistic, <span class="dt">R =</span> <span class="dv">999</span>, <span class="dt">sim =</span> <span class="st">&quot;parametric&quot;</span>,
+          <span class="dt">ran.gen =</span> function(data, mle, ..., <span class="dt">size =</span> <span class="dv">300</span>) <span class="kw">make.data</span>(data, mle$groups, mle$lda.model, ...),
+          <span class="dt">mle =</span> <span class="kw">list</span>(<span class="dt">groups =</span> iris$Species, <span class="dt">lda.model =</span> model))
+b</code></pre>
+<pre><code>## 
+## PARAMETRIC BOOTSTRAP
+## 
+## 
+## Call:
+## boot(data = iris, statistic = my.statistic, R = 999, sim = &quot;parametric&quot;, 
+##     ran.gen = function(data, mle, ..., size = 300) make.data(data, 
+##         mle$groups, mle$lda.model, ...), mle = list(groups = iris$Species, 
+##         lda.model = model))
+## 
+## 
+## Bootstrap Statistics :
+##     original     bias    std. error
+## t1*        0 0.02529196  0.01938893</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(b)</code></pre>
+<div class="figure">
+<img src="QDAboot_files/figure-html/unnamed-chunk-5-1.png" />
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boot.ci</span>(b, <span class="dt">type =</span> <span class="st">&quot;perc&quot;</span>)</code></pre>
+<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 999 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = b, type = &quot;perc&quot;)
+## 
+## Intervals : 
+## Level     Percentile     
+## 95%   ( 0.0000,  0.0667 )  
+## Calculations and Intervals on Original Scale</code></pre>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+---
+title: "Seeds"
+author: "Тураев Тимур"
+date: "17 января 2015 г."
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 15
+    fig_width: 15
+    highlight: tango
+    self_contained: no
+    theme: spacelab
+---
+```{r echo=FALSE}
+library(lattice)
+library(MASS)
+library(e1071)
+library(corrplot)
+library(latticeExtra)
+library(nnet)
+```
+
+Загружаем наши данные и подготавливаем их.
+Убирает Jitter.Abs (с ним не работает lda, да и он не нужен - есть Jitter.Percent)
+```{r}
+df <- read.csv("data/parkinsons.csv", comment.char = "#")
+df$name <- NULL
+df$MDVP.Jitter.Abs. <- NULL
+names(df)[names(df) == 'MDVP.Jitter...'] <- 'MDVP.Jitter.Percent'
+summary(df)
+```
+
+Построим всякие графики:
+```{r}
+corrplot.mixed(cor(df), tl.cex=1.0)
+```
+
+```{r}
+df$status <- as.factor(df$status)
+marginal.plot(df)
+```
+Очень много коррелирующих признаков.
+
+Поделим выборку на обучающую и тестовую в отношении 2/1:
+```{r}
+train.idx <- sample(nrow(df), size = nrow(df) * 0.6666)
+df.train <- df[train.idx, ]
+df.test <- df[-train.idx, ]
+```
+
+### LDA
+Установим функцию тестирования нашей модели (10-fold cross validation) и проверим test-train (выведем относительную ошибку)
+```{r}
+check.testTrain.lda <- function(f) {
+  m.predicted <- predict(lda(f, data = df.train), df.test)
+  print(table(m.predicted$class, df.test$status))
+  mean(m.predicted$class != df.test$status)
+}
+
+check.lda = function(f) {
+  print(lda(f, df))
+  t <- tune(lda, f, data = df, predict.func = function(...) predict(...)$class)
+  print(check.testTrain.lda(f))
+  t
+}
+check.lda(status ~ .)
+```
+В принципе, не так уж и плохо.
+
+### Naive Bayes
+Снова тестовая функция:
+```{r}
+check.testTrain.nb = function(f) {
+  m.predicted <- predict(naiveBayes(f, data = df.train), df.test)
+  print(table(m.predicted, df.test$status))
+  mean(m.predicted != df.test$status)
+}
+
+check.nb = function(f) {
+  print(naiveBayes(f, df))
+  t <- tune(naiveBayes, f, data = df)
+  print(check.testTrain.nb(f))
+  t
+}
+
+check.nb(status ~ .)
+```
+Тут уже сильно хуже, почти в 2 раза.
+
+### Мультиномиальная регрессия
+
+Снова тестовые фукнции (trace выключен)
+```{r}
+check.testTrain.mr = function(f) {
+  m.predicted <- predict(multinom(f, df.train, maxit = 3000, trace=FALSE), df.test)
+  print(table(m.predicted, df.test$status))
+  mean(m.predicted != df.test$status)
+}
+
+check.mr = function(f) {
+  (mr <- multinom(f, df, maxit = 3000, trace=FALSE))
+  t <- tune(multinom, f, data = df, maxit=3000, trace=FALSE)
+  print(check.testTrain.mr(f))
+  t
+}
+
+check.mr(status ~ .)
+```
+Чуть хуже, чем LDA.
+
+В одной из домашней работ (seeds) я забыл применить тут AIC/stepAIC, исправляю. В семенах все аналогично...
+```{r}
+mnr <- multinom(status ~ ., df, maxit=3000, trace=FALSE)
+mnr.aic <- stepAIC(mnr, trace=FALSE)
+(mnr.aic.formula <- mnr.aic$call$formula)
+```
+
+Пробуем на получившейся формуле multinomial:
+```{r}
+check.mr(mnr.aic.formula)
+```
+Неплохо, улучшилось, стало как у lda.
+
+## Группируем по пациентам
+
+Теперь сгруппируем данные. Написано в документации, что каждая строчка представляет собой записи 31 пациента и имя пациента есть подстрока вида R01_S_XX_1..6, где XX - собственно "имя" человека. Это и надо выцепить.
+```{r}
+df <- read.csv("data/parkinsons.csv", comment.char = "#")
+df$MDVP.Jitter.Abs. <- NULL
+names(df)[names(df) == 'MDVP.Jitter...'] <- 'MDVP.Jitter.Percent'
+df$name <- substring(df$name, 10, 12)
+df <- aggregate(subset(df, select = c(-name, -status)), list(df$name, df$status), mean)
+df$Group.1 <- NULL
+names(df)[1] = "status"
+df$status <- as.factor(df$status)
+```
+Пациентов получилось, к слову, 32. В данных ошибка (опечатка?) :-)
+
+Далее повторяем то же самое.
+```{r}
+train.idx <- sample(nrow(df), size = nrow(df) * 0.6666)
+df.train <- df[train.idx, ]
+df.test <- df[-train.idx, ]
+```
+
+LDA
+```{r}
+check.lda(status ~ .)
+```
+
+Naive Bayes
+```{r}
+check.nb(status ~ .)
+```
+
+Multinomial
+```{r}
+check.mr(status ~ .)
+```
+Вот тут совсем хорошо (иногда! данных очень мало!) расклассифицировал пациентов. И проверим еще stepAIC:
+
+```{r}
+mnr.grouped <- multinom(status ~ ., df, maxit=3000, trace=FALSE)
+mnr.aic.grouped <- stepAIC(mnr.grouped, trace=FALSE)
+(mnr.aic.formula.grouped <- mnr.aic.grouped$call$formula)
+check.mr(mnr.aic.formula.grouped)
+```
+В этот раз stepAIC очень сильно нам помог: модель резко упростилась: с 22 до 8 предикторов, ошибка тоже уменьшилась (опять же от запуска к запуску)

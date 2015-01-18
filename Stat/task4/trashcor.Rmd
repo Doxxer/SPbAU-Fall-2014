@@ -1,0 +1,77 @@
+---
+title: "TrashCor"
+author: "Тураев Тимур"
+date: "16 января 2015 г."
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 15
+    fig_width: 15
+    highlight: tango
+    self_contained: no
+    theme: spacelab
+---
+```{r echo=FALSE}
+library(knitr)
+library(MASS)
+library(e1071)
+```
+
+Моделируем данные, как это указано в задании.
+
+Константы:
+```{r}
+pred <- 10000
+indiv <- 100
+cor.count <- 20
+```
+
+Данные:
+```{r}
+data <- matrix(rnorm(pred * indiv), indiv, pred)
+data.train <- data[seq(1, indiv/2), ]
+data.test <- data[seq(indiv/2 + 1, indiv),]
+y <- data.train[,1]
+x.test <- data.test[,-1]
+x.train <- data.train[,-1]
+```
+
+Ищем 20 самых коррелирующих:
+```{r}
+c <- apply(x.train, MARGIN = 2, FUN = function(z) cor(y, z))
+cor <- sort(c, decreasing = TRUE)[cor.count]
+cor
+mostcor.x.train <- x.train[, c >= cor]
+mostcor.x.test <- x.test[, c >= cor]
+```
+
+Строим датафреймы
+```{r}
+df.test <- data.frame(y, mostcor.x.test)
+df.train <- data.frame(y, mostcor.x.train)
+```
+
+Модель:
+```{r}
+fit <- lm(y ~ ., df.train)
+summary(fit)
+sqrt(sum(fit$residuals^2) / (indiv/2))
+```
+
+Сделаем tune:
+```{r}
+tune(lm, fit$call$formula, data=df.train, tunecontrol=tune.control(cross=nrow(df.train)))
+```
+Ошибки около 0.3, кажется что вроде бы все неплохо.
+
+Теперь проверим на тестовом наборе:
+```{r}
+pred <- predict(fit, df.test)
+err <- y - pred
+sqrt(sum(err^2) / (indiv/2))
+
+# and tune
+tune(lm, fit$call$formula, data=df.test, tunecontrol=tune.control(cross=nrow(df.test)))
+```
+
+Смотрим на увеличившиеся значения ошибки и понимаем, что регрессия неинформативна.

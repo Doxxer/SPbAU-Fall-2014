@@ -1,0 +1,60 @@
+---
+title: "GlaucomaMVF"
+author: "Тураев Тимур"
+date: "17 января 2015 г."
+output:
+  html_document:
+    fig_caption: yes
+    fig_height: 15
+    fig_width: 15
+    highlight: tango
+    self_contained: no
+    theme: spacelab
+---
+
+```{r echo=FALSE}
+library("e1071")
+library("lattice")
+```
+
+Читаем данные:
+```{r}
+df <- read.table("data/GlaucomaMVF.txt", header=TRUE)
+```
+
+Запишем для краткости функцию, которой мы будем тестировать разные ядра:
+```{r}
+test.kernel <- function(f) {
+  print(f)
+  print(table(actual = df$Class, predicted = predict(f$best.model)))
+  xyplot(f$performances[,"error"] ~ log2(f$performances[,"cost"]), type="b")
+  f
+}
+```
+
+### Linear kernel
+```{r}
+test.kernel(tune.svm(Class ~ ., data = df, type = "C-classification", tunecontrol = tune.control(cross = 10),
+                     kernel="linear", cost=2^(-5:5)))
+```
+Видно, что ошибка маленькая, данные хорошо (линейно) разделимы, и это самое линейное ядро дало очень хороший результат.
+
+### Polynomial kernel
+```{r}
+f <- test.kernel(tune.svm(Class ~ ., data = df, type = "C-classification", tunecontrol = tune.control(cross = 10),
+                          kernel="polynomial", cost=2^(-5:10), degree=(1:5)))
+xyplot(f$performances[,"error"] ~ log2(f$performances[,"cost"]), type="b",
+       groups=f$performances[, "degree"] , auto.key=list(title="degree", corner=c(0.95,1)))
+```
+Опять же видна линейная разделимость данных: лучше всего подходит полином первой степени. Причем следующими будут полиномы нечетной степени, а затем четной...
+
+### Radial kernel
+```{r}
+f <- test.kernel(tune.svm(Class ~ ., data = df, type = "C-classification", tunecontrol = tune.control(cross = 10),
+                          kernel="radial", cost=2^(-3:6), gamma=2^(-8:-2)))
+xyplot(f$performances[,"error"] ~ log2(f$performances[,"cost"]), type="b",
+       groups=f$performances[, "gamma"] , auto.key=list(title="gamma", corner=c(0.95,1)))
+```
+При больших гамма получаем оверфиттинг. Чем меньше, тем лучше, причем штраф нужен больший.
+
+Таким образом видно, что данные очень хорошие, что подтверждается тем, чтовсе ядра хорошо разделяют данные.
