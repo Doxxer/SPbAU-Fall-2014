@@ -107,7 +107,7 @@ void HW3scene::render(double time, double yaw, double pitch, char keysPressed) {
         rotation_angle = 0;
     }
 
-    double speed = 1.0f;
+    float speed = 1.0f;
 
     glm::mat4 proj = glm::perspective(45.0f, openGLContext->getWindowWidth() / openGLContext->getWindowHeight() / 2, 0.1f, 100.0f);
     glm::vec3 direction(cos(pitch) * sin(yaw), sin(pitch), cos(pitch) * cos(yaw));
